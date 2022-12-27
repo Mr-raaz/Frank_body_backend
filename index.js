@@ -14,6 +14,10 @@ app.get('/' , (req,res) =>{
     res.send("server is working....");
 })
 
+app.get('/test' , (req,res)=>{
+    res.send("hello from test endpoint");
+})
+
 
 connect().then(()=>{
     console.log("connected to database");
