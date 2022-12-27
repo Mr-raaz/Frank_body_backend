@@ -12,6 +12,16 @@ route.post('/create' ,async (req,res)=>{
     res.send("working");
 })
 
+route.get('/:email' , async(req,res)=>{
+
+    let {email} = req.params;
+
+    let temp = await user.find({email:{$eq:email}});
+
+    console.log(temp);
+    res.send("fin...");
+})
+
 
 
 
