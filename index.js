@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const connect = require("./db/connect");
 const userRoute = require('./routes/user.route');
+const productRoute = require('./routes/procuct.route');
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -9,6 +10,7 @@ app.use(express.json());
 const port = process.env.PORT || 8080;
 
 app.use('/user',userRoute);
+app.use('/products' , productRoute);
 
 app.get('/' , (req,res) =>{
     res.send("server is working....");
