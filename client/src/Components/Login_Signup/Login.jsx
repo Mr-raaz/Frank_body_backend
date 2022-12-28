@@ -98,7 +98,9 @@ function Login() {
             }
         }
 
-
+        const facebookAuthHandler = ()=>{
+            console.log("facebook auth");
+        }
 
 
 
@@ -158,7 +160,7 @@ function Login() {
 
         <div className="login_btns">
             <button><FontAwesomeIcon className='google' icon={faGoogle}/> &nbsp;&nbsp;&nbsp;&nbsp;Google</button>
-            <button><FontAwesomeIcon className='facebook' icon={faFacebook} />&nbsp;&nbsp;&nbsp;&nbsp;Facebook</button>
+            <button onClick={facebookAuthHandler}><FontAwesomeIcon className='facebook' icon={faFacebook} />&nbsp;&nbsp;&nbsp;&nbsp;Facebook</button>
         </div>
     </div>
 
