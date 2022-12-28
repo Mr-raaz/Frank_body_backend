@@ -101,9 +101,9 @@ function Login() {
         const facebookAuthHandler = async()=>{
             console.log("facebook auth client side call");
 
-            // navigate("/auth/facebook")
-            let resp = await fetch("http//:localhost:8080/auth/facebook");
-            console.log(resp);
+            navigate("localhost:8080/auth/facebook")
+            // let resp = await fetch("/auth/test");
+            // console.log(resp);
         }
 
 

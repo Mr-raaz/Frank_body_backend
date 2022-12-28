@@ -7,12 +7,22 @@ const route = express.Router();
 
 //     res.send("auth facebook route")
 // })
-
+route.get("/test",(req, res)=>{
+    console.log("auth test")
+    // res.redirect("/");
+    res.send({message:"replay"})
+})
+// route.get("/facebook",(req, res)=>{
+//     res.send({message:"hello authh facebook"})
+// })
 passport.use(new FacebookStrategy({
-    clientID: 1519534005223811,
-    clientSecret: "1515bc288172c95235bb3140debe9477",
+    // clientID: 1519534005223811,
+    // clientSecret: "1515bc288172c95235bb3140debe9477",
+    clientID: 534813265280045,
+    clientSecret:"517446206fc4a90a6bba6e7432e60147",
     callbackURL: "http://localhost:3000/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'photos', 'email']
+    
+    
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
@@ -28,6 +38,8 @@ route.get('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
+    console.log("got response from facebook");
+    console.log(req.body);
     res.redirect('/');
   });
 
