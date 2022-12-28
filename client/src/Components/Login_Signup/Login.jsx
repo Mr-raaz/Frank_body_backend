@@ -98,8 +98,12 @@ function Login() {
             }
         }
 
-        const facebookAuthHandler = ()=>{
-            console.log("facebook auth");
+        const facebookAuthHandler = async()=>{
+            console.log("facebook auth client side call");
+
+            // navigate("/auth/facebook")
+            let resp = await fetch("http//:localhost:8080/auth/facebook");
+            console.log(resp);
         }
 
 

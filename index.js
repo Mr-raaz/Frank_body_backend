@@ -4,7 +4,7 @@ const cors = require('cors');
 const connect = require("./db/connect");
 const userRoute = require('./routes/user.route');
 const productRoute = require('./routes/product.route');
-
+const authRoute = require("./routes/auth.route")
 // port Number
 const port = process.env.PORT || 8080;
 
@@ -19,7 +19,7 @@ app.use(express.json());
 // routes....
 app.use('/user',userRoute);
 app.use('/products' , productRoute);
-
+app.use('/auth', authRoute)
 
 
 app.get('/' , (req,res) =>{
