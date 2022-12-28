@@ -98,7 +98,13 @@ function Login() {
             }
         }
 
+        const facebookAuthHandler = async()=>{
+            console.log("facebook auth client side call");
 
+            // navigate("/auth/facebook")
+            let resp = await fetch("http//:localhost:8080/auth/facebook");
+            console.log(resp);
+        }
 
 
 
@@ -158,7 +164,7 @@ function Login() {
 
         <div className="login_btns">
             <button><FontAwesomeIcon className='google' icon={faGoogle}/> &nbsp;&nbsp;&nbsp;&nbsp;Google</button>
-            <button><FontAwesomeIcon className='facebook' icon={faFacebook} />&nbsp;&nbsp;&nbsp;&nbsp;Facebook</button>
+            <button onClick={facebookAuthHandler}><FontAwesomeIcon className='facebook' icon={faFacebook} />&nbsp;&nbsp;&nbsp;&nbsp;Facebook</button>
         </div>
     </div>
 
