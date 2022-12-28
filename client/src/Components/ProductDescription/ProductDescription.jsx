@@ -12,7 +12,10 @@ function ProductDescription() {
 
     const [currProd , setProd] = useState([]);
 
-    const [id2 , setid2] = useState(useParams().id);
+    let id = useParams().id;
+
+
+    const [id2 , setid2] = useState(id);
 
     function check(val){
         setid2(val);
@@ -24,18 +27,31 @@ function ProductDescription() {
 
     }
 
-    
-
+    function scrollToTop(val){
+        setTimeout(()=>{
+            window.scrollTo({
+                top:0,
+                behavior:'smooth'
+            })
+        },val);
+    }
 
     useEffect(()=>{
 
             getProductDetails();
+            scrollToTop(500);
             
-    },[id2])
+            
+    },[id2 , id])
+
+    useEffect(()=>{
+        getProductDetails();
+        scrollToTop(500);
+    },[])
 
     
     async function getProductDetails(){
-        let res = await fetch(`https://frank-body-backend.vercel.app/${id2}`);
+        let res = await fetch(`https://frank-body-backend.vercel.app/products/${id2}`);
         let data = await res.json()
 
         setProd([data]);
