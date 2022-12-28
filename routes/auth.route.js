@@ -3,6 +3,38 @@ var passport = require('passport');
 const FacebookStrategy = require("passport-facebook").Strategy;
 const route = express.Router();
 
+
+
+
+route.post("/login", (req, res)=>{
+    console.log(req.body.email);
+    res.send({message:"got data"});
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // route.get("/facebook/callback",(req, res)=>{
 
 //     res.send("auth facebook route")

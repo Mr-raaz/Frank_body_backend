@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import {toast as tt} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { loginroute } from '../../constant';
 
 
 
@@ -49,53 +50,65 @@ function Login() {
     // function handleLogin(){
         
 
-        const loginsubmitter = (e) => {
+        const loginsubmitter = async(e) => {
 
             let localStoragearr2 = JSON.parse(localStorage.getItem('RegisterItems')) || [];
 
 
             e.preventDefault();
-            if(localStoragearr2.length>0)
-            {
-                localStoragearr2.map((elem)=>{
-                    if(elem.email === logindata.email && elem.password === logindata.password)
-                    {
-                        setloginstatus(true);
-                        // console.log(loginstatus);
-                        localStorage.setItem("Login_Status",true);
-                        SetLogin(dispatch , true);
-                        toast.success('Login Success', {
-                            position: "top-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                            });
-                        setTimeout(()=>{
-                            navigate('/')
-                        },1000)
+            
+            // if(localStoragearr2.length>0)
+            // {
+            //     localStoragearr2.map((elem)=>{
+            //         if(elem.email === logindata.email && elem.password === logindata.password)
+            //         {
+            //             setloginstatus(true);
+            //             // console.log(loginstatus);
+            //             localStorage.setItem("Login_Status",true);
+            //             SetLogin(dispatch , true);
+            //             toast.success('Login Success', {
+            //                 position: "top-center",
+            //                 autoClose: 5000,
+            //                 hideProgressBar: false,
+            //                 closeOnClick: true,
+            //                 pauseOnHover: false,
+            //                 draggable: true,
+            //                 progress: undefined,
+            //                 theme: "light",
+            //                 });
+            //             setTimeout(()=>{
+            //                 navigate('/')
+            //             },1000)
                         
-                        // return <Navigate to="/register" />
-                    }
-                return 1;
-                })
-            }
-            else{
-                toast.error('Register To login', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    });
+            //             // return <Navigate to="/register" />
+            //         }
+            //     return 1;
+            //     })
+            // }
+            // else{
+            //     toast.error('Register To login', {
+            //         position: "top-center",
+            //         autoClose: 5000,
+            //         hideProgressBar: false,
+            //         closeOnClick: true,
+            //         pauseOnHover: false,
+            //         draggable: true,
+            //         progress: undefined,
+            //         theme: "light",
+            //         });
               
-            }
+            // }
+            console.log(logindata);
+           let response = await fetch(loginroute ,{
+                method: "POST",
+                headers :{
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify(logindata)
+            });
+            let result = await response.json();
+            console.log(result);
+
         }
 
         const facebookAuthHandler = async()=>{
