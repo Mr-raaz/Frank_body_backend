@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 function Card({data}) {
 
-    let {url_1 , prod_name , best_price  , id , cartStatus} = data;
+    let {url_1 , prod_name , best_price  , _id , cartStatus} = data;
 
     const cartData = useSelector((cartdata) => cartdata.cart);
 
@@ -23,11 +23,11 @@ function Card({data}) {
 
 
     function handleProductClick(){
-        navigate(`/details/${id}`);
+        navigate(`/details/${_id}`);
     }
 
     function clickcheck(){
-        addToCart(data , dispatc , id);
+        addToCart(data , dispatc , _id);
         navigate('/cart');
     }
 
@@ -35,7 +35,7 @@ function Card({data}) {
 
         currCartState(true);
 
-        addToCart(data , dispatc , id);
+        addToCart(data , dispatc , _id);
 
     }
 
@@ -48,7 +48,7 @@ function Card({data}) {
         if(quant + val == 0){
             currCartState(false);
 
-            quantityZero(cartData , dispatc , id);
+            quantityZero(cartData , dispatc , _id);
         }
         
     }

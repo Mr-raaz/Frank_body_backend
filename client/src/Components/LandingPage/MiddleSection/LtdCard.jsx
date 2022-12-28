@@ -7,7 +7,7 @@ import {faPlus , faMinus} from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 function LtdCard({data}) {
 
-    let {id, url_1 , prod_name , best_price , mrp , cartStatus} = data;
+    let {_id, url_1 , prod_name , best_price , mrp , cartStatus} = data;
 
     const [curr , setCurr] = useState(cartStatus);
     
@@ -20,15 +20,15 @@ function LtdCard({data}) {
     const navigate = useNavigate();
 
     function detailClick(){
-
-        navigate(`/details/${id}`)
+        
+        navigate(`/details/${_id}`)
 
     }
 
     function addToCartbtn(){
         setCurr(true);
 
-        addToCart(data ,dispatch , id);
+        addToCart(data ,dispatch , _id);
 
     }
 
@@ -41,7 +41,7 @@ function LtdCard({data}) {
         if(quant + val == 0){
             setCurr(false);
 
-            quantityZero(cartData , dispatch , id);
+            quantityZero(cartData , dispatch , _id);
         }
         
     }
