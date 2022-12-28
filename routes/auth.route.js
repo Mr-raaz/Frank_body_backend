@@ -2,13 +2,23 @@ const express = require('express');
 var passport = require('passport');
 const FacebookStrategy = require("passport-facebook").Strategy;
 const route = express.Router();
+const userManualLogin = require("../controlers/user.controller")
 
 
 
-
-route.post("/login", (req, res)=>{
+route.post("/login",async (req, res)=>{
     console.log(req.body.email);
-    res.send({message:"got data"});
+    let obj = {
+        email : req.body.email,
+        password : req.body.password
+    }
+    try{
+        let result = await userManualLogin(obj);
+        res.send({message:result});
+    }catch(err){
+        res.send({message:err});
+    }
+    
 })
 
 
