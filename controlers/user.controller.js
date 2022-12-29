@@ -5,15 +5,16 @@ const jwt = require('jsonwebtoken');
 
 
 async function userManualLogin({email, password}){
-    const alldata = await user.find({email,logintype:"email-password"}).select('name email password');
+    const alldata = await user.find({email,logintype:"email-password"}).select('name email password').lean();
 
     console.log( alldata, email, password);
     if(!alldata){
         return "User not found with this email"
     }
-    const samepass = false;
-    console.log(password, alldata.password)
-    if(password == JSON.stringify(alldata.password)){
+    let samepass = false;
+    console.log(typeof password, typeof alldata[0].password)
+    if(password + "" === ""+JSON.parse(JSON.stringify(alldata[0].password))){
+        console.log("condition passed");
         samepass = true;
     }
     // const passwordMatch =  bscrypt.compare(password,alldata.password);
