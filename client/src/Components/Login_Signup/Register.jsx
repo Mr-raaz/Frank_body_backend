@@ -3,7 +3,7 @@ import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
 import { Link  , Navigate} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'
-import {faGoogle , faFacebook} from '@fortawesome/free-brands-svg-icons';
+import {faSquareGooglePlus , faSquareFacebook , faSquareGithub} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ToastContainer, toast } from 'react-toastify';
 import {toast as tt} from 'react-toastify';
@@ -71,7 +71,7 @@ function Register() {
 
                     <div className='formSide'>
 
-                    <div  className='registerconatiner'>
+                    <div  className='registerconatiner register_section'>
 
         <form className='registerform' onSubmit={handleFormSubmit}>
             <h2 className='cana'>Create an account</h2>
@@ -86,6 +86,11 @@ function Register() {
         </form>
         <div className='registerlinks'>
             <Link className='registerlinksdata firstlink' to="/login">Have an account? Login</Link>
+        </div>
+        <div className="social_links_for_signup">
+            <FontAwesomeIcon  icon={faSquareFacebook}  className="social_links_hover social_links_hover1" />
+            <FontAwesomeIcon  icon={faSquareGooglePlus}  className="social_links_hover social_links_hover2" />
+            <FontAwesomeIcon icon={faSquareGithub}  className="social_links_hover social_links_hover3"/>
         </div>
     </div>
                     

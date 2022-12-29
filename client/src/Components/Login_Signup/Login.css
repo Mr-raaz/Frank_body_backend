@@ -6,7 +6,6 @@
 
 .login_div{
     margin-top: 60px;
-    /* border: 1px solid red; */
     height: 90.6vh;
     background-color:rgb(243, 240, 237);
     display: flex;
@@ -44,7 +43,8 @@
 }
 
 .formSide{
-    padding: 10px 0px;    
+    padding: 10px 0px;   
+    /* border: 1px solid red;  */
 }
 
 .formSide h1{
@@ -197,12 +197,13 @@ flex-direction: row;
 }
 .registerform div span{
 margin-top: 5%;
+/* border: 1px solid red; */
 }
 
 .registerlinks{
 display: flex;
 justify-content: space-between;
-margin-top: 6%;
+margin-top: 2%;
 justify-content: center;
 }
 .registerlinksdata{
@@ -241,4 +242,45 @@ margin-top: 20px;
 .maysend{
     font-size: 12px;
     margin-top: 10px;
+}
+
+.register_section{
+    /* border: 1px solid red; */
+}
+.cana{
+    /* border: 1px solid red; */
+    margin-top: 20px;
+}
+
+.social_links_for_signup{
+    width: 50%;
+    /* border: 1px solid red; */
+    padding: 5px; 
+    display: flex;
+    margin: auto;
+    margin-top: 10px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 28px;
+}
+
+.social_links_hover1{
+    color: #3b5998;
+}
+
+.social_links_hover2{
+    color :#db4a39;
+}
+.social_links_hover3{
+    color: #171515;
+}
+
+.social_links_hover{
+cursor: pointer;
+transition: 0.5s;
+}
+
+.social_links_hover:hover{
+    scale: 1.2;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
