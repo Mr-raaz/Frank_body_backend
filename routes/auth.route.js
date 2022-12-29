@@ -14,7 +14,7 @@ route.post("/login",async (req, res)=>{
     }
     try{
         let result = await userManualLogin(obj);
-        res.send({message:result});
+        res.send({token:result});
     }catch(err){
         res.send({message:err});
     }
