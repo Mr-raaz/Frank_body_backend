@@ -1,11 +1,11 @@
 require('dotenv').config()
 const mongoose = require("mongoose");
-const testdb = "mongodb+srv://frankbodytest:frankbodytest@cluster0.xqjwgpw.mongodb.net/?retryWrites=true&w=majority";
 
+// console.log(process.env.DB);
 async function connect(){
 
     return new Promise((resolve , reject) =>{
-        mongoose.connect(testdb , (err)=>{
+        mongoose.connect(process.env.DB , (err)=>{
             if(err){
                 reject(err);
             }
