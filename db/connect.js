@@ -5,7 +5,7 @@ const testdb = "mongodb+srv://frankbodytest:frankbodytest@cluster0.xqjwgpw.mongo
 async function connect(){
 
     return new Promise((resolve , reject) =>{
-        mongoose.connect(process.env.DB , (err)=>{
+        mongoose.connect(testdb , (err)=>{
             if(err){
                 reject(err);
             }
