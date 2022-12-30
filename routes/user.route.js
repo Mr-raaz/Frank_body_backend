@@ -73,11 +73,11 @@ route.post('/googleregister' , async (req,res)=>{
         if(temp){
             const  secret= temp._id + "ayush"
             const token = jwt.sign({userID : temp._id},secret,{
-                expiresIn :'5m'
+                expiresIn :'15m'
             })
             const link =`http://localhost:3000/user/reset/${temp._id}/${token}`
             // console.log(link);
-
+             try {
             let info =await transporter.sendMail({
              from: 'frankbody123@gmail.com',
              to :temp.email,
@@ -85,10 +85,14 @@ route.post('/googleregister' , async (req,res)=>{
              html: `<a href=${link} >Click Here</a> to Reset Your Password`
             })
             res.send({
-                "status":"success",
-                "message":"Password Reset Email sent successfully  Please check your Mail",
-                "info": info,
-            })
+              "status":"success",
+              "message":"Password Reset Email sent successfully  Please check your Mail",
+              "info": info,
+          })
+          }catch(err){
+              res.send(err);
+            }
+           
         }else{
             res.send({
                 "status":"failed",
@@ -112,8 +116,8 @@ route.post('/userResetPassword/:id/:token', async(req, res)=>{
    const {id,token}=req.params;
  
    const temp =await user.findById(id);
- 
-   const new_secret=user._id + "ayush";
+ const secretId= temp._id.toString();
+   const new_secret=secretId + "ayush";
    try{
      jwt.verify(token, new_secret);
       if(password && confirm_password){
@@ -125,7 +129,7 @@ route.post('/userResetPassword/:id/:token', async(req, res)=>{
         }else{
           const salt =await bcrypt.genSalt(10);
           const hashPassword = await bcrypt.hash(password, salt);
-          await user.findByIdAndUpdate(req.user._id,{ $set:{
+          await user.findByIdAndUpdate(req.params._id,{ $set:{
              password : hashPassword
           }})
           res.send({
@@ -141,7 +145,9 @@ route.post('/userResetPassword/:id/:token', async(req, res)=>{
  
       }
    }catch(e){
+    console.log(e);
      res.send({
+      
          "status":"failed",
          "message":"Invalid Token",
      })
