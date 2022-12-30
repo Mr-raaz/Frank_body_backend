@@ -27,14 +27,14 @@ function Search() {
             <input value={value} onChange={searchedValue} placeholder='search product' />
             <div>
                 {data.filter((elem) => {
-                    let title = elem.title.toLowerCase();
+                    let title = elem.prod_name.toLowerCase();
                     let key = value.toLowerCase();
 
                     return key && title.includes(key) && key !== title;
                 })
                     .map((elem) => {
                         return (
-                            <p onClick={() => setValue(elem.title)}>{elem.title}</p>
+                            <p onClick={() => setValue(elem.prod_name)}>{elem.prod_name}</p>
                         )
                     }).splice(0, 6)}
             </div>
