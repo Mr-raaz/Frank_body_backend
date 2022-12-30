@@ -10,6 +10,7 @@ import Cookies from 'universal-cookie';
 import {SetLogin} from '../../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 function Profile() {
 
@@ -19,11 +20,9 @@ function Profile() {
    
   
     function handleLogout(){
-        
-        
         SetLogin(dispatch , false);
+        cookies.remove('jwt')
     }
-    console.log(cookies.remove('jwt'));
     return (
         <>
             <Navbar />
