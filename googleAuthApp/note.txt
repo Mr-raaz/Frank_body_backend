@@ -1,0 +1,49 @@
+in client 
+
+written in useEffect=>{
+    const getUser = () => {
+      fetch("http://localhost:5000/auth/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) return response.json();
+          console.log("authentication has been failed!")
+          throw new Error("authentication has been failed!");
+          
+        })
+        .then((resObject) => {
+          setUser(resObject.user);
+          console.log(resObject)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getUser();
+}
+
+
+FOR LOGIN :- 
+  const google = () => {
+    window.open("http://localhost:5000/auth/google", "_self");
+  };
+
+  const github = () => {
+    window.open("http://localhost:5000/auth/github", "_self");
+  };
+
+  const facebook = () => {
+    window.open("http://localhost:5000/auth/facebook", "_self");
+  };
+
+
+  FOR LOGOUT :-
+
+
+ window.open("http://localhost:5000/auth/logout", "_self");

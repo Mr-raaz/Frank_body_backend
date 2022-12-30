@@ -1,35 +1,28 @@
+const cookieSession = require("cookie-session");
 const express = require("express");
-const session = require("express-session");
+const cors = require("cors");
+const passportSetup = require("./passport");
 const passport = require("passport");
-// require('./passportsetup')
+const authRoute = require("./routes/auth");
 const app = express();
-require('./passportsetup')(passport)
 
-app.use(session(({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-  })));
-  app.use(passport.initialize())
-app.use(passport.session())
+app.use(
+  cookieSession({ name: "session", keys: ["ayush"], maxAge: 24 * 60 * 60 * 100 })
+);
 
-app.get('/',(req,res)=>{
-    res.send('hello app')
-})
-app.get('/google', passport.authenticate('google', { scope: ['profile','email'] }));
-app.get('/googleCallback', passport.authenticate( 'google', {
-    successRedirect: 'http://127.0.0.1:5500/googleAuthApp/sucess.html',
-    failureRedirect: 'http://127.0.0.1:5500/googleAuthApp/google.html'
-}))
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get('/logout', (req, res) => {
-    req.logout(function(err) {
-        if (err) { return next(err); }})
-    res.redirect('http://127.0.0.1:5500/googleAuthApp/google.html')
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
   })
-const port = 8080;
+);
 
-app.listen(port,()=>{
-    console.log(`port is running on http://localhost:${port}`);
-})
+app.use("/auth", authRoute);
+
+app.listen("5000", () => {
+  console.log("Server is running!");
+});
