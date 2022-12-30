@@ -53,7 +53,10 @@ function Register() {
     }
 
 
-
+    const google = () => {
+        window.open("http://localhost:5000/auth/google", "_self");
+      };
+    
 
 
 
@@ -89,7 +92,7 @@ function Register() {
         </div>
         <div className="social_links_for_signup">
             <FontAwesomeIcon  icon={faSquareFacebook}  className="social_links_hover social_links_hover1" />
-            <FontAwesomeIcon  icon={faSquareGooglePlus}  className="social_links_hover social_links_hover2" />
+            <FontAwesomeIcon  icon={faSquareGooglePlus}  className="social_links_hover social_links_hover2" onClick={google} />
             <FontAwesomeIcon icon={faSquareGithub}  className="social_links_hover social_links_hover3"/>
         </div>
     </div>
