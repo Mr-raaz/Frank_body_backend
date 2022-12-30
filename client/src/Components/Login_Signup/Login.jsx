@@ -11,22 +11,20 @@ import {SetLogin} from '../../ReduxStore/Actions/mainAction';
 import { ToastContainer, toast } from 'react-toastify';
 import {toast as tt} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import axios from 'axios';
 import { loginroute } from '../../constant';
-
-
+// import {SetLogin} from '../../ReduxStore/Actions/mainAction';
+import Cookies from 'universal-cookie';
 
 const logindatainital  = {
     email:"",
     password:"",
 }
-let localStoragearr = JSON.parse(localStorage.getItem('RegisterItems')) || [];
-
-
-
 
 
 function Login() {
+
+    const cookies = new Cookies();
 
     const dispatch = useDispatch();
 
@@ -48,66 +46,67 @@ function Login() {
     const {email,password} = logindata;
 
     // function handleLogin(){
-        
+        function  handlepopup(val){
+            toast.error(val, {
+                position: "top-center",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+        }
 
-        const loginsubmitter = async(e) => {
-
-            let localStoragearr2 = JSON.parse(localStorage.getItem('RegisterItems')) || [];
+        const loginsubmitter = (e) => {
 
 
             e.preventDefault();
             
-            // if(localStoragearr2.length>0)
-            // {
-            //     localStoragearr2.map((elem)=>{
-            //         if(elem.email === logindata.email && elem.password === logindata.password)
-            //         {
-            //             setloginstatus(true);
-            //             // console.log(loginstatus);
-            //             localStorage.setItem("Login_Status",true);
-            //             SetLogin(dispatch , true);
-            //             toast.success('Login Success', {
-            //                 position: "top-center",
-            //                 autoClose: 5000,
-            //                 hideProgressBar: false,
-            //                 closeOnClick: true,
-            //                 pauseOnHover: false,
-            //                 draggable: true,
-            //                 progress: undefined,
-            //                 theme: "light",
-            //                 });
-            //             setTimeout(()=>{
-            //                 navigate('/')
-            //             },1000)
-                        
-            //             // return <Navigate to="/register" />
-            //         }
-            //     return 1;
-            //     })
-            // }
-            // else{
-            //     toast.error('Register To login', {
-            //         position: "top-center",
-            //         autoClose: 5000,
-            //         hideProgressBar: false,
-            //         closeOnClick: true,
-            //         pauseOnHover: false,
-            //         draggable: true,
-            //         progress: undefined,
-            //         theme: "light",
-            //         });
-              
-            // }
-            console.log(logindata);
-           let response = await fetch(loginroute ,{
+           
+
+           fetch('https://frank-body-backend.vercel.app/auth/login' ,{
+
                 method: "POST",
                 headers :{
                     "Content-Type" : "application/json"
                 },
                 body : JSON.stringify(logindata)
+            }).then((response)=>{
+                 return response.json();
+                
+                
+
+            }).then((data)=> {
+                   if(data.token){
+                    toast.success("Login Successful", {
+                        position: "top-center",
+                        autoClose: 1200,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
+
+                        cookies.set('jwt' , data.token , {
+                            maxAge:24 * 60 * 60 * 100
+                          });
+
+                          SetLogin(dispatch , true);
+
+                          setTimeout(()=>{
+                            navigate('/');
+                          },1500)
+
+                   } else {
+                    handlepopup(data.message);
+                   }
+            })
+            .catch((error)=>{
             });
-            let result = await response.json();
-            console.log(result);
 
         }
 
