@@ -19,7 +19,10 @@ router.post("/login",async (req, res)=>{
     try{
         let result = await userManualLogin(obj);
         if(result !== "password is incorrent"){
-          res.cookie("token",result);
+          // set cookie with key token to value of jwt token(result)
+          req.session.token = result;
+
+          // cookieval:req.session.token works
           res.send({token:result});
         }else{
           res.send({result:"password is incorrent"})
