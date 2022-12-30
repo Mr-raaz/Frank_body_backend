@@ -47,3 +47,7 @@ FOR LOGIN :-
 
 
  window.open("http://localhost:5000/auth/logout", "_self");
+
+
+
+http://localhost:3000/user/reset/63ab25014bd1f0d62795d838/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2M2FiMjUwMTRiZDFmMGQ2Mjc5NWQ4MzgiLCJpYXQiOjE2NzI0MTI1NjcsImV4cCI6MTY3MjQxMjg2N30.6zoNLJwgfNYhSnLDTwE-yL355PbE0qDYlnfOc67eHCI
