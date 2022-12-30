@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const userManualLogin = require("../controlers/user.controller")
-
+// const userManualLogin = require("../controlers/user.controller")
+const bscrypt = require('bcrypt');
+// const generateToken = require('../controlers/user.controller');
 const passport = require("passport");
+const user = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 const CLIENT_URL = "http://localhost:3000/";
 
@@ -10,33 +13,54 @@ const CLIENT_URL = "http://localhost:3000/";
 
   
 
-router.post("/login",async (req, res)=>{
-    console.log(req.body.email);
-    let obj = {
-        email : req.body.email,
-        password : req.body.password
-    }
-    try{
-        let result = await userManualLogin(obj);
-        if(result !== "password is incorrent"){
-          // set cookie with key token to value of jwt token(result)
-          req.session.token = result;
-
-          // cookieval:req.session.token works
-          res.send({token:result});
-        }else{
-          res.send({result:"password is incorrent"})
-        }
+router.post("/login", async (req, res)=>{
+   
+    try {
+        let reqData = req.body;
         
-    }catch(err){
-        res.send({message:err});
+        let db = await user.find({email:{$eq:reqData.email}});
+        let db2 = await user.find({email:{$eq:reqData.email}}).count();
+        if(db2 == 0){
+          res.status(500).send({
+            message:"user does not exist"
+          })
+        } else {
+
+        
+
+        if(db[0].logintype != "email-password"){
+          res.status(500).send({
+            message:"user does not exist"
+          })
+        }
+
+
+        let passwordMatch = await  bscrypt.compare(reqData.password,db[0].password);
+
+        if(passwordMatch){
+          const token = await jwt.sign({email:reqData.email} , "secretkey");
+
+          res.send({
+              token:token
+          })
+        } else {
+          res.status(500).send({
+            message:"wrong password"
+          })
+        }
+
+      }
+
+
+    } catch (error) {
+      res.status(500).send({
+        message:"not working"
+      })
     }
-    
 })
   
    
 router.get("/login/success", (req, res) => {
-        // console.log(req);
     res.status(200).json({
       success: true,
       message: "successfull",

@@ -16,6 +16,7 @@ function Register() {
     const pass = useRef();
     const fname = useRef();
     const lname = useRef();
+    const navigate = useNavigate();
 
 
     function handleFormSubmit(e){
@@ -37,6 +38,11 @@ function Register() {
             progress: undefined,
             theme: "light",
             });
+
+            setTimeout(()=>{
+                navigate('/login');
+            },1500)
+
         }).catch((err)=>{
           toast.error(`${err.response.data}`, {
             position: "top-center",
