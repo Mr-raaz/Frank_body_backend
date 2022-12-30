@@ -19,10 +19,10 @@ async function userManualLogin({email, password}){
     //     console.log("condition passed");
     //     samepass = true;
     // }
-      let passwordMatch =  bscrypt.compare(password,""+JSON.parse(JSON.stringify(alldata[0].password)));
-    //  console.log(passwordMatch, "hello");
+      let passwordMatch = await  bscrypt.compare(password,alldata[0].password);
+      console.log(passwordMatch, "hello");
      if(passwordMatch){
-        console.log("same pass is "+ samepass);
+        console.log("same pass is "+ password, alldata[0].password);
         const token = generateToken(alldata);
         return token;
      }else {
