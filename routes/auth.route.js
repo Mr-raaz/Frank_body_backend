@@ -27,7 +27,7 @@ router.post("/login",async (req, res)=>{
   
    
 router.get("/login/success", (req, res) => {
-        console.log(req);
+        // console.log(req);
     res.status(200).json({
       success: true,
       message: "successfull",
@@ -49,7 +49,7 @@ router.get("/logout", (req, res) => {
   res.redirect(CLIENT_URL);
 });
 
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get("/google", passport.authenticate("google", { scope: ['openid', 'email', 'profile'] }));
 
 router.get(
   "/google/callback",

@@ -14,7 +14,7 @@ const userModel = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        // required:true
     },
     address:{
         type:Array
@@ -28,6 +28,9 @@ const userModel = new mongoose.Schema({
     },
     cart:{
         type:Array
+    },
+    avtar:{
+        type:String
     }
 
 })

@@ -50,7 +50,8 @@ passport.use(
       callbackURL: "/auth/facebook/callback",
     },
     function (accessToken, refreshToken, profile, done) {
-  
+
+      // console.log(profile);
       done(null, profile);
     }
   )

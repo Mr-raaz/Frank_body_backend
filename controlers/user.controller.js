@@ -46,4 +46,7 @@ const generateToken = (value)=>{
     
 }
 
-module.exports = userManualLogin
+module.exports = {
+    userManualLogin,
+    generateToken
+}

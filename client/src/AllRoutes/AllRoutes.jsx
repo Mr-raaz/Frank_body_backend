@@ -16,13 +16,25 @@ import Payment2 from '../Components/PaymentPage/Payment2';
 import PaymentDialouge from '../Components/PaymentPage/PaymentDialouge';
 import EmptyCart from '../Components/CartPage/EmptyCart/EmptyCart';
 import Cart from '../Components/CartPage/Cart/Cart';
-
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+import {SetLogin} from '../ReduxStore/Actions/mainAction';
+import { useDispatch } from 'react-redux';
 function AllRoutes() {
 
     const isLogin = useSelector((store) => store.loginStatus);
     const cartLen = useSelector((store) => store.cart.length);
+    const cookies = new Cookies();
+    const dispatch = useDispatch();
+
     const [user, setUser] = useState(null);
-    console.log(cartLen);
+
+
+    // console.log(cartLen);
+
+    // console.log(user);
+
+
     useEffect(() => {
         const getUser = () => {
           fetch("http://localhost:5000/auth/login/success", {
@@ -42,7 +54,10 @@ function AllRoutes() {
             })
             .then((resObject) => {
               setUser(resObject.user);
-              console.log(resObject)
+
+              addTobackend(resObject.user);
+              
+
             })
             .catch((err) => {
               console.log(err);
@@ -51,6 +66,22 @@ function AllRoutes() {
         getUser();
       }, []);
 
+
+      async function addTobackend(data){
+
+        axios.post('http://localhost:5000/user/googleregister' , {
+          name:data.displayName,
+          email:data.emails[0].value,
+          avtar:data.photos[0].value
+        }).then((res)=>{
+          cookies.set('jwt' , res.data.token , {
+            maxAge:24 * 60 * 60 * 100
+          });
+          SetLogin(dispatch , true);
+        }).catch((err)=>{
+              console.log(err);
+        })
+      } 
 
     return (
         <>
@@ -63,7 +94,7 @@ function AllRoutes() {
                         <Route path='/contact' element={<Contact />} />
                         <Route path ='/Login' element={<Login />} />
                         <Route path='/details/:id' element={<ProductDescription />} />
-                        <Route path='/profile' element={isLogin ? <Profile user={user} /> : <Navigate to='/Login' />} />
+                        <Route path='/profile' element={isLogin ? <Profile  /> : <Navigate to='/Login' />} />
                         <Route path = '/register' element={<Register />} />
                         <Route path='/category/:type' element={<ProductCategory />} />
                         <Route path='/checkout' element={<Payment />} />
