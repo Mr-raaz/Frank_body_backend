@@ -1,5 +1,5 @@
 const user = require("../models/user.model")
-// const bscrypt = require('bcrypt');
+ const bscrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
@@ -13,14 +13,16 @@ async function userManualLogin({email, password}){
     }
     let samepass = false;
     console.log(typeof password, typeof alldata[0].password)
-    if(password + "" === ""+JSON.parse(JSON.stringify(alldata[0].password))){
-        console.log("condition passed");
-        samepass = true;
-    }
-    // const passwordMatch =  bscrypt.compare(password,alldata.password);
-    // console.log(passwordMatch, "hello");
-     if(samepass){
-        console.log("same pass is "+ samepass);
+    // let hashpass = bscrypt.hash(password);
+    // console.log(hashpass, "hashpassval");
+    // if(hashpass + "" === ""+JSON.parse(JSON.stringify(alldata[0].password))){
+    //     console.log("condition passed");
+    //     samepass = true;
+    // }
+      let passwordMatch = await  bscrypt.compare(password,alldata[0].password);
+      console.log(passwordMatch, "hello");
+     if(passwordMatch){
+        console.log("same pass is "+ password, alldata[0].password);
         const token = generateToken(alldata);
         return token;
      }else {
