@@ -10,7 +10,7 @@ function Search() {
     let [data, setdata] = useState([]);
 
     const getData = async () => {
-        let res = await fetch(`https://fakestoreapi.com/products`)
+        let res = await fetch(`https://frank-body-backend.vercel.app/products`)
         let arr = await res.json();
         setdata(arr);
     }
