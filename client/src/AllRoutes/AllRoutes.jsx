@@ -20,6 +20,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {SetLogin} from '../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
+import { addToCart } from '../ReduxStore/Actions/mainAction';
 function AllRoutes() {
 
     const isLogin = useSelector((store) => store.loginStatus);
@@ -55,6 +56,8 @@ function AllRoutes() {
             .then((resObject) => {
               setUser(resObject.user);
 
+              // console.log(resObject.user);
+
               addTobackend(resObject.user);
               
 
@@ -65,6 +68,28 @@ function AllRoutes() {
         };
         getUser();
       }, []);
+
+
+
+      useEffect(()=>{
+        let token = cookies.get('jwt');
+        if(token){
+
+          axios.post('http://localhost:5000/products/getcart' , {
+                headers: {
+                    Authentication:token
+                }
+            }).then((res)=>{
+                addToCart(res.data , dispatch);
+                
+            }).catch((err)=>{
+                console.log(err , "from ltd card");
+            })
+        }
+
+        // console.log(token);
+        
+      },[])
 
 
       async function addTobackend(data){

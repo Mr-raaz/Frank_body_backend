@@ -3,6 +3,7 @@ const user = require('../models/user.model');
 const {userExist} = require('../middlewares/user.middlewars');
 const bcrypt = require('bcrypt');
 const {generateToken} = require('../controlers/user.controller');
+const jwt = require('jsonwebtoken');
 const route = Router();
 
 
@@ -42,7 +43,7 @@ route.post('/googleregister' , async (req,res)=>{
         })
       }
 
-      let token = await generateToken({email:email} , "secretkey");
+      let token = await jwt.sign({email:email} , "secretkey");
       
       res.send({
         token:token

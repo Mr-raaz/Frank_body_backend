@@ -32,7 +32,7 @@ export default function ProductReducer(data = initialData , action){
         case "ADD":
             return {
                 ...data,
-                cart:[...data.cart , action.payload]
+                cart:[...action.payload]
             }
 
         case "DELETE":

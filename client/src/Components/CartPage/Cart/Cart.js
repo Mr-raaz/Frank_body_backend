@@ -9,6 +9,9 @@ import Navbar from "../../LandingPage/TopSection/Navbar/Navbar";
 import { ToastContainer, toast } from 'react-toastify';
 import {toast as tt} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'universal-cookie';
+import axios from 'axios';
+import { addToCart } from "../../../ReduxStore/Actions/mainAction";
 
 export const Cart = ()=>{
     
@@ -18,6 +21,7 @@ export const Cart = ()=>{
     const discountRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const cookies = new Cookies();
 
     useEffect(()=>{
         AddQuantityKey(cartData,dispatch)
@@ -44,8 +48,25 @@ export const Cart = ()=>{
         DecreaseQuantity(cartData,index,dispatch)
     }
 
-    const handleCart = (index)=>{
+    const handleCart = (index , id)=>{
        DeleteFromCart(cartData,index,dispatch)
+
+       let token = cookies.get('jwt');
+
+       axios.post('http://localhost:5000/products/deletefromcart' , {
+                headers: {
+                    Authentication:token
+                },
+                data:{
+                   id:id 
+                }
+            }).then((res)=>{
+                addToCart(res.data , dispatch);
+                
+            }).catch((err)=>{
+                console.log(err , "from ltd card");
+            })
+
     }
 
     const discount = ()=>{
@@ -116,7 +137,7 @@ export const Cart = ()=>{
                                 <button className="inc" disabled = {el.quantity === 10 ? true : false} onClick={()=>increaseCount(index)}>+</button>
                             </div>
                             <p>₹{Math.round(el.best_price*el.quantity * 100) / 100}</p>
-                            <img src="https://th.bing.com/th/id/R.f6883ee1ce2e0e3755a1892da2fe7e3c?rik=ozgkFfeviLMaDg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_265949.png&ehk=gPghjaahwRbD4GGEcjuhCM8HJhQYy%2b2YzE5lGs5PvMo%3d&risl=&pid=ImgRaw&r=0" width="20px" height="20px" style={{marginTop:"15px"}} alt="" onClick={()=>handleCart(index)}/>
+                            <img src="https://th.bing.com/th/id/R.f6883ee1ce2e0e3755a1892da2fe7e3c?rik=ozgkFfeviLMaDg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_265949.png&ehk=gPghjaahwRbD4GGEcjuhCM8HJhQYy%2b2YzE5lGs5PvMo%3d&risl=&pid=ImgRaw&r=0" width="20px" height="20px" style={{marginTop:"15px"}} alt="" onClick={()=>handleCart(index , el._id)}/>
                         </div>
                     })
                 }
