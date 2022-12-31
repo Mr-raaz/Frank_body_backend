@@ -6,7 +6,7 @@ import './Login.css'
 import {faSquareGooglePlus , faSquareFacebook , faSquareGithub} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ToastContainer, toast } from 'react-toastify';
-import {toast as tt} from 'react-toastify';
+// import {toast as tt} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useRef } from 'react';

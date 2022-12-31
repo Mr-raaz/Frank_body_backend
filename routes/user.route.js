@@ -51,7 +51,7 @@ route.post('/googleregister' , async (req,res)=>{
         })
       }
 
-      let token = await generateToken({email:email} , "secretkey");
+      let token = await jwt.sign({email:email} , "secretkey");
       
       res.send({
         token:token

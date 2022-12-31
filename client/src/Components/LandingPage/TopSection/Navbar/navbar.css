@@ -61,6 +61,8 @@ height: 100%;
     justify-content: space-between;
     position: relative;
     margin-top: 60px;
+    /* z-index: -5; */
+    /* z-index: 99999999999999; */
 }
 
 .top_banner > div:first-of-type{
@@ -89,6 +91,8 @@ height: 100%;
     border-radius: 10px;
     font-weight: bold;
     color: #e76364;
+    z-index: 192834982348239 !important;
+    cursor: pointer;
 }
 
 .heading_bottom_div{
@@ -103,6 +107,8 @@ height: 100%;
     height: 100%;
     background: url('../img//testingeffect.png');
     opacity: 0.08;
+    /* opacity: 1; */
+    /* z-index: -1; */
 }
 
 .heading_bottom_div{
@@ -141,6 +147,7 @@ height: 100%;
 
 .ShowNow_btn:hover{
     cursor: pointer;
+    background-color: red;
 }
 .cart_logo{
     color: white;

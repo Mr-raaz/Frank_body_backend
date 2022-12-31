@@ -2,13 +2,6 @@ import React from 'react';
 import rightlogo from '../img/rightlogo.png';
 import {motion as m } from 'framer-motion';
 
-
-
-
-
-
-
-
 function TopBanner() {
 
        function handleClick(){
