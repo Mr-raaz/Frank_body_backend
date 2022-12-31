@@ -20,8 +20,8 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {SetLogin} from '../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
-
-
+import { ChakraProvider } from '@chakra-ui/react'
+import { EmailVerification } from '../Components/Verification/EmailVerification';
 
 import { addToCart } from '../ReduxStore/Actions/mainAction';
 
