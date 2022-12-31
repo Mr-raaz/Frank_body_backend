@@ -1,0 +1,40 @@
+#products_parent_div {
+    width: 70%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    padding: 20px;
+}
+
+#products_parent_div img {
+    width: 100%;
+}
+
+#products_parent_div h3,
+#products_parent_div h4,
+#products_parent_div h5 {
+    margin-top: 10px
+}
+
+#products_parent_div .details_div {
+    margin-left: 20%;
+}
+
+#products_parent_div h3 {
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+#products_parent_div h4 {
+    font-size: 22px;
+}
+
+#products_parent_div h5 {
+    font-size: 19px;
+    text-decoration: line-through;
+    display: inline;
+}
+
+#products_parent_div .percent_span {
+    display: inline;
+}
