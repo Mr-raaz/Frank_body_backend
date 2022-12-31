@@ -280,3 +280,30 @@
 .first_section{
   border-bottom: 1px solid black;
 }
+
+.coupon_box{
+  /* border: 1px solid red; */
+  padding: 10px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+.coupon_box > div:first-of-type{
+  /* background-color: #bff3c3; */
+  padding: 2px 2px 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.remove{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.remove:hover{
+  color: #e76364;
+}
+.invalid_coupon{
+  color: red;
+  font-size: 12px;
+  margin-left: 5%;
+}
+
