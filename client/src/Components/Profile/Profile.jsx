@@ -11,6 +11,7 @@ import {SetLogin} from '../../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+// import { Text, Button } from '@chakra-ui/react'
 
 function Profile() {
 
@@ -26,10 +27,11 @@ function Profile() {
     return (
         <>
             <Navbar />
+             <div>hello</div>
+         
 
-            <h3>New profile page here.....</h3>
-
-            <button style={{marginTop:'100px'}} onClick={handleLogout}>logout</button>
+            {/* <button style={{marginTop:'100px'}} onClick={handleLogout}>logout button</button> */}
+            {/* <h3>New profile page here</h3> */}
         </>
     );
 }

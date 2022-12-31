@@ -20,6 +20,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {SetLogin} from '../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
+import Profileops from '../Components/Profile/Profileops';
 function AllRoutes() {
 
     const isLogin = useSelector((store) => store.loginStatus);
@@ -94,10 +95,11 @@ function AllRoutes() {
                         <Route path='/contact' element={<Contact />} />
                         <Route path ='/Login' element={<Login />} />
                         <Route path='/details/:id' element={<ProductDescription />} />
-                        <Route path='/profile' element={isLogin ? <Profile  /> : <Navigate to='/Login' />} />
+                         <Route path='/profile' element={isLogin ? <Profileops  /> : <Navigate to='/Login' />} />
                         <Route path = '/register' element={<Register />} />
                         <Route path='/category/:type' element={<ProductCategory />} />
                         <Route path='/checkout' element={<Payment />} />
+                        
                         <Route path='/payment' element={<Payment2 />} />
                         <Route path = '/paymentDone' element={<PaymentDialouge />} />
                         <Route path='/cart' element={isLogin ? (cartLen==0 ? <EmptyCart /> : <Cart />) : <Navigate to='/Login' />} />
