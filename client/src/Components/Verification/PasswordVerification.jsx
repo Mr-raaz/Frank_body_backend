@@ -21,7 +21,7 @@ export const  PasswordVerification=()=> {
     const handleClick=async(e)=>{
       e.preventDefault();
       console.log(obj);
-     await fetch(`http://localhost:5000/user/userResetPassword/${id}/${token}` ,{
+     await fetch(`https://frank-body-backend.vercel.app/user/userResetPassword/${id}/${token}` ,{
 
                method: "POST",
                headers :{

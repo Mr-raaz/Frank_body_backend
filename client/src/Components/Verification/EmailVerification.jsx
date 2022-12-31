@@ -28,7 +28,7 @@ import { useState } from 'react';
     const handleClick= async(e)=>{
         e.preventDefault();
        console.log(obj);
-      await fetch('http://localhost:5000/user/sendResetPassword' ,{
+      await fetch('https://frank-body-backend.vercel.app/user/sendResetPassword' ,{
 
                 method: "POST",
                 headers :{
