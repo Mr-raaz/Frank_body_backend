@@ -20,6 +20,8 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {SetLogin} from '../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
+import { EmailVerification } from '../Components/Verification/EmailVerification';
+import { ChakraProvider } from '@chakra-ui/react'
 function AllRoutes() {
 
     const isLogin = useSelector((store) => store.loginStatus);
@@ -101,6 +103,7 @@ function AllRoutes() {
                         <Route path='/payment' element={<Payment2 />} />
                         <Route path = '/paymentDone' element={<PaymentDialouge />} />
                         <Route path='/cart' element={isLogin ? (cartLen==0 ? <EmptyCart /> : <Cart />) : <Navigate to='/Login' />} />
+                       <Route  path='/email-verification' element={<ChakraProvider> <EmailVerification/> </ChakraProvider>}/>
                     </Routes>  
         </>
     );
