@@ -20,9 +20,13 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {SetLogin} from '../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
+
 import { ChakraProvider } from '@chakra-ui/react'
 import { EmailVerification } from '../Components/Verification/EmailVerification';
 import {PasswordVerification } from '../Components/Verification/PasswordVerification';
+
+
+
 import { addToCart } from '../ReduxStore/Actions/mainAction';
 
 function AllRoutes() {
@@ -52,6 +56,7 @@ function AllRoutes() {
             },
           })
             .then((response) => {
+              // fetchCart();
               if (response.status === 200) return response.json();
               console.log("authentication has been failed!")
               throw new Error("authentication has been failed!");
@@ -59,12 +64,8 @@ function AllRoutes() {
             })
             .then((resObject) => {
               setUser(resObject.user);
-
-              // console.log(resObject.user);
-
               addTobackend(resObject.user);
-              
-
+              fetchCart();
             })
             .catch((err) => {
               console.log(err);
@@ -75,7 +76,7 @@ function AllRoutes() {
 
 
 
-      useEffect(()=>{
+      function fetchCart(){
         let token = cookies.get('jwt');
         if(token){
 
@@ -90,9 +91,9 @@ function AllRoutes() {
                 console.log(err , "from ltd card");
             })
         }
-
-        // console.log(token);
-        
+      }
+      useEffect(()=>{
+        fetchCart();
       },[])
 
 

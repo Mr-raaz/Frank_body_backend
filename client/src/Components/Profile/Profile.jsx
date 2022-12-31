@@ -11,7 +11,7 @@ import {SetLogin} from '../../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-
+import { addToCart } from '../../ReduxStore/Actions/mainAction';
 function Profile() {
 
     const cookies = new Cookies();
@@ -20,8 +20,11 @@ function Profile() {
    
   
     function handleLogout(){
+
         SetLogin(dispatch , false);
         cookies.remove('jwt')
+        addToCart([] , dispatch);
+        
     }
     return (
         <>

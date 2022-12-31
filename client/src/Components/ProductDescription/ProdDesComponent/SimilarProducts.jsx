@@ -55,7 +55,7 @@ function SimilarProducts({func}) {
 
 
 {
-  recommendaded.length > 0 &&  recommendaded.map((elem)=>{
+  recommendaded.length > 0 &&  recommendaded.splice(10,40).map((elem)=>{
         return <SwiperSlide onClick={()=>checking(elem._id)}> <LtdCard data={elem}/></SwiperSlide>
     })
 }
