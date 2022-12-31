@@ -87,7 +87,7 @@ function App() {
 
                 />
             </ThemeProvider>
-            {/* <Search /> */}
+            <Search />
         </>
     );
 }

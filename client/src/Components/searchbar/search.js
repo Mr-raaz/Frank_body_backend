@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import style from './search.css'
 
-var data = [{
 
-}]
+
 
 function Search() {
     let [value, setValue] = useState("");
     let [data, setdata] = useState([]);
+    let navigate = useNavigate()
 
     const getData = async () => {
         let res = await fetch(`https://frank-body-backend.vercel.app/products`)
         let arr = await res.json();
-        setdata(arr);
+        setdata(arr.data);
     }
 
     useEffect(() => {
@@ -24,7 +25,11 @@ function Search() {
     }
     return (
         <div>
-            <input value={value} onChange={searchedValue} placeholder='search product' />
+            <input onKeyPress={(e) => {
+                if (e.charCode == 13 && value != "") {
+                    navigate(`/products?search_query=${value}`)
+                }
+            }} value={value} onChange={(e) => searchedValue(e)} placeholder='search product' />
             <div>
                 {data.filter((elem) => {
                     let title = elem.prod_name.toLowerCase();
@@ -32,11 +37,11 @@ function Search() {
 
                     return key && title.includes(key) && key !== title;
                 })
-                    .map((elem) => {
+                    .map((elem, ind) => {
                         return (
-                            <p onClick={() => setValue(elem.prod_name)}>{elem.prod_name}</p>
+                            <p key={ind + 1} onClick={() => setValue(elem.prod_name)}>{elem.prod_name}</p>
                         )
-                    }).splice(0, 6)}
+                    }).splice(0, 10)}
             </div>
         </div>
 

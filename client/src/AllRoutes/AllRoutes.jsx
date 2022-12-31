@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes , Route , Navigate} from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from '../Components/LandingPage/LandingPage';
 import ProductPage from '../Components/ProductPage/ProductPage';
 import About from '../Components/About/About';
@@ -15,6 +15,7 @@ import Payment2 from '../Components/PaymentPage/Payment2';
 import PaymentDialouge from '../Components/PaymentPage/PaymentDialouge';
 import EmptyCart from '../Components/CartPage/EmptyCart/EmptyCart';
 import Cart from '../Components/CartPage/Cart/Cart';
+import SearchedProducts from '../Components/Searched-Products/Searched-products';
 
 function AllRoutes() {
 
@@ -29,21 +30,22 @@ function AllRoutes() {
         <>
 
 
-                    <Routes>
-                        <Route path='/' element={<LandingPage />} />
-                        <Route path='/shop' element={<ProductPage />} />
-                        <Route path='/about' element={<About />} />
-                        <Route path='/contact' element={<Contact />} />
-                        <Route path ='/Login' element={<Login />} />
-                        <Route path='/details/:id' element={<ProductDescription />} />
-                        <Route path='/profile' element={isLogin ? <Profile /> : <Navigate to='/Login' />} />
-                        <Route path = '/register' element={<Register />} />
-                        <Route path='/category/:type' element={<ProductCategory />} />
-                        <Route path='/checkout' element={<Payment />} />
-                        <Route path='/payment' element={<Payment2 />} />
-                        <Route path = '/paymentDone' element={<PaymentDialouge />} />
-                        <Route path='/cart' element={isLogin ? (cartLen==0 ? <EmptyCart /> : <Cart />) : <Navigate to='/Login' />} />
-                    </Routes>  
+            <Routes>
+                <Route path='/' element={<LandingPage />} />
+                <Route path='/shop' element={<ProductPage />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/contact' element={<Contact />} />
+                <Route path='/Login' element={<Login />} />
+                <Route path='/details/:id' element={<ProductDescription />} />
+                <Route path='/profile' element={isLogin ? <Profile /> : <Navigate to='/Login' />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/category/:type' element={<ProductCategory />} />
+                <Route path='/checkout' element={<Payment />} />
+                <Route path='/payment' element={<Payment2 />} />
+                <Route path='/paymentDone' element={<PaymentDialouge />} />
+                <Route path='/cart' element={isLogin ? (cartLen == 0 ? <EmptyCart /> : <Cart />) : <Navigate to='/Login' />} />
+                <Route path='/products' element={<SearchedProducts />} />
+            </Routes>
         </>
     );
 }
