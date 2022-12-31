@@ -86,7 +86,7 @@ route.post('/deletefromcart' , async(req,res)=>{
 
 
         let temp = cartData.filter((elem)=>{
-            return String(elem._id) !== String(prod._id);
+            return elem != null && String(elem._id) !== String(prod._id);
         })
 
         let check = await user.updateOne({email:{$eq:email}} , {

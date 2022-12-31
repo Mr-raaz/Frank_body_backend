@@ -53,10 +53,6 @@ function LtdCard({data}) {
                 console.log(err , "from ltd card");
             })
 
-
-
-
-
         } else {
             toast.warn('Please Login First', {
                 position: "top-center",

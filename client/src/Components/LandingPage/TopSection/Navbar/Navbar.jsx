@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './navbar.css'
 import logo from '../img/log.png'
 import { NavLink } from 'react-router-dom';
@@ -10,7 +10,11 @@ function Navbar() {
 
     const cartitem = useSelector((store) => store.cart);
 
+    const [count , setCount] = useState(cartitem.length);
 
+    useEffect(()=>{
+        setCount(cartitem.length);
+    },[cartitem])
 
     const navigate = useNavigate();
 
@@ -38,7 +42,7 @@ function Navbar() {
                     <NavLink to='/cart' className="res_m"><div className='cartLogo_div'>
                     <FontAwesomeIcon icon={faCartShopping} className="cart_logo"/>
                     {
-                        cartitem.length == 0 ? null :<p className='cartQuant'>{cartitem.length}</p>
+                        count == 0 ? null :<p className='cartQuant'>{count}</p>
                     }
                     </div></NavLink>
 
