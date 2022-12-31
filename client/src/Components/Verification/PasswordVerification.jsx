@@ -7,12 +7,17 @@ import {
   Input,
   Stack,
   useColorModeValue,
+  Spinner,
+  useToast
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import {useParams } from 'react-router-dom'
-export const  PasswordVerification=()=> {
+import {useNavigate, useParams } from 'react-router-dom'
 
-  // password, confirm_password
+
+export const  PasswordVerification=()=> {
+  const navigate =useNavigate();
+  const toast =useToast()
+  const [loading, setLoading] = useState(false);
   const [obj,setObj]=useState({password:"",confirm_password:""});
    const{id,token}=useParams();
     const handleChange = (e)=>{
@@ -20,7 +25,7 @@ export const  PasswordVerification=()=> {
     }
     const handleClick=async(e)=>{
       e.preventDefault();
-      console.log(obj);
+      setLoading(true);
      await fetch(`https://frank-body-backend.vercel.app/user/userResetPassword/${id}/${token}` ,{
 
                method: "POST",
@@ -32,7 +37,18 @@ export const  PasswordVerification=()=> {
                return response.json();        
 
           }).then((data)=> {
-                 console.log(data);
+                 setLoading(false);
+                 if(data.status=="success"){
+                  navigate('/Login')
+                 }else{
+                  toast({
+                    title: data.message,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                    position:'top'
+                  })
+                 }
    })
     }
   return (
@@ -66,15 +82,26 @@ export const  PasswordVerification=()=> {
           <Input type="password" name='confirm_password' onChange={handleChange} />
         </FormControl>
         <Stack spacing={6}>
-          <Button
-          onClick={handleClick}
-            bg={'blue.400'}
+       <Button
+           disabled={loading ? true : false}
+           onClick={handleClick}
+            bg={'rgb(242,141,141)'}
             color={'white'}
             _hover={{
-              bg: 'blue.500',
-              
-            }}>
-            Submit
+              bg: 'rgb(250,193,186)',
+              color:'rgb(63,42,45)'
+            }}
+            
+          >
+            {loading ?  <Spinner
+        
+        thickness='4px'
+        speed='0.65s'
+        emptyColor='gray.200'
+        color='rgb(231 99 100)'
+        
+        size='md'
+      />:"Submit"}
           </Button>
         </Stack>
       </Stack>
