@@ -166,7 +166,7 @@ function Login() {
             <input type="submit" value="SIGN IN" />
         </form>
         <div className='loginlinks'>
-            <Link  className='loginlinksdata firstlink'>Forgot your password? </Link>
+            <Link  className='loginlinksdata firstlink' to="/email-verification">Forgot your password? </Link>
             <Link className='loginlinksdata firstlink' to="/register">Register an account</Link>
         </div>
 

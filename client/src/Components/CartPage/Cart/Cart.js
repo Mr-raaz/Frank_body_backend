@@ -4,7 +4,7 @@ import './Cart.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faAngleRight , faTrash} from '@fortawesome/free-solid-svg-icons';
 import offerPng from './offer.png';
-import party from "party-js";
+// import party from "party-js";
 import { useSelector } from 'react-redux';
 import Product from './Product';
 import { useState } from 'react';
