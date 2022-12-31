@@ -9,12 +9,40 @@ import {
     Text,
     useColorModeValue,
   } from '@chakra-ui/react';
+import { useState } from 'react';
+
   
 //   type ForgotPasswordFormInputs = {
 //     email: string;
 //   };
   
   export const EmailVerification=()=>{
+ 
+    
+    const [obj,setObj]=useState({email:""});
+
+    const handleChange = (e)=>{
+        setObj({...obj, [e.target.name]: e.target.value });
+    }
+
+    const handleClick= async(e)=>{
+        e.preventDefault();
+       console.log(obj);
+      await fetch('http://localhost:5000/user/sendResetPassword' ,{
+
+                method: "POST",
+                headers :{
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify(obj)
+            }).then((response)=>{
+                return response.json();        
+
+           }).then((data)=> {
+                  console.log(data);
+    })
+}
+
     return (
       <Flex
         minH={'100vh'}
@@ -39,14 +67,15 @@ import {
             You&apos;ll get an email with a reset link
           </Text>
           <FormControl id="email">
-            <Input
+            <Input onChange={handleChange}
+            name="email"
               placeholder="Enter Your Registered Email"
               _placeholder={{ color: 'gray.500' }}
               type="email"
             />
           </FormControl>
           <Stack spacing={6}>
-            <Button
+            <Button onClick={handleClick}
               bg={'blue.400'}
               color={'white'}
               _hover={{

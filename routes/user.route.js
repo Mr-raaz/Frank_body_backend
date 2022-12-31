@@ -73,7 +73,7 @@ route.post('/googleregister' , async (req,res)=>{
         if(temp){
             const  secret= temp._id + "ayush"
             const token = jwt.sign({userID : temp._id},secret,{
-                expiresIn :'15m'
+                expiresIn :'7d'
             })
             const link =`http://localhost:3000/user/reset/${temp._id}/${token}`
             // console.log(link);
@@ -114,9 +114,19 @@ route.post('/userResetPassword/:id/:token', async(req, res)=>{
   const {password, confirm_password} =req.body;
  
    const {id,token}=req.params;
- 
+ console.log(id)
    const temp =await user.findById(id);
- const secretId= temp._id.toString();
+   if(!temp){
+    res.send({
+      "status":"failed",
+      "message":"User with this id not exist",
+  })
+   }
+   else{
+
+   
+   console.log(temp)
+ const secretId= temp._id.toString();;
    const new_secret=secretId + "ayush";
    try{
      jwt.verify(token, new_secret);
@@ -152,6 +162,7 @@ route.post('/userResetPassword/:id/:token', async(req, res)=>{
          "message":"Invalid Token",
      })
    }
+  }
  
  })
 
