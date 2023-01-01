@@ -172,3 +172,19 @@
     font-weight: bold;
     cursor: pointer;
 }
+.payment_notavailable{
+  /* border: 1px solid red; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.payment_notavailable > img{
+  height: 50%;
+}
+.payment_notavailable p {
+  margin-top: 5%;
+  /* border: 1px solid red; */
+}

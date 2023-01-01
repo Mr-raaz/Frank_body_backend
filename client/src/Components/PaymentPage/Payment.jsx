@@ -1,15 +1,55 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Payment.css';
 import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons'
 import {TextField} from '@mui/material'
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 function Payment() {
 
+    const [address , setAddress] = useState({
+      fname:"",
+      lname:"",
+      email:"",
+      contact:"",
+      pincode:"",
+      landmark:"",
+      detail:""
+    })
+
     const navigate = useNavigate();
+    const cookies = new Cookies();
+
+    function handleChange(e){
+
+      const {name , value} = e.target;
+
+      setAddress({...address , [name] : value});
+
+    }
+
+
+  function handleContinue(e){  
+    
+      e.preventDefault();
+
+      let token = cookies.get('jwt');
+      axios.post('http://localhost:5000/user/setAddress' , {
+
+      token:token,
+      address:address
+
+      }).then((res)=>{
+        // alert('done');
+        navigate('/payment');
+      })
+      
+
+      console.log(address);
+  }
     return (
         <>
         <Navbar />
@@ -49,13 +89,18 @@ function Payment() {
           id="outlined-size-small"
           defaultValue=""
           size="small"
-          
+          name='fname'
+          value={address.fname}
+          onChange={handleChange}
         />
         <TextField
           label="Last Name"
           id="outlined-size-small"
           defaultValue=""
           size="small"
+          name='lname'
+          value={address.lname}
+          onChange={handleChange}
         />
       </div>
       <div className='divTest'>
@@ -69,6 +114,9 @@ function Payment() {
     }}
     InputProps={{ sx: { height: 40 , width: 500 } }}
     placeholder=""
+    name='email'
+          value={address.email}
+          onChange={handleChange}
         /></div>
         <div className='divTest'>
       <TextField
@@ -81,6 +129,9 @@ function Payment() {
     }}
     InputProps={{ sx: { height: 40 , width: 500 } }}
     placeholder=""
+    name='contact'
+          value={address.contact}
+          onChange={handleChange}
         /></div><div className='divTest'>
       <TextField
           label="Pin Code"
@@ -92,6 +143,9 @@ function Payment() {
     }}
     InputProps={{ sx: { height: 40 , width: 500 } }}
     placeholder=""
+    name='pincode'
+          value={address.pincode}
+          onChange={handleChange}
         /></div><div className='divTest'>
       <TextField
           label="Landmark"
@@ -103,16 +157,24 @@ function Payment() {
     }}
     InputProps={{ sx: { height: 40 , width: 500 } }}
     placeholder=""
+    name='landmark'
+          value={address.landmark}
+          onChange={handleChange}
         /></div>
         
-        <input type="text" placeholder='Flat Number , Building Name , Street Locality' className='addressinput'/>
+        <input type="text" placeholder='Flat Number , Building Name , Street Locality' className='addressinput'
+
+name='detail'
+          value={address.detail}
+          onChange={handleChange}
+        />
 
         
       
       
     </Box>
                 <div className="payment_btn_div">
-                <button onClick={()=>navigate('/payment')}>Continue</button>
+                <button onClick={handleContinue}>Continue</button>
                 </div>
                 </form>
             </div>

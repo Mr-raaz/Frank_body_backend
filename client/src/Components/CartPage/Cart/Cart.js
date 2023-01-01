@@ -29,7 +29,7 @@ function Cart() {
         if(val < 0){
             setPriceDiscount((prev) => prev - 47)
         } else {
-                setPriceDiscount((prev) => prev + 47)
+            setPriceDiscount((prev) => prev + 47)
         }
     }
 

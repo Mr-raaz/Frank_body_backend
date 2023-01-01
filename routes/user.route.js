@@ -165,9 +165,56 @@ route.post('/userResetPassword/:id/:token', async(req, res)=>{
 
 
 
+route.post('/setAddress' , async(req,res)=>{
+  try {
+
+    let {token  , address} = req.body;
+
+    let {email} = await jwt.verify(token , "secretkey");
+
+    let dbData = await user.find({email:{$eq:email}});
+    
+    let newaddress = [address];
+
+    let check = await user.updateOne({email:{$eq:email}} , {
+      $set:{
+          address:newaddress
+      }
+  });
+    res.send("address updated");
+  } catch (error) {
+    res.status(500).send("can't add address");
+  }
+})
 
 
+route.post('/orderPlaced' , async(req,res)=>{
 
+  try {
+      let token = req.body.token;
+
+      let {email} = await jwt.verify(token , "secretkey");
+
+      let dbData = await user.find({email:{$eq:email}});
+
+      let db = dbData[0];
+
+      let cartData = db.cart;
+      let orderhistory = db.orderhistory;
+      // let emptyCart = [];
+
+      let check = await user.updateOne({email:{$eq:email}} , {
+        $set:{
+            orderhistory:[...orderhistory , ...cartData],
+            cart:[]
+        }
+    });
+
+      res.send("done");
+  } catch (error) {
+    res.status(500).send("order Failed");
+  }
+})
 
 
 module.exports = route;
