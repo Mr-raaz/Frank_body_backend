@@ -22,6 +22,9 @@ const product = new mongoose.Schema({
     },
     quantity:{
         type:Number
+    },
+    comments:{
+        type:Array
     }
 
 })
