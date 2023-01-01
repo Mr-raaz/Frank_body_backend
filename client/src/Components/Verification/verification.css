@@ -1,0 +1,49 @@
+#verifiedEmail{
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: 0.3s;
+    margin-bottom: 20px;
+  }
+  
+  #verifiedEmail:focus {
+    border-color: rgb(250 193 186);
+    box-shadow: 0 0 8px 0 rgb(250 193 186);
+  }
+  
+  .inputWithIcon #verifiedEmail {
+    padding-left: 40px;
+  }
+  
+  .inputWithIcon {
+    position: relative;
+  }
+  
+  .inputWithIcon i {
+    position: absolute;
+    left: 0;
+    top:20px;
+    padding: 9px 8px;
+    color: #aaa;
+    transition: 0.3s;
+  }
+  
+  .inputWithIcon #verifiedEmail:focus + i {
+    color: rgb(250 193 186);
+  }
+  
+  .inputWithIcon.inputIconBg i {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+  }
+  
+  .inputWithIcon.inputIconBg #verifiedEmail:focus + i {
+    color: #fff;
+    background-color: rgb(250 193 186);
+  }

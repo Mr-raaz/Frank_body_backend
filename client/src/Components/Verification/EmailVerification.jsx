@@ -1,4 +1,4 @@
-
+import './verification.css'
 import {
     Button,
     FormControl,
@@ -12,8 +12,10 @@ import {
     Spinner,
     useToast
   } from '@chakra-ui/react';
-import { useState } from 'react';
-import { use } from 'react-toastify';
+import { useState ,CSSProperties} from 'react';
+import "./Button.css";
+import  PropagateLoader from 'react-spinners/PropagateLoader'
+
 
 
 
@@ -24,7 +26,9 @@ import { use } from 'react-toastify';
 //   };
   
   export const EmailVerification=()=>{
- 
+    const [changeName,setChangeName]=useState(false);
+    const [changeClass,setChangeClass]=useState("add-btn");
+    let btn=document.getElementById("btn");
     const toast=useToast();
     const [obj,setObj]=useState({email:""});
   const [flip,setFlip]=useState(false);
@@ -36,6 +40,7 @@ import { use } from 'react-toastify';
     const handleClick= async(e)=>{
         e.preventDefault();
         setLoading(true);
+      
       await fetch('https://frank-body-backend.vercel.app/user/sendResetPassword' ,{
 
                 method: "POST",
@@ -48,8 +53,11 @@ import { use } from 'react-toastify';
 
            }).then((data)=> {
             setLoading(false);
+            
                   if(data.status=="success"){
                     setFlip(true);
+                    setChangeName(true);
+            setChangeClass("active_btn")
                   }
                   else {
                     toast({
@@ -70,10 +78,6 @@ import { use } from 'react-toastify';
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-       
-          // bgImage="url(https://image.shutterstock.com/image-photo/golden-sparkles-on-pink-pastel-260nw-1182869260.jpg)"
-          // opacity={0.9}
-    
         bg={useColorModeValue('rgb(242 141 141)', 'RGB(242 141 141)')}
         >
          {
@@ -111,48 +115,52 @@ import { use } from 'react-toastify';
                  spacing={4}
                  w={'full'}
                  maxW={'md'}
-                 bg={('rgb(247,232,233)')}
-                 
+                 bg={('white')}
+                 padding={'70px'}
                  rounded={'xl'}
                  boxShadow={'lg'}
-                 p={6}
+                //  p={6}
                  my={12}>
+
+                  <img src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1438842049/auk7ayohemudyedrknde.png" 
+                   style={{width:"100px",height:"100px",margin:"auto"}}
+                  alt=""  />
                  <Heading lineHeight={1.1}  fontSize={{ base: '2xl', md: '3xl' }} style={{fontFamily: 'solway',color:'rgb(86,68,71)'}} >
                    Forgot your password?
                  </Heading>
-                 <Text
-                   fontSize={{ base: 'sm', sm: 'md' }}
-                   color={('gray.800', 'gray.400')}>
-                   Forgot your password ? No Problem, Just let us now your email address and we will email you a password reset link that will allow
-                   you to choose a new one.
-                 </Text>
+                
                  <FormControl id="email">
-                   <Input onChange={handleChange}
-                   name="email"
-                     placeholder="Enter Your Registered Email"
-                     _placeholder={{ color: 'gray.500' }}
-                     bg="white"
-                     type="email"
-                   />
+              
+                   <div class="inputWithIcon">
+               <input id='verifiedEmail'   name="email" type="email" placeholder="Enter Your Registered Email" onChange={handleChange}/>
+             <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+                  </div>
                  </FormControl>
                  <Stack spacing={6}>
-                   <Button onClick={handleClick}
-                     bg={'rgb(63,42,45)'}
-                     color={'white'}
-                     disabled={loading ? true : false}
-                     _hover={{
-                       bg: 'rgb(250,193,186)',
-                       color:'rgb(63,42,45)'
-                     }}>
-                     {loading ?  <Spinner
+           
+                   <div class="hero_btn" style={{marginLeft:'32px'}}>
+        <button className={changeClass} onClick={handleClick}>
+          
+           {
+            loading ?  <PropagateLoader
         
-        thickness='4px'
-        speed='0.65s'
-        emptyColor='gray.200'
-        color='rgb(231 99 100)'
-        size='md'
-      />:'Request Reset Password'} 
-                   </Button>
+        loading='true'
+      speedMultiplier={2}
+        // emptyColor='gray.200'
+        color='white'
+        size='16'
+       style={{marginTop:'-5px',position:'absolute'}}
+      />: <p className="btn_txt">{changeName ? "Thanks" : "Submit"} </p>
+           }
+          
+           <div className="cart-check-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39 35">
+                <path fill="transparent" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+             </svg>
+        </div>
+        </button>
+
+    </div>
                  </Stack>
                </Stack>
          } 
