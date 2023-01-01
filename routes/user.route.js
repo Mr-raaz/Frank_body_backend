@@ -137,7 +137,7 @@ route.post('/userResetPassword/:id/:token', async(req, res)=>{
           const salt =await bcrypt.genSalt(10);
           const hashPassword = await bcrypt.hash(password, salt);
           await user.findByIdAndUpdate(req.params._id,{ $set:{
-             password : hashPassword
+             password : password
           }})
           res.send({
              "status":"success",
