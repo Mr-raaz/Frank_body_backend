@@ -77,7 +77,7 @@ function Details_page({data}) {
 
   }
   function buyNowTrigger(){
-    addToCart(data , dispatc , id);
+    addToCart(data , dispatc , _id);
     navigate('/cart');
   }
 
@@ -104,7 +104,7 @@ function Details_page({data}) {
         }).catch((err)=>{
             console.log(err , "from ltd card");
         })
-        quantityZero(cartData , dispatc , id);
+        quantityZero(cartData , dispatc , _id);
     }
     
 }
