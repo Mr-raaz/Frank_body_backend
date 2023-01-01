@@ -114,7 +114,7 @@ function Login() {
 
 
         const google = () => {
-            window.open("https://frank-body-backend.vercel.app", "_self");
+            window.open("https://frank-body-backend.vercel.app/auth/google", "_self");
           };
         
           const facebook = () => {
