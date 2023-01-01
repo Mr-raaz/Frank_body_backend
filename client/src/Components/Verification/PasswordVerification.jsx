@@ -10,14 +10,29 @@ import {
   Spinner,
   useToast
 } from '@chakra-ui/react';
+import { useRef } from 'react';
 import { useState } from 'react';
 import {useNavigate, useParams } from 'react-router-dom'
 
 
 export const  PasswordVerification=()=> {
   const navigate =useNavigate();
-  const toast =useToast()
+  const toast =useToast();
+// loading
   const [loading, setLoading] = useState(false);
+
+//state manage for  hide or unhide 
+  const [hide1,sethide1] = useState(true);
+  const [hide2,sethide2] = useState(true);
+
+// useRef use for input and i tag
+
+const inputRef1 = useRef(null);
+const inputRef2 = useRef(null);
+
+
+
+
   const [obj,setObj]=useState({password:"",confirm_password:""});
    const{id,token}=useParams();
     const handleChange = (e)=>{
@@ -51,12 +66,32 @@ export const  PasswordVerification=()=> {
                  }
    })
     }
+
+    const handleHideOne=()=>{
+      if(hide1){
+        inputRef1.current.type="text";
+      }
+      else{
+        inputRef1.current.type="password";
+      }
+      sethide1(!hide1);
+    }
+    const handleHideTwo=()=>{
+     
+      if(hide2){
+        inputRef2.current.type="text";
+      }
+      else{
+        inputRef2.current.type="password";
+      }
+      sethide2(!hide2);
+    }
   return (
     <Flex
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}>
+      bg={useColorModeValue('rgb(242 141 141)', 'RGB(242 141 141)')}>
       <Stack
         spacing={4}
         w={'full'}
@@ -66,20 +101,33 @@ export const  PasswordVerification=()=> {
         boxShadow={'lg'}
         p={6}
         my={12}>
+           <img src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/v1438842049/auk7ayohemudyedrknde.png" 
+                   style={{width:"100px",height:"100px",margin:"auto"}}
+                  alt=""  />
         <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
-          Enter new password
+          Reset Password
         </Heading>
         <FormControl id="password" isRequired>
           <FormLabel>Enter Your New password</FormLabel>
-          <Input
+          <div class="inputWithIcon" >
+          <input id='verifiedEmail'
+          ref={inputRef1}
           name='password'
            type="password"
            onChange={handleChange}
           />
+            <i class="fa-solid fa-lock" aria-hidden="true" style={{marginTop:'-5px'}}></i>
+            <i class={hide1 ?"fa-solid fa-eye-slash" : "fa-solid fa-eye" } style={{marginLeft:'90%',marginTop:'-5px'}} onClick={handleHideOne}></i>
+          </div>
         </FormControl>
         <FormControl id="confirm-password" isRequired>
           <FormLabel>Confirm Your New password</FormLabel>
-          <Input type="password" name='confirm_password' onChange={handleChange} />
+          <div class="inputWithIcon" >
+               <input id='verifiedEmail' ref={inputRef2}  name="confirm_password" type="password"  onChange={handleChange}/>
+             <i class="fa-solid fa-lock" aria-hidden="true" style={{marginTop:'-5px'}}></i>
+            <i class={hide2 ?"fa-solid fa-eye-slash" : "fa-solid fa-eye" } style={{marginLeft:'90%',marginTop:'-5px'}} onClick={handleHideTwo}></i>
+                  </div>
+                 
         </FormControl>
         <Stack spacing={6}>
        <Button
