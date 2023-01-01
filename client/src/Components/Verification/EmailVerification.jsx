@@ -55,9 +55,12 @@ import  PropagateLoader from 'react-spinners/PropagateLoader'
             setLoading(false);
             
                   if(data.status=="success"){
-                    setFlip(true);
+                    
                     setChangeName(true);
             setChangeClass("active_btn")
+            setTimeout(() => {
+              setFlip(true);
+            }, 2000);
                   }
                   else {
                     toast({
