@@ -5,10 +5,10 @@ const connect = require("./db/connect");
 const authRoute = require('./routes/auth.route');
 const userRoute = require('./routes/user.route');
 const productRoute = require('./routes/product.route');
-// port Number
 const cookieSession = require("cookie-session");
 const passportSetup = require("./passport");
 const passport = require("passport");
+const commentRoute = require('./routes/comments.route');
 const app = express();
 
 app.use(
@@ -41,6 +41,7 @@ app.use(express.json());
 app.use('/user',userRoute);
 app.use('/products' , productRoute);
 app.use("/auth", authRoute);
+app.use('/comment' , commentRoute);
 
 
 app.get('/' , (req,res) =>{

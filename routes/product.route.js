@@ -52,7 +52,25 @@ route.post('/addtocart' , async (req,res) =>{
         
         const prod = await product.findById(id);
 
-        cartData.push(prod);
+        if(prod){
+            let idx = -1;
+            let temp = cartData.filter((elem , index)=>{
+                if(elem != null && String(elem._id) === String(prod._id)){
+                    idx = index;
+                }
+                return elem != null && String(elem._id) === String(prod._id);
+            })
+
+            if(idx >=0){
+                cartData[idx] = {...cartData[idx] , quantity:cartData[idx].quantity+1};
+            } else {
+                cartData.push(prod);
+            }
+            
+                
+        }
+
+        
 
         let check = await user.updateOne({email:{$eq:email}} , {
             $set:{

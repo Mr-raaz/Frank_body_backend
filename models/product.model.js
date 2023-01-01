@@ -19,6 +19,12 @@ const product = new mongoose.Schema({
     },
     url_2:{
         type:String
+    },
+    quantity:{
+        type:Number
+    },
+    comments:{
+        type:Array
     }
 
 })

@@ -18,8 +18,8 @@ function SimilarProducts({func}) {
 
     async function getRecommendedData(){
         let temp = await axios.get('https://frank-body-backend.vercel.app/products');
-        console.log(temp.data.data);
-        let check = temp.data.data.splice(3,7);
+        // console.log(temp.data.data);
+        // let check = temp.data.data.splice(3,7);
         setRecom([...temp.data.data]);
     }
 
@@ -55,8 +55,11 @@ function SimilarProducts({func}) {
 
 
 {
-  recommendaded.length > 0 &&  recommendaded.splice(10,40).map((elem)=>{
-        return <SwiperSlide onClick={()=>checking(elem._id)}> <LtdCard data={elem}/></SwiperSlide>
+  recommendaded.length > 0 &&  recommendaded.map((elem)=>{
+        if(elem != null){
+          return <SwiperSlide onClick={()=>checking(elem._id)}> <LtdCard data={elem}/></SwiperSlide>
+        }
+        
     })
 }
         

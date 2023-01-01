@@ -37,7 +37,6 @@ function ProductDescription() {
     }
 
     useEffect(()=>{
-
             getProductDetails();
             scrollToTop(500);
             

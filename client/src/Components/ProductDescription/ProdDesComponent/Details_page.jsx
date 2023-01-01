@@ -13,7 +13,7 @@ import axios from 'axios';
 function Details_page({data}) {
 
 
-  let {id ,  prod_name, url_1, url_2  , categories , mrp , best_price , cartStatus} = data;
+  let {_id ,  prod_name, url_1, url_2  , categories , mrp , best_price , cartStatus} = data;
   const login_status = useSelector((store) => store.loginStatus);
   const cookies = new Cookies();
   const cartData = useSelector((cartdata) => cartdata.cart);
@@ -43,8 +43,8 @@ function Details_page({data}) {
 
 
     if(login_status){
-      // setCurr(true);
       currCartState(true);
+      // alert(_id);
       let token = cookies.get('jwt');
       
       axios.post('http://localhost:5000/products/addtocart' , {
@@ -52,7 +52,7 @@ function Details_page({data}) {
               Authentication:token
           },
           data:{
-             id:id 
+             id:_id 
           }
       }).then((res)=>{
           addToCart(res.data , dispatc);
@@ -73,6 +73,8 @@ function Details_page({data}) {
           theme: "light",
           });
   }
+
+
   }
   function buyNowTrigger(){
     addToCart(data , dispatc , id);
@@ -88,7 +90,20 @@ function Details_page({data}) {
     if(quant + val == 0){
       
         currCartState(false);
-
+        let token = cookies.get('jwt');
+            
+        axios.post('http://localhost:5000/products/deletefromcart' , {
+            headers: {
+                Authentication:token
+            },
+            data:{
+               id:_id 
+            }
+        }).then((res)=>{
+            addToCart(res.data , dispatc);            
+        }).catch((err)=>{
+            console.log(err , "from ltd card");
+        })
         quantityZero(cartData , dispatc , id);
     }
     
