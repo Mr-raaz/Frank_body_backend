@@ -7,9 +7,10 @@ import Cookies from 'universal-cookie';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 function Product({elem , func}) {
+    
     const cookies = new Cookies();
     const dispatch = useDispatch();
-    const [quantity , setQuant] = useState(1);
+    const [quantity , setQuant] = useState(elem.quantity);
 
     function handleQuantity(val){
         if(quantity + val >= 1){
@@ -20,17 +21,7 @@ function Product({elem , func}) {
             } else {
                 func(elem.best_price);
             }
-
-
-
-
-
-
         }
-        
-        
-
-
     }
 
     function handleClick(){

@@ -34,9 +34,13 @@ function Cart() {
     }
 
     function cartPrice(){
-        let temp = cartData.reduce((curr,val)=>{
-            return curr+val.best_price;
-        },0)
+       let temp = 0;
+
+       cartData.map((elem)=>{
+        if(elem){
+            temp += (elem.best_price * elem.quantity);
+        }
+       })
         setTotalPrice(temp);
 
         setPriceDiscount(Math.floor(temp/10 - Math.random() * 60))
@@ -89,12 +93,9 @@ function Cart() {
                             
                         {cartData.length > 0 && cartData.map((elem , idx)=>{
                             
-                            if(elem == null){
-
-                            } else {
-                                return <Product  elem={elem} func={check}/>
+                            if(elem){
+                                return <Product elem={elem} func={check}/>
                             }
-                             
                              
                          })}
                                 
