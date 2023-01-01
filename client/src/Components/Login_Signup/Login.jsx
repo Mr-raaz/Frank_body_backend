@@ -109,28 +109,17 @@ function Login() {
             });
 
         }
-
-        const facebookAuthHandler = async()=>{
-            console.log("facebook auth client side call");
-
-            navigate("localhost:8080/auth/facebook")
-            // let resp = await fetch("/auth/test");
-            // console.log(resp);
-        }
+// http://localhost:5000/auth/github/callback
+       
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+        const google = () => {
+            window.open("https://frank-body-backend.vercel.app", "_self");
+          };
+        
+          const facebook = () => {
+            window.open("http://localhost:5000/auth/facebook", "_self");
+          };
 
 
 
@@ -175,8 +164,8 @@ function Login() {
     <div className="login_with_container">
 
         <div className="login_btns">
-            <button><FontAwesomeIcon className='google' icon={faGoogle}/> &nbsp;&nbsp;&nbsp;&nbsp;Google</button>
-            <button onClick={facebookAuthHandler}><FontAwesomeIcon className='facebook' icon={faFacebook} />&nbsp;&nbsp;&nbsp;&nbsp;Facebook</button>
+            <button onClick={google}><FontAwesomeIcon className='google' icon={faGoogle}/> &nbsp;&nbsp;&nbsp;&nbsp;Google</button>
+            <button onClick={facebook}><FontAwesomeIcon className='facebook' icon={faFacebook} />&nbsp;&nbsp;&nbsp;&nbsp;Facebook</button>
         </div>
     </div>
 

@@ -58,14 +58,18 @@ function Register() {
 
     }
 
-
+// https://frank-body-backend.vercel.app/auth/github
     const google = () => {
         window.open("http://localhost:5000/auth/google", "_self");
       };
     
+      const facebook = () => {
+        window.open("http://localhost:5000/auth/facebook", "_self");
+      };
 
-
-
+      const github = () => {
+        window.open("http://localhost:5000/auth/github", "_self");
+      };
 
     return (
         <>
@@ -97,9 +101,9 @@ function Register() {
             <Link className='registerlinksdata firstlink' to="/login">Have an account? Login</Link>
         </div>
         <div className="social_links_for_signup">
-            <FontAwesomeIcon  icon={faSquareFacebook}  className="social_links_hover social_links_hover1" />
+            <FontAwesomeIcon  icon={faSquareFacebook}  className="social_links_hover social_links_hover1" onClick={facebook} />
             <FontAwesomeIcon  icon={faSquareGooglePlus}  className="social_links_hover social_links_hover2" onClick={google} />
-            <FontAwesomeIcon icon={faSquareGithub}  className="social_links_hover social_links_hover3"/>
+            <FontAwesomeIcon icon={faSquareGithub}  className="social_links_hover social_links_hover3" onClick={github}/>
         </div>
     </div>
                     
