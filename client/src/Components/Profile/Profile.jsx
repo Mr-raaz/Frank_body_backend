@@ -35,6 +35,12 @@ import { store } from '../../ReduxStore/store';
 function Profile(props) {
   
     const { isOpen, onOpen, onClose } = useDisclosure()
+     
+
+    let [mobile, setMobile] = useState("");
+    
+
+    let [gender, setGender] = useState("");
 
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
@@ -47,10 +53,12 @@ function Profile(props) {
 
     const cookies = new Cookies();
    
-    const [curruserID, setuserID] = useSelector((store)=>{return store.userId})
+    const [curruserID, setuserID] = useState(useSelector((store)=>{return store.userId}));
     
      useEffect(()=>{
         console.log(curruserID);
+        getData();
+      
 
      },[])
 
@@ -69,8 +77,45 @@ function Profile(props) {
     mobile : "",
     gender : ""
 };
-    const [editUser, seteditUser] = useState(emptyData); 
+const getData = async ()=>{
+    let url = "https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile/"+curruserID;
+    console.log(url);
+    let fetcheddata = await fetch(url);
+    let result = await fetcheddata.json();
+    let fullname = result.message[0].name.split(" ");
+    if(result.message[0]?.address.length !== 0){
+        var address = result.message[0]?.address[0];
+    if(address?.firstname.length === 0 || address?.lastname.length === 0){
+        address.firstname = fullname[0];
+        address.lastname = fullname[1];
+        setCurrentuser(address);
+    }
 
+    }else{
+        setCurrentuser({
+            ...currentUser,
+            firstname: fullname[0],
+            lastname: fullname[1],
+            email: result.message[0].email
+        })
+    }
+    
+    
+    
+    console.log(result);
+}
+    const [editUser, seteditUser] = useState(currentUser); 
+   
+    const getmobileandgender = async ()=>{
+        let mobgen = await fetch("https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/mobilegender/"+curruserID);
+        let result = await mobgen.json();
+        setGender(result[0].address[0].gender);
+        setMobile(result[0].address[0].contact);
+    }
+
+    useEffect(()=>{
+         getmobileandgender();
+    },[])
 
 
     function handleLogout(){
@@ -113,16 +158,16 @@ function Profile(props) {
        border
     }
    
-    const handleModalInputs = (e)=>{
+    // const handleModalInputs = (e)=>{
         
-        console.log(e.target.name, e.target.value);
-        seteditUser({...editUser, [e.target.name]:e.target.value});
+    //     console.log(e.target.name, e.target.value);
+    //     seteditUser({...currentUser, [e.target.name]:e.target.value});
         
-    }
+    // }
 
     const handleSaveInput = ()=>{
-        console.log(editUser);
-        setCurrentuser({...editUser});
+        console.log(mobile, gender);
+        setCurrentuser({...currentUser, mobile, gender});
         setTimeout(()=>{
            onClose();
         },1000)
@@ -130,11 +175,28 @@ function Profile(props) {
     }
     
     useEffect(()=>{
-        axios.post('localhost:5000/profile' , {
-            currentUser
-        })
+        console.log(currentUser);
+         postData();
     },[currentUser])
+ 
+    const postData = async ()=>{
 
+         let resp = await fetch("https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile", {
+            method : "POST",
+            headers :{
+                "Content-Type" : "application/json"
+            },
+            data : {
+                email : currentUser.email,
+                mobile, 
+                gender
+            }
+         })
+         let result = await resp.json();
+         console.log(result);
+    }
+
+    
     
 
     return (
@@ -217,7 +279,7 @@ function Profile(props) {
                                 <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.email}</Text>
                                 <FormHelperText>We'll never share your email.</FormHelperText>
                                 <FormLabel marginTop={"6"} fontWeight={"700"} color={"lightblue"}>Mobile Number</FormLabel>
-                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.mobile}</Text>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{mobile}</Text>
                             </FormControl>
 
 
@@ -229,7 +291,7 @@ function Profile(props) {
                                 <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{`${currentUser.firstname} ${currentUser.lastname}` }</Text>
 
                                 <FormLabel marginTop={"6"} fontWeight={"700"} color={"lightblue"}>Gender</FormLabel>
-                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.gender.length == 0? "NO DATA" : currentUser.gender}</Text>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{gender == 0? "NO DATA" : gender}</Text>
                             </FormControl>
 
 
@@ -248,11 +310,11 @@ function Profile(props) {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent onChange={handleModalInputs}>
+        <ModalContent >
           <ModalHeader>Edit details</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
+            {/* <FormControl>
               <FormLabel>First name</FormLabel>
               <Input name="firstname" placeholder='First name' />
             </FormControl>
@@ -260,18 +322,18 @@ function Profile(props) {
             <FormControl mt={2}>
               <FormLabel>Last name</FormLabel>
               <Input name="lastname" placeholder='Last name' />
-            </FormControl>
-            <FormControl mt={2}>
+            </FormControl> */}
+            {/* <FormControl mt={2}>
               <FormLabel>Email</FormLabel>
               <Input name="email" placeholder='Email Address' />
-            </FormControl>
+            </FormControl> */}
             <FormControl mt={2}>
               <FormLabel>Phone</FormLabel>
-              <Input name="mobile" placeholder='Phone Number' />
+              <Input name="mobile" placeholder='Phone Number' onChange={(e)=>{setMobile(e.target.value)}}/>
             </FormControl>
             <FormControl mt={2}>
               <FormLabel>Gender</FormLabel>
-              <Select name="gender" placeholder='Select option'>
+              <Select name="gender" placeholder='Select option' onChange={(e)=>{setGender(e.target.value)}}>
                     <option value='male'>Male</option>
                     <option value='female'>Female</option>
                     <option value='gender'>Other</option>
