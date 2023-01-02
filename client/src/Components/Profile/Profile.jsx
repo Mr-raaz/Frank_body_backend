@@ -15,7 +15,26 @@ import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
 import { useToast } from '@chakra-ui/react'
 import { ChakraProvider } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
+import { useRef } from 'react';
+import { Select } from '@chakra-ui/react';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+  } from '@chakra-ui/react'
+  import { EditIcon} from '@chakra-ui/icons'
+
 function Profile(props) {
+  
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const initialRef = React.useRef(null)
+    const finalRef = React.useRef(null)
 
     const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
     const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
@@ -27,6 +46,22 @@ function Profile(props) {
 
 
     const dispatch = useDispatch();
+    const [currentUser, setCurrentuser] = useState({
+        firstname : "",
+        lastname : "",
+        email : "",
+        mobile : "",
+        gender : ""
+    });
+  let emptyData = {
+    firstname : "",
+    lastname : "",
+    email : "",
+    mobile : "",
+    gender : ""
+};
+    const [editUser, seteditUser] = useState(emptyData); 
+
 
 
     function handleLogout(){
@@ -48,12 +83,12 @@ function Profile(props) {
     let border = {
         borderRadius : "10px"
     }
-    let currentUser = {
-        name : "Hari Prasanth",
-        email : "hariprasanthmath@gmail.com",
-        mobile : "8248608590",
-        gender : ""
-    }
+    // let currentUser = {
+    //     name : "Hari Prasanth",
+    //     email : "hariprasanthmath@gmail.com",
+    //     mobile : "8248608590",
+    //     gender : ""
+    // }
     let imageAndName = {
        display:"flex",
        alignItems:"center",
@@ -68,26 +103,26 @@ function Profile(props) {
        justifyContent:"center",
        border
     }
+   
+    const handleModalInputs = (e)=>{
+        
+        console.log(e.target.name, e.target.value);
+        seteditUser({...editUser, [e.target.name]:e.target.value});
+        
+    }
 
+    const handleSaveInput = ()=>{
+        console.log(editUser);
+        setCurrentuser({...editUser});
+        setTimeout(()=>{
+           onClose();
+        },1000)
+        // onClose
+    }
 
     return (
         <div>
-            {/* <Box
-  sx={{
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: 1,
-    gridTemplateRows: 'auto',
-    gridTemplateAreas: `"header header header header"
-  "main main . sidebar"
-  "footer footer footer footer"`,
-  }}
->
-  <Box sx={{ gridArea: 'header', bgcolor: 'primary.main' }}>Header</Box>
-  <Box sx={{ gridArea: 'main', bgcolor: 'secondary.main' }}>Main</Box>
-  <Box sx={{ gridArea: 'sidebar', bgcolor: 'error.main' }}>Sidebar</Box>
-  <Box sx={{ gridArea: 'footer', bgcolor: 'warning.dark' }}>Footer</Box>
-</Box> */}
+           
  <ChakraProvider>
  <Box backgroundColor={"#f3f7fb"} height={"100vh"}>
         <Box marginTop="600px" width="80%" margin="auto">
@@ -98,15 +133,21 @@ function Profile(props) {
                   templateColumns='repeat(6, 1fr)'
                   gap={4}
                  >
+
+                    {/* first */}
                       <GridItem style={border} rowSpan={2} colSpan={2} bg='white'>
                       <HStack height={"100%"} minWidth={"max-content"} padding="30px" >
                              <img src="https://www.netmeds.com/msassets/images/icons/profile-icon.svg"></img>
                               <VStack margin={"30px"}>
-                              <Heading size={"md"}>{currentUser.name}</Heading>
+                              <Heading size={"md"}>{`${currentUser.firstname} ${currentUser.lastname}` }</Heading>
                               <Text fontSize={"sm"}>{currentUser.email}</Text>
+                              <EditIcon boxSize={4} _hover={{width:"110%", transition: 'width ease 0.5s',boxSize:"6" , cursor:"pointer"}} onClick={onOpen }/>
+ 
+
                               </VStack>
                      </HStack>
                       </GridItem>
+                      {/* second */}
                       <GridItem  rowSpan={2} colSpan={4 } bg='white' style={centerIt}> 
                       <HStack display={"flex"} flexDirection={"row"} justifyContent={"space-around"} width={"60%"} margin={"auto"}>
                         <Box style={imageAndName}> 
@@ -124,6 +165,7 @@ function Profile(props) {
                         </Box>
                         </HStack>   
                       </GridItem>
+                      {/* third */}
                       <GridItem style={border} rowSpan={4} colSpan={2} bg='white' > 
 
                         <VStack margin="10%" width="80%" display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -148,6 +190,7 @@ function Profile(props) {
 
                         </VStack>
                        </GridItem>
+                       {/* fourth */}
                       <GridItem style={border} rowSpan={3} colSpan={4} bg='white' > 
                         <HStack display={"flex"} justifyContent={"space-between"} padding="30px">
                             <VStack width={"40%"}>
@@ -166,7 +209,7 @@ function Profile(props) {
                             <FormControl>
                                 <FormLabel fontWeight={"bold"}>PERSONAL INFORMATION</FormLabel>
                                 <FormLabel fontWeight={"700"} color={"lightblue"}>FULL NAME</FormLabel>
-                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.name}</Text>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{`${currentUser.firstname} ${currentUser.lastname}` }</Text>
 
                                 <FormLabel marginTop={"6"} fontWeight={"700"} color={"lightblue"}>Gender</FormLabel>
                                 <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.gender.length == 0? "NO DATA" : currentUser.gender}</Text>
@@ -180,6 +223,55 @@ function Profile(props) {
            {/* </Box> */}
         </Box>
         </Box>
+
+        <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent onChange={handleModalInputs}>
+          <ModalHeader>Edit details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>First name</FormLabel>
+              <Input name="firstname" placeholder='First name' />
+            </FormControl>
+
+            <FormControl mt={2}>
+              <FormLabel>Last name</FormLabel>
+              <Input name="lastname" placeholder='Last name' />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>Email</FormLabel>
+              <Input name="email" placeholder='Email Address' />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>Phone</FormLabel>
+              <Input name="mobile" placeholder='Phone Number' />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>Gender</FormLabel>
+              <Select name="gender" placeholder='Select option'>
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
+                    <option value='gender'>Other</option>
+              </Select>
+              
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={handleSaveInput}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
 </ChakraProvider>
         </div>
     );
