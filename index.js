@@ -49,6 +49,10 @@ app.get('/' , (req,res) =>{
 })
 
 
+app.get("/profile", (req, res)=>{
+    res.send({message:"profile page"})
+})
+
 
 
 
