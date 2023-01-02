@@ -26,6 +26,7 @@ import Skeleton from '@mui/material/Skeleton';
 function ProductCategory() {
 
   let {type} = useParams();
+  const navigate = useNavigate();
 
   const [currCategory  , setCategory] = useState(type);
   const [loading , setLoading] = useState(true);
@@ -49,7 +50,7 @@ function ProductCategory() {
 
 
   async function fetchData(){
-    let res = await axios.get(`http://localhost:5000/products/category/${currCategory}?sort=${sort}`);
+    let res = await axios.get(`https://frank-body-backend.vercel.app/products/category/${currCategory}?sort=${sort}`);
     setData(res.data);
     setTimeout(()=>{
       setLoading(false);
@@ -68,6 +69,9 @@ function ProductCategory() {
   setEnd(second);
  }
 
+ function handleRedirect(val){
+  navigate(`/details/${val}`);
+ }
 
   // }
  
@@ -204,10 +208,10 @@ function ProductCategory() {
                           <>
                           {elem.best_price >=start && elem.best_price <= end && <div className='productCate_card'>
 
-                        <img src={elem.url_1} alt="Not Found" />
+                        <img src={elem.url_1} alt="Not Found"  onClick={()=>handleRedirect(elem._id)}/>
 
-                        <h6 className='prod_name' >{elem.prod_name}</h6>
-                        <div className="price_outer"> 
+                        <h6 className='prod_name'  onClick={()=>handleRedirect(elem._id)}>{elem.prod_name}</h6>
+                        <div className="price_outer" onClick={()=>handleRedirect(elem._id)}> 
                         <div><span>⭐⭐⭐⭐⭐</span> <b className='ttd'>&#x20B9; {elem.best_price}</b></div>
                         </div>
 

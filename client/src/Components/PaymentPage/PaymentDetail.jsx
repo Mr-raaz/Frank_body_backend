@@ -31,7 +31,7 @@ function PaymentDetail() {
 
         let token = cookies.get('jwt');
         
-        axios.post('http://localhost:5000/user/orderPlaced' , {
+        axios.post('https://frank-body-backend.vercel.app/user/orderPlaced' , {
                 token:token
         })
 
