@@ -23,7 +23,7 @@ function ProductsRating(props) {
     }
 
     async function getComments(){
-        let temp = await axios.get(`http://localhost:5000/comment/get/${id}`);
+        let temp = await axios.get(`https://frank-body-backend.vercel.app/comment/get/${id}`);
         setComments(temp.data);
         counting();
     }

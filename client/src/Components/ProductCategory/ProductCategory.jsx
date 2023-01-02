@@ -50,7 +50,7 @@ function ProductCategory() {
 
 
   async function fetchData(){
-    let res = await axios.get(`http://localhost:5000/products/category/${currCategory}?sort=${sort}`);
+    let res = await axios.get(`https://frank-body-backend.vercel.app/products/category/${currCategory}?sort=${sort}`);
     setData(res.data);
     setTimeout(()=>{
       setLoading(false);
