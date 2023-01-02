@@ -13,14 +13,26 @@ function Navbar() {
     const login_status = useSelector((store) => store.loginStatus);
     const [change, setChange] = useState(false);
     const [count, setCount] = useState(0);
+    let [value, setValue] = useState("");
+    let [data, setdata] = useState([]);
+
+    const getData = async () => {
+        let res = await fetch(`https://frank-body-backend.vercel.app/products`)
+        let arr = await res.json();
+        setdata(arr.data);
+    }
 
     useEffect(() => {
         if (login_status) {
             setCount(cartitem.length);
         }
+        getData()
     }, [cartitem, login_status])
 
     const navigate = useNavigate();
+    const searchedValue = (e) => {
+        setValue(e.target.value)
+    }
 
     function logoClick() {
         navigate('/');
@@ -42,13 +54,26 @@ function Navbar() {
                 </div>
                 <div id='navbarSearchBox'>
                     <span id={change ? 'searchNavicon' : 'searchNaviconChange'}> <FontAwesomeIcon style={change ? { color: '#e76364', marginTop: '8px' } : { color: 'white', marginTop: '8px' }} icon={faMagnifyingGlass} className="cart_logo" onClick={() => setChange(true)} /></span>
-                    <input type="text" id={change ? 'searchInput' : 'searchInputChange'} />
+                    <input type="text" value={value} id={change ? 'searchInput' : 'searchInputChange'} onKeyPress={(e) => {
+                        if (e.charCode == 13 && value != "") {
+                            navigate(`/products?search_query=${value}`)
+                            setValue("");
+                            setChange(false)
+                        }
+                    }} onChange={(e) => searchedValue(e)} placeholder='search product' />
                     <FontAwesomeIcon icon={faX} id={change ? 'searchcross' : 'searchcrossChange'} className="cart_logo" onClick={() => setChange(false)} />
                     <div class='searchdivsuggestion' >
-                        <div className={change ? "SearchSuggestion" : 'SearchSuggestionNew'}></div>
-                        <div className={change ? "SearchSuggestion" : 'SearchSuggestionNew'}></div>
-                        <div className={change ? "SearchSuggestion" : 'SearchSuggestionNew'}></div>
-                        <div className={change ? "SearchSuggestion" : 'SearchSuggestionNew'}></div>
+                        {data.filter((elem) => {
+                            let title = elem.prod_name.toLowerCase();
+                            let key = value.toLowerCase();
+
+                            return key && title.includes(key) && key !== title;
+                        })
+                            .map((elem, ind) => {
+                                return (
+                                    <div><p key={ind + 1} onClick={() => setValue(elem.prod_name)} className={change ? "SearchSuggestion test_eclips" : 'SearchSuggestionNew test_eclips'}>{elem.prod_name}</p></div>
+                                )
+                            }).splice(0, 5)}
                         {/*  */}
                     </div>
                 </div>
