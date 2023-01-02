@@ -15,6 +15,7 @@ import axios from 'axios';
 import { loginroute } from '../../constant';
 // import {SetLogin} from '../../ReduxStore/Actions/mainAction';
 import Cookies from 'universal-cookie';
+import { setUserID } from '../../ReduxStore/Actions/mainAction';
 
 const logindatainital  = {
     email:"",
@@ -100,7 +101,7 @@ function Login() {
                           setTimeout(()=>{
                             navigate('/');
                           },1500)
-
+                          setUserID(dispatch, data.userId)
                    } else {
                     handlepopup(data.message);
                    }

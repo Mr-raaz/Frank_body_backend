@@ -3,7 +3,8 @@ var initialData = {
     activeCat:"All Products",
     sortingOrder:"sbp",
     cart:[],
-    loginStatus:false
+    loginStatus:false,
+    userId : ""
 }
 
 
@@ -74,6 +75,13 @@ export default function ProductReducer(data = initialData , action){
                     ...data,
                     cart :[]
                 }
+            case "SETUSERID": {
+                return{
+                    ...data,
+                    userId : action.payload
+                }
+            }
+                
         default :{
             return data;
         }

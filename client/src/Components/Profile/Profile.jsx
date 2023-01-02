@@ -30,6 +30,8 @@ import {
   import { EditIcon} from '@chakra-ui/icons'
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { store } from '../../ReduxStore/store';
 function Profile(props) {
   
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -44,7 +46,13 @@ function Profile(props) {
     const toast = useToast()
 
     const cookies = new Cookies();
+   
+    const [curruserID, setuserID] = useSelector((store)=>{return store.userId})
+    
+     useEffect(()=>{
+        console.log(curruserID);
 
+     },[])
 
     const dispatch = useDispatch();
     const [currentUser, setCurrentuser] = useState({
@@ -126,6 +134,8 @@ function Profile(props) {
             currentUser
         })
     },[currentUser])
+
+    
 
     return (
         <div>

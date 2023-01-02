@@ -38,7 +38,7 @@ route.post("/", async (req, res)=>{
   // getting the updated user data
   try{
 
-    let dbData = await user.find({email:userdata.email});
+    var dbData = await user.find({email:userdata.email});
 
   }catch(err){
 
@@ -50,6 +50,24 @@ route.post("/", async (req, res)=>{
   
   res.send({message:dbData});
   
+})
+
+
+route.get("/:id",async (req, res)=>{
+     
+     let userID = req.params.id
+     
+
+    try{
+        var userdata = await user.find({_id:userID});
+        
+        res.send({message:userdata})
+    }catch(err){
+        res.status(500).send({error:err});
+    }
+     console.log(userdata);
+
+    
 })
 
 module.exports = route;
