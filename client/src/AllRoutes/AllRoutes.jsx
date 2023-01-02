@@ -20,13 +20,10 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {SetLogin} from '../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
-
+// import Profileops from '../Components/Profile/Profileops';
 import { ChakraProvider } from '@chakra-ui/react'
 import { EmailVerification } from '../Components/Verification/EmailVerification';
 import {PasswordVerification } from '../Components/Verification/PasswordVerification';
-
-
-
 import { addToCart } from '../ReduxStore/Actions/mainAction';
 
 function AllRoutes() {
@@ -80,7 +77,7 @@ function AllRoutes() {
         let token = cookies.get('jwt');
         if(token){
 
-          axios.post('http://localhost:5000/products/getcart' , {
+          axios.post('https://frank-body-backend.vercel.app/products/getcart' , {
                 headers: {
                     Authentication:token
                 }
@@ -99,7 +96,7 @@ function AllRoutes() {
 
       async function addTobackend(data){
 
-        axios.post('http://localhost:5000/user/googleregister' , {
+        axios.post('https://frank-body-backend.vercel.app/user/googleregister' , {
           name:data.displayName,
           email:data.emails[0].value,
           avtar:data.photos[0].value

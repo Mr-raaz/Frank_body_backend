@@ -37,7 +37,7 @@ function Payment() {
       e.preventDefault();
 
       let token = cookies.get('jwt');
-      axios.post('http://localhost:5000/user/setAddress' , {
+      axios.post('https://frank-body-backend.vercel.app/user/setAddress' , {
 
       token:token,
       address:address
