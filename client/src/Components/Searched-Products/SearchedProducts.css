@@ -1,0 +1,59 @@
+#pageparentdiv {
+    margin-top: 50px;
+}
+
+#products_parent_div {
+    width: 70%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    padding: 20px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 0.3px solid rgb(206, 204, 204);
+}
+
+#products_parent_div img {
+    width: 100%;
+}
+
+#products_parent_div h4,
+#products_parent_div h5,
+#products_parent_div p {
+    margin-top: 10px
+}
+
+#products_parent_div .details_div {
+    margin-left: 20%;
+}
+
+#products_parent_div h4 {
+    margin-top: 20px;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+#products_parent_div h5 {
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+#products_parent_div .mrp_tag {
+    font-size: 19px;
+    text-decoration: line-through;
+    display: inline;
+}
+
+#products_parent_div .percent_span {
+    display: inline;
+}
+
+#products_parent_div .review_tag {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+#noresult_image {
+    width: 65%;
+    margin: auto;
+}

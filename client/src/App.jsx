@@ -1,7 +1,7 @@
 import React from 'react';
 import "swiper/css/bundle";
 import AllRoutes from './AllRoutes/AllRoutes';
-import {AnimatePresence} from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import avtar from './Components/LandingPage/Images/chatbot.png';
 import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
@@ -24,24 +24,24 @@ const steps = [
         message: " Ok! , May I know your name please?",
         trigger: 4
     }, {
-        id:'4',
-        user:true,
-        trigger:'5',
-    },{
+        id: '4',
+        user: true,
+        trigger: '5',
+    }, {
         id: '5',
-        message : "Ok {previousValue}, I am Looking to your problem ....",
-        trigger:'6',
-    },{
-        id:'6',
+        message: "Ok {previousValue}, I am Looking to your problem ....",
+        trigger: '6',
+    }, {
+        id: '6',
         options: [
             { value: 1, label: 'Ok' },
             { value: 2, label: 'Cancel' },
- 
+
         ],
-        end :true
+        end: true
     }
 ];
- 
+
 
 const theme = {
     background: 'white',
@@ -53,7 +53,7 @@ const theme = {
     userBubbleColor: '#FF5733',
     userFontColor: 'white',
 };
- 
+
 
 const config = {
     botAvatar: "https://e7.pngegg.com/pngimages/498/917/png-clipart-computer-icons-desktop-chatbot-icon-blue-angle-thumbnail.png",
@@ -64,25 +64,25 @@ const config = {
 function App() {
     return (
         <>
-        
-<AnimatePresence mode='wait'>
-        <AllRoutes>
+
+            <AnimatePresence mode='wait'>
+                <AllRoutes>
 
 
 
-                {/* Home Component route has been created..... */}
+                    {/* Home Component route has been created..... */}
 
 
-        </AllRoutes>
-        </AnimatePresence>
-       
+                </AllRoutes>
+            </AnimatePresence>
 
-        <ThemeProvider theme={theme}>
+
+            <ThemeProvider theme={theme}>
                 <ChatBot
                     headerTitle="Chat Bot "
                     steps={steps}
                     {...config}
- 
+
                 />
             </ThemeProvider>
         </>
