@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
+import { Footer } from '../Footer/footer';
 import style from "./SearchedProducts.css"
 
 function SearchedProducts() {
@@ -28,24 +30,32 @@ function SearchedProducts() {
     console.log(search_query);
     return (
         <div>
-            {searchedData.map((elem, ind) => {
-                return (
-                    <div id='products_parent_div' key={ind + 1}>
-                        <div>
-                            <img src={elem.url_1} />
-                        </div>
-                        <div className='details_div'>
-                            <h3>{elem.prod_name}</h3>
-                            <h4>Best Price:  ₹ {elem.best_price}  <span></span></h4>
-                            <h5>₹ {elem.mrp} </h5>
-                            <p className='percent_span'> | ({parseInt(elem.best_price * 100 / elem.mrp)}%)</p>
-                            <h4>⭐⭐⭐⭐⭐</h4>
-                            <p>43 ratings & 15 reviews</p>
-                        </div>
-                    </div>
-                )
-            })}
-        </div>
+            <Navbar />
+            {searchedData.length == 0 ? (<div id='noresult_image' ><img id=' noresult_image' src="https://ibellstore.com/images/no-item-found-here.png" /></div>) :
+                <div id='pageparentdiv'>
+                    {searchedData.map((elem, ind) => {
+                        return (
+
+                            <Link to={`/details/${elem._id}`} id='products_parent_div' key={ind + 1}>
+                                <div>
+                                    <img src={elem.url_1} />
+                                </div>
+                                <div className='details_div'>
+                                    <h4>{elem.prod_name}</h4>
+                                    <h5>Best Price:  ₹ {elem.best_price}</h5>
+                                    <span>Original Price: </span><p className='mrp_tag'>₹ {elem.mrp} </p>
+                                    <span className='percent_span'> | ({100 - parseInt(elem.best_price * 100 / elem.mrp)}%)</span>
+                                    <h5 className='review_tag'>⭐⭐⭐⭐⭐</h5>
+                                    <p>43 ratings & 15 reviews</p>
+                                </div>
+
+                            </Link>
+                        )
+                    })}
+                </div>
+            }
+            <Footer />
+        </div >
     )
 }
 
