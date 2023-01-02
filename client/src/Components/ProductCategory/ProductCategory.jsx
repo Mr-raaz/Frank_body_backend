@@ -21,124 +21,69 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
-
+import axios from 'axios';
+import Skeleton from '@mui/material/Skeleton';
 function ProductCategory() {
 
-    let {type} = useParams();
+  let {type} = useParams();
 
-    const [type2 , setType] = useState(type);
+  const [currCategory  , setCategory] = useState(type);
+  const [loading , setLoading] = useState(true);
+  const[data , setData] = useState([]);
+  const [sort , setSort] = useState('none');
+  const[start, setStart] = useState(0);
+  const [end , setEnd]= useState(Infinity);
 
-    if(type2 == 'Lipcare'){
-      setType("Lip care")
-    }
+  if(currCategory == 'Lipcare'){
+    setCategory("Lip Care")
+  }
+
+  function handleCategory(val){
+    setLoading(true);
+    setCategory(val);
+  }
+
+  function handleSort(val){
+    setSort(val);
+  }
 
 
-    function handleCat(val){
-      setType(val)
-    }
-    const [data2 , setData2] = useState([])
+  async function fetchData(){
+    let res = await axios.get(`http://localhost:5000/products/category/${currCategory}?sort=${sort}`);
+    setData(res.data);
+    setTimeout(()=>{
+      setLoading(false);
+    },500)
+  }
 
-    const [sort , setSort] = useState("")
+  useEffect(()=>{
+    fetchData();
+  },[currCategory , sort])
 
-      const data = useSelector((store) => store.products);
+
+  // sorting logic here..
+
+ function handlePriceRange(first, second){
+  setStart(first);
+  setEnd(second);
+ }
 
 
-      useEffect(()=>{
-        setData2(data);
-      },[])
-      
-      const navigate = useNavigate();
-
-      function handleDesRedirect(val){
-        navigate(`/details/${val}`)
-      }
-
-      function handleSortlth(val){
-       if(val == 'lth'){
-        let temp = data2.sort(function (a, b) {
-          if (a.best_price > b.best_price) {
-            return 1;
-          }
-          if (a.best_price < b.best_price) {
-            return -1;
-          }
-          return 0;
-        });
-        setData2([...temp]);
-       } else if (val == 'htl'){
-        let temp = data2.sort(function (a, b) {
-          if (a.best_price > b.best_price) {
-            return -1;
-          }
-          if (a.best_price < b.best_price) {
-            return 1;
-          }
-          return 0;
-        });
-        setData2([...temp]);
-       } else if (val == 'asc'){
-        let temp =data2.sort(function (a, b) {
-          if (a.prod_name > b.prod_name) {
-            return 1;
-          }
-
-          if (a.prod_name < b.prod_name) {
-            return -1;
-          }
-
-          return 0;
-        });
-        setData2([...temp]);
-       }
-      }
-
-    function sortbyPrice(a, b){
-      let temp = data.filter((elem)=>{
-        return elem.best_price >= a && elem.best_price <=b
-          
-        
-      })
-
-      setData2([...temp])
-      console.log(temp);
-    }
+  // }
+ 
+    
     return (
         <>
             <Navbar />
 
-            <p className='location'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Shop <FontAwesomeIcon icon = {faAngleRight} /></b>&nbsp; {type2}</p>
+            <p className='location'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Shop <FontAwesomeIcon icon = {faAngleRight} /></b>&nbsp; {currCategory}</p>
 
             <div className="product_category_contaier">
                     <div className='ldiv'>
-{/* material accordian */}
 
-
-
+      
 
       <Accordion >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Category</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-          <FormGroup>
-      <FormControlLabel name='tic' control={<Checkbox  checked = {type2 == "Skin Care" ? true : false} />} label="Skin Care"  onClick={()=> handleCat("Skin Care")}/>
-      <FormControlLabel name='tic2' control={<Checkbox checked = {type2 == "Lip care" ? true : false} />} label="Lip Care"  onClick={()=> handleCat("Lip care")}/>
-      <FormControlLabel name='tic2' control={<Checkbox checked = {type2 == "hAIR" ? true : false} />} label="Hair" onClick={()=> handleCat("HAIR")} />
-      <FormControlLabel name='tic2' control={<Checkbox checked = {type2 == "Perfumes" ? true : false}/>} label="Perfumes" onClick={()=> handleCat("Perfumes")} />
-      <FormControlLabel name='tic2' control={<Checkbox  checked = {type2 == "makeup" ? true : false}/>} label="Makeup"  onClick={()=> handleCat("makeup")}/>
-      <FormControlLabel name='tic2' control={<Checkbox checked = {type2 == "EVERYDAY" ? true : false}/>} label="Everyday" onClick={()=> handleCat("EVERYDAY")}/>
-      <FormControlLabel name='tic2' control={<Checkbox disabled />} label="Mens" />
-    </FormGroup>
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion  expanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -156,13 +101,36 @@ function ProductCategory() {
       >
         <FormControlLabel value="female" control={<Radio />} label="Popularity" />
         <FormControlLabel value="male" control={<Radio />} label="Discount" />
-        <FormControlLabel value="name" control={<Radio />} label="Name"  onClick={()=>handleSortlth("asc")}/>
+        <FormControlLabel value="name" control={<Radio onClick={()=>handleSort('prod_name')}/>} label="Name"/>
         <FormControlLabel value="newArrivals" control={<Radio />} label="New Arrivals" />
-        <FormControlLabel value="lth" control={<Radio />} label="Price Low To High" onClick={()=>handleSortlth("lth")} />
-        <FormControlLabel value="htl" control={<Radio />} label="Price High To Low" onClick={()=>handleSortlth("htl")}/>
+        <FormControlLabel value="lth" control={<Radio onClick={()=>handleSort('best_price')}/>} label="Price Low To High"/>
+        <FormControlLabel value="htl" control={<Radio onClick={()=>handleSort('best_price_high_to_low')}/>} label="Price High To Low"/>
         <FormControlLabel value="rating" control={<Radio />} label="Ratings" />
       </RadioGroup>
     </FormControl>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion  expanded>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Category</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+          <FormGroup>
+      <FormControlLabel name='tic' control={<Checkbox checked = {currCategory == "Skin Care" ? true : false} />} label="Skin Care"  onClick={()=> handleCategory("Skin Care")}/>
+      <FormControlLabel name='tic2' control={<Checkbox checked = {currCategory == "Lip Care" ? true : false} />} label="Lip Care"  onClick={()=> handleCategory("Lip Care")}/>
+      <FormControlLabel name='tic2' control={<Checkbox checked = {currCategory == "HAIR" ? true : false} />} label="Hair"  onClick={()=> handleCategory("HAIR")}/>
+      <FormControlLabel name='tic2' control={<Checkbox checked = {currCategory == "Perfumes" ? true : false} />} label="Perfumes"  onClick={()=> handleCategory("Perfumes")}/>
+      <FormControlLabel name='tic2' control={<Checkbox checked = {currCategory == "makeup" ? true : false} />} label="Makeup"  onClick={()=> handleCategory("makeup")}/>
+      <FormControlLabel name='tic2' control={<Checkbox checked = {currCategory == "EVERYDAY" ? true : false} />} label="Everyday" onClick={()=> handleCategory("EVERYDAY")}/>
+      {/* <FormControlLabel name='tic2' control={<Checkbox disabled />} label="Mens" /> */}
+    </FormGroup>
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -209,51 +177,15 @@ function ProductCategory() {
         <AccordionDetails>
           <Typography>
           <FormGroup>
-      <FormControlLabel name='tic' control={<Checkbox  />} label="Rs. 0 - Rs . 499"  onClick={()=> sortbyPrice(0 , 499)} />
-      <FormControlLabel name='tic2' control={<Checkbox />} label="Rs. 500 - Rs . 999"   onClick={()=> sortbyPrice(500 , 999)}/>
-      <FormControlLabel name='tic2' control={<Checkbox />} label="Rs. 1000 - Rs . 1999"  onClick={()=> sortbyPrice(1000 , 1999)} />
-      <FormControlLabel name='tic2' control={<Checkbox />} label="Rs. 2000 - Above"   onClick={()=> sortbyPrice(2000 , 9999999)}/>
+      <FormControlLabel name='tic' control={<Checkbox  checked={start == 0 && !isFinite(end) ? true :false}/>} label="All"   onClick={()=>handlePriceRange(0,Infinity)}/>
+      <FormControlLabel name='tic' control={<Checkbox  checked={start == 0 && end==499? true :false}/>} label="Rs. 0 - Rs . 499"   onClick={()=>handlePriceRange(0,499)}/>
+      <FormControlLabel name='tic2' control={<Checkbox checked={start == 500 && end == 999? true :false}/>} label="Rs. 500 - Rs . 999"  onClick={()=>handlePriceRange(500,999)}/>
+      <FormControlLabel name='tic2' control={<Checkbox checked={start == 1000 && end == 1999 ? true :false}/>} label="Rs. 1000 - Rs . 1999" onClick={()=>handlePriceRange(1000,1999)}/>
+      <FormControlLabel name='tic2' control={<Checkbox checked={start == 2000 ? true :false}/>} label="Rs. 2000 - Above"  onClick={()=>handlePriceRange(2000 , Infinity)}/>
     </FormGroup>
           </Typography>
         </AccordionDetails>
       </Accordion>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* Ends here... */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -266,19 +198,17 @@ function ProductCategory() {
                     <div className='rdiv'>
 
 
-                    {
-                      data2.map((elem) => {
+                  {
+                    !loading && data.length > 0 && data.map((elem) => {
                         return (
                           <>
-                            {
-                              elem.categories == type2 ?  <>
-                          <div className='productCate_card'>
+                          {elem.best_price >=start && elem.best_price <= end && <div className='productCate_card'>
 
-                        <img src={elem.url_1} alt="Not Found" onClick={()=> handleDesRedirect(elem.id)}/>
+                        <img src={elem.url_1} alt="Not Found" />
 
-                        <h6 className='prod_name' onClick={()=> handleDesRedirect(elem.id)}>{elem.prod_name}</h6>
-                        <div className="price_outer" onClick={()=> handleDesRedirect(elem.id)}>
-                        <div> <span>⭐⭐⭐⭐⭐</span> <b className='ttd'>&#x20B9; {elem.best_price}</b></div>
+                        <h6 className='prod_name' >{elem.prod_name}</h6>
+                        <div className="price_outer"> 
+                        <div><span>⭐⭐⭐⭐⭐</span> <b className='ttd'>&#x20B9; {elem.best_price}</b></div>
                         </div>
 
                         <div className='btn_outer'>
@@ -286,20 +216,28 @@ function ProductCategory() {
                             <button className='testbtn'>Buy Now</button>
                         </div>
 
-                    </div>
-                          </> : null
-                            }
+                    </div>}
                           </>
                         )
                       })
                     }
 
+                    {
+                      loading ? <>
+                        <div><Skeleton variant="rectangular" width='100%' height='100%'  animation="wave"/></div>
+                        <div><Skeleton variant="rectangular" width='100%' height='100%'  animation="wave"/></div>
+                        <div><Skeleton variant="rectangular" width='100%' height='100%' animation="wave" /></div>
+                        <div><Skeleton variant="rectangular" width='100%' height='100%'  animation="wave"/></div>
+                        <div><Skeleton variant="rectangular" width='100%' height='100%'  animation="wave"/></div>
+                        <div><Skeleton variant="rectangular" width='100%' height='100%'  animation="wave"/></div>
+                        <div><Skeleton variant="rectangular" width='100%' height='100%'  animation="wave"/></div>
+                        <div><Skeleton variant="rectangular" width='100%' height='100%'  animation="wave"/></div>
+                         </>: null
+                      
+                    }
 
-
-                    </div>
-
-
-
+                    
+                    </div> 
             </div>
 
 
