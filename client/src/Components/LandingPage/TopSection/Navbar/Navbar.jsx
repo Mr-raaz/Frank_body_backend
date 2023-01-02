@@ -3,13 +3,13 @@ import './navbar.css'
 import logo from '../img/log.png'
 import { NavLink } from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faMagnifyingGlass , faUser , faCartShopping} from '@fortawesome/free-solid-svg-icons';
+import {faMagnifyingGlass , faUser , faCartShopping,faX} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 function Navbar() {
 
     const cartitem = useSelector((store) => store.cart);
-
+     const [change,setChange]=useState(false);
     const [count , setCount] = useState(cartitem.length);
 
     useEffect(()=>{
@@ -35,9 +35,21 @@ function Navbar() {
                                 <li className="res_m"><NavLink to='/about'>About</NavLink></li>
                                 <li className="res_m"><NavLink to='/contact'>Contact</NavLink></li>
                             </ul>
+                    </div> 
+                    <div id='navbarSearchBox'>
+                   <span id={change ? 'searchNavicon' : 'searchNaviconChange'}> <FontAwesomeIcon style={change ? {color:'#e76364',marginTop: '8px'}:{color:'white',marginTop: '8px'} }   icon={faMagnifyingGlass} className="cart_logo"onClick={()=>setChange(true)} /></span>
+                    <input type="text"  id={change ?'searchInput' : 'searchInputChange' } />
+                    <FontAwesomeIcon icon={faX}  id={change ? 'searchcross' : 'searchcrossChange'} className="cart_logo" onClick={()=>setChange(false)}/>
+                    <div class='searchdivsuggestion' >
+                       <div className={change ? "SearchSuggestion" : 'SearchSuggestionNew'}></div>
+                       <div className={change ? "SearchSuggestion" : 'SearchSuggestionNew'}></div>
+                       <div  className={change ? "SearchSuggestion" : 'SearchSuggestionNew'}></div>
+                       <div className={change ? "SearchSuggestion" : 'SearchSuggestionNew'}></div>
+               {/*  */}
                     </div>
+                    </div>
+                    
                     <div className='navbar_icons'>
-                    <NavLink className="res_m"><FontAwesomeIcon icon={faMagnifyingGlass} className="cart_logo"/></NavLink>
                     <NavLink to='/profile'><FontAwesomeIcon icon={faUser} className="cart_logo"/></NavLink>
                     <NavLink to='/cart' className="res_m"><div className='cartLogo_div'>
                     <FontAwesomeIcon icon={faCartShopping} className="cart_logo"/>

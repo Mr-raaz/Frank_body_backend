@@ -112,16 +112,11 @@ route.post('/googleregister' , async (req,res)=>{
 
 route.post('/userResetPassword/:id/:token', async(req, res)=>{
   const {password, confirm_password} =req.body;
- 
+   console.log(password,confirm_password);
    const {id,token}=req.params;
  console.log(id)
    const temp =await user.findById(id);
-   if(temp){
-
-   }
-   else{
-    
-   }
+   
    console.log(temp)
  const secretId= temp._id.toString();;
    const new_secret=secretId + "ayush";
@@ -134,6 +129,7 @@ route.post('/userResetPassword/:id/:token', async(req, res)=>{
              "message":"Password does not match",
          })
         }else{
+          console.log("password",password,confirm_password);
           const salt =await bcrypt.genSalt(10);
           const hashPassword = await bcrypt.hash(password, salt);
           await user.findByIdAndUpdate(req.params._id,{ $set:{
