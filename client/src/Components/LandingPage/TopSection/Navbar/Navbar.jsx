@@ -9,12 +9,15 @@ import { useSelector } from 'react-redux';
 function Navbar() {
 
     const cartitem = useSelector((store) => store.cart);
+    const login_status = useSelector((store) => store.loginStatus);
 
-    const [count , setCount] = useState(cartitem.length);
+    const [count , setCount] = useState(0);
 
     useEffect(()=>{
-        setCount(cartitem.length);
-    },[cartitem])
+        if(login_status){
+            setCount(cartitem.length);
+        }
+    },[cartitem , login_status])
 
     const navigate = useNavigate();
 

@@ -192,3 +192,15 @@
 .rating_box_single{
     padding: 5px;
 }
+.nocomment_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.nocomment_div img {
+    height: 60%;
+    width: 40%;
+    /* border: 1px solid red; */
+    margin-bottom: 2%;
+}
