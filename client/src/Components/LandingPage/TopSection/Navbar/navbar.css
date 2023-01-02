@@ -113,8 +113,8 @@ margin-left: -20px;
 }
 .SearchSuggestion{
     border:1px solid red;
-    background-color: #e76364;
-    
+    background-color: white;
+    border-color:#e76364 ;
     width:100%;
     height:30px;
     margin-bottom: 5px;
@@ -124,10 +124,10 @@ margin-left: -20px;
 }
 .SearchSuggestionNew{
     border:1px solid red;
-    background-color: #e76364;
+    background-color: white;
     margin-bottom: 5px;
     width:100%;
-   
+   border-color:#e76364 ;
     height:30px;
     border-radius:50px 50px 50px 50px;
     opacity: -1;

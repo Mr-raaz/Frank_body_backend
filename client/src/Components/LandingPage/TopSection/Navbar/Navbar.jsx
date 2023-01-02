@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMagnifyingGlass , faUser , faCartShopping,faX} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 function Navbar() {
 
     const cartitem = useSelector((store) => store.cart);
