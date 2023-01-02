@@ -5,6 +5,7 @@ import {AnimatePresence} from 'framer-motion';
 import avtar from './Components/LandingPage/Images/chatbot.png';
 import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
+
 const steps = [
     {
         id: '0',
@@ -63,6 +64,7 @@ const config = {
 function App() {
     return (
         <>
+        
 <AnimatePresence mode='wait'>
         <AllRoutes>
 
@@ -73,6 +75,7 @@ function App() {
 
         </AllRoutes>
         </AnimatePresence>
+       
 
         <ThemeProvider theme={theme}>
                 <ChatBot

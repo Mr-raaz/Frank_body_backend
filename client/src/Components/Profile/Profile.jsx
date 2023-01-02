@@ -1,8 +1,186 @@
 import React from 'react';
+// import {Box} from "@mui/material"
+
+import { useState } from 'react';
+import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
+import { Box } from '@chakra-ui/react'
+import { Text, Button, useMediaQuery, HStack, VStack, Grid, GridItem, Image, Heading, FormControl, FormHelperText,
+    FormLabel, Input
+} from '@chakra-ui/react';
+import {profileSideList} from "../../constant"
+import Cookies from 'universal-cookie';
+import {SetLogin} from '../../ReduxStore/Actions/mainAction';
+import { useDispatch } from 'react-redux';
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+
+import { useToast } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react';
 function Profile(props) {
+
+    const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
+    const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
+    const [isLargerThan1000] = useMediaQuery('(min-width: 1300px)');
+
+    const toast = useToast()
+
+    const cookies = new Cookies();
+
+
+    const dispatch = useDispatch();
+
+
+    function handleLogout(){
+        toast({
+            title: 'Logging out...',
+
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          })
+            console.log("logout");
+        setTimeout(()=>{
+        SetLogin(dispatch , false);
+        cookies.remove('jwt')
+       },3000)
+
+    }
+
+    let border = {
+        borderRadius : "10px"
+    }
+    let currentUser = {
+        name : "Hari Prasanth",
+        email : "hariprasanthmath@gmail.com",
+        mobile : "8248608590",
+        gender : ""
+    }
+    let imageAndName = {
+       display:"flex",
+       alignItems:"center",
+       flexDirection:"column",
+       justifyContent:"center",
+       margin:"auto"
+    }
+    let centerIt = {
+        display:"flex",
+       alignItems:"center",
+       flexDirection:"row",
+       justifyContent:"center",
+       border
+    }
+
+
     return (
         <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. In error dolores unde odio nemo, harum quam quibusdam non ratione necessitatibus nesciunt delectus perspiciatis, nihil odit doloribus temporibus inventore eveniet debitis vitae culpa minima. Necessitatibus, doloremque debitis facilis odio officiis ea nostrum quam voluptatibus ipsa minima illum dicta nesciunt iste? Quae minus dolorem reprehenderit. Exercitationem, alias. Repellat et dicta consequuntur rerum iusto mollitia, voluptas facilis ipsam commodi velit voluptate voluptatum optio impedit consectetur laudantium delectus doloremque? Unde dolorum ratione ut nesciunt voluptates molestiae id quis et at reiciendis, expedita quisquam voluptatibus modi repudiandae fugit, aut ea pariatur non sapiente minus. Dignissimos, deserunt quibusdam. Earum reiciendis, ut, explicabo perferendis quibusdam ratione sed in totam commodi est quia quo nihil maiores corrupti placeat dignissimos possimus facere cum repudiandae aut. Nostrum quo repellendus debitis eligendi, aliquid inventore, incidunt labore alias soluta ducimus ratione nam deserunt, modi repellat consequatur temporibus doloribus sint architecto voluptatem consectetur quis illum adipisci excepturi. Consectetur dolores obcaecati, dolor explicabo reiciendis quis. Voluptate numquam eaque eos adipisci dolore. Nobis neque asperiores aliquid alias obcaecati inventore beatae, quod qui facilis temporibus voluptas esse modi reprehenderit voluptatem. Tenetur sunt adipisci, sed autem quod labore dolore impedit a placeat asperiores nostrum facilis vitae suscipit commodi possimus ipsa dolorem magnam id cumque. Ipsum consequatur temporibus tempora deleniti incidunt itaque, perferendis soluta aspernatur, porro maxime suscipit quasi veritatis minus tempore voluptas quod assumenda perspiciatis laudantium aliquid eveniet hic. Illum ducimus impedit distinctio cumque quis dignissimos unde temporibus perferendis ipsam vel vitae officiis ipsum quibusdam excepturi ullam tempore tenetur qui suscipit, dolore, quidem quisquam officia! Alias excepturi vitae atque ex sint eaque, soluta, ullam quo impedit dolor commodi, in laudantium! Dicta possimus, soluta debitis cupiditate ut sapiente. Molestias error consequatur eius ratione quia deleniti ex expedita similique dolorem adipisci libero, tempore, blanditiis harum quis veritatis dolore cum fugit. Ipsam soluta deserunt repellendus aliquam! Sint, doloremque commodi? Debitis voluptates minus dignissimos vel pariatur quibusdam voluptate distinctio modi corporis voluptatem architecto officiis consectetur, dicta totam quasi sed. Doloribus eius quae quas voluptates distinctio fuga, fugit nostrum. Autem blanditiis perferendis dolore, impedit aliquam error consequuntur veniam illum voluptatum distinctio quibusdam, explicabo vitae repellendus? Ut dignissimos odit laborum eaque nesciunt cumque voluptates, dolorem enim repellat, vel harum eius voluptate blanditiis eligendi accusantium suscipit. Inventore quas at illum, ad maxime quos harum in sunt officiis laboriosam error magni labore temporibus suscipit consectetur rerum voluptate, tempora sint enim eos fuga totam dolor eveniet. Eius repudiandae quaerat eaque delectus ut dicta accusantium obcaecati praesentium dolorem unde at, perferendis ea dolore laudantium animi voluptatum totam voluptate facilis hic sunt quia, aperiam iusto reiciendis? Omnis nulla accusantium delectus. Odio perferendis facere accusantium debitis asperiores. Voluptatum nulla nam debitis quam ducimus. Suscipit dignissimos impedit minus nisi quidem eos esse omnis aliquid quae et fugiat labore exercitationem atque magni quisquam, odit fugit fuga corporis. Amet in suscipit alias deleniti inventore sed accusamus quod neque dolores corporis distinctio dicta fugiat fuga, officia voluptatibus incidunt laboriosam vel consequuntur, labore, laborum sapiente dolorum repellendus? Doloremque iure fugit libero perspiciatis iste obcaecati eum enim magni autem excepturi, officia amet quisquam ut adipisci voluptas omnis, vero rem numquam assumenda. Temporibus, eos. Excepturi doloremque perspiciatis est dignissimos exercitationem. Fuga, debitis nesciunt quos blanditiis et tenetur ab hic? Explicabo inventore nesciunt deserunt praesentium suscipit, qui ut laborum fugiat aliquam vitae culpa at, rerum alias perferendis repellendus quaerat cum recusandae nam debitis tempore optio blanditiis. Beatae tempora reiciendis, dolores harum nobis architecto, error dolorem, sit magnam perspiciatis expedita quaerat? Vel, veniam officia nobis libero itaque deleniti temporibus voluptatibus quo pariatur fugiat quae accusantium mollitia ducimus corrupti quibusdam quasi tempora hic sint iste! Veniam nulla ipsam aut quisquam quod nisi soluta repellat odio dicta odit deserunt culpa, placeat reiciendis accusamus porro modi, aperiam impedit dolor tempora iusto, ullam consectetur veritatis quidem. Ex dolores consequuntur nobis dignissimos inventore eos, tempore saepe deleniti minima placeat voluptatem magni laboriosam vel qui expedita debitis atque voluptate molestiae? Nihil architecto quae exercitationem vitae rerum ipsa excepturi dolor culpa fuga! Maxime incidunt mollitia, rem ipsum molestias amet provident similique magnam facilis pariatur natus autem, beatae voluptatum quam ipsa eos perspiciatis itaque expedita. Quaerat, animi obcaecati. Expedita minima deserunt consectetur in nobis cupiditate laboriosam? Nam assumenda fugiat molestiae. Dolorem nisi esse fuga exercitationem libero est omnis totam corporis porro! Quos ea iusto, aliquam dolor ullam rerum commodi, id ratione ab, earum molestiae minima pariatur nulla tempore nisi unde harum ipsam? Error possimus dolor deleniti veniam aut quod provident temporibus laborum eius facere similique tempore ea laudantium delectus ipsa doloremque harum ullam saepe consequuntur quae, ratione maiores. Repudiandae vitae molestiae error sunt quidem quo vero eum consequuntur voluptates doloremque quaerat repellendus similique ratione id reprehenderit, minima, exercitationem odio blanditiis officia facere mollitia necessitatibus quod beatae? Error soluta modi ratione, officia, non impedit laborum ullam sint debitis dolorem iste minima, quasi cum praesentium consequatur! Repellendus aspernatur ipsam, est odio necessitatibus quisquam error fuga iste voluptatem quas iusto asperiores, dolorum impedit quae numquam reiciendis assumenda recusandae unde deserunt reprehenderit consequatur enim amet ad excepturi. Sit quaerat ad, cumque beatae soluta dolores quidem ducimus libero cupiditate delectus veniam optio ipsam accusamus ab, quos voluptas molestiae natus maiores rerum assumenda nostrum illo? Ducimus, recusandae. Quod, facilis? Modi neque asperiores odit inventore. Iste fuga dignissimos voluptatem eligendi natus maiores quibusdam aliquid dolores earum possimus ea sunt illum mollitia odit quia, odio ducimus tempora aliquam id corporis enim veritatis! Dolore voluptatum nemo pariatur, quidem laudantium eaque itaque dignissimos corporis distinctio quas hic consequuntur excepturi quo sapiente. Magni dolorum exercitationem iste corrupti, saepe ipsam. Fuga ratione sunt dolore dignissimos similique tenetur odit nihil voluptatum vero! Harum consequuntur dolorem vel. Tempore vel, velit praesentium nobis iure laudantium quas exercitationem, deleniti, quam voluptatem adipisci enim repellat libero ex. Ipsam labore eos explicabo deleniti necessitatibus aliquam quae inventore qui. Laudantium sequi ipsam voluptatibus, a praesentium, quae error ullam nostrum maiores sed similique incidunt corrupti fugit deserunt exercitationem quos dignissimos cumque neque sit quibusdam repellendus aut beatae magni ea! Perspiciatis accusamus, repellat incidunt nostrum amet commodi. Nostrum eos facilis repellendus libero reiciendis, amet soluta quasi suscipit!
+            {/* <Box
+  sx={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: 1,
+    gridTemplateRows: 'auto',
+    gridTemplateAreas: `"header header header header"
+  "main main . sidebar"
+  "footer footer footer footer"`,
+  }}
+>
+  <Box sx={{ gridArea: 'header', bgcolor: 'primary.main' }}>Header</Box>
+  <Box sx={{ gridArea: 'main', bgcolor: 'secondary.main' }}>Main</Box>
+  <Box sx={{ gridArea: 'sidebar', bgcolor: 'error.main' }}>Sidebar</Box>
+  <Box sx={{ gridArea: 'footer', bgcolor: 'warning.dark' }}>Footer</Box>
+</Box> */}
+ <ChakraProvider>
+ <Box backgroundColor={"#f3f7fb"} height={"100vh"}>
+        <Box marginTop="600px" width="80%" margin="auto">
+
+            <Grid
+                  h='500px'
+                  templateRows='repeat(6, 1fr)'
+                  templateColumns='repeat(6, 1fr)'
+                  gap={4}
+                 >
+                      <GridItem style={border} rowSpan={2} colSpan={2} bg='white'>
+                      <HStack height={"100%"} minWidth={"max-content"} padding="30px" >
+                             <img src="https://www.netmeds.com/msassets/images/icons/profile-icon.svg"></img>
+                              <VStack margin={"30px"}>
+                              <Heading size={"md"}>{currentUser.name}</Heading>
+                              <Text fontSize={"sm"}>{currentUser.email}</Text>
+                              </VStack>
+                     </HStack>
+                      </GridItem>
+                      <GridItem  rowSpan={2} colSpan={4 } bg='white' style={centerIt}> 
+                      <HStack display={"flex"} flexDirection={"row"} justifyContent={"space-around"} width={"60%"} margin={"auto"}>
+                        <Box style={imageAndName}> 
+                            <Image src="https://www.netmeds.com/msassets/images/icons/payment_history.svg"></Image>
+                            <Text>Payment Methods</Text>
+
+                        </Box>
+                        <Box style={imageAndName}>
+                        <Image src="https://www.netmeds.com/msassets/images/icons/medicine_orders.svg"></Image>
+                        <Text>Medicine Order</Text>
+                        </Box>
+                        <Box style={imageAndName}>
+                        <Image src="https://www.netmeds.com/msassets/images/icons/rewards.svg"></Image>
+                        <Text>My Rewards</Text>
+                        </Box>
+                        </HStack>   
+                      </GridItem>
+                      <GridItem style={border} rowSpan={4} colSpan={2} bg='white' > 
+
+                        <VStack margin="10%" width="80%" display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                            {profileSideList.map((eachItem,index)=>{
+                                if(index != profileSideList.length-1){
+                                return <HStack width="100%" display={"flex"} transition={"width 0.5s ease"} justifyContent={"start"} _hover={{width:"110%", transition: 'width ease 0.5s', cursor:"pointer"}}  > 
+                                <Image width="40px" src={eachItem.listImg}></Image>
+                                <HStack width="100%" display={"flex"} justifyContent={"space-between"} paddingBottom={"4px"} borderBottom={index+1 < profileSideList.length ? "3px solid lightgrey" : ""}>
+                                <Text>{eachItem.content}</Text>
+                                <Image src="https://www.netmeds.com/msassets/images/icons/keyboard_arrow_big_right.svg"></Image>
+                                </HStack>
+                              </HStack>
+                                }
+                            })}
+                            <HStack width="100%" display={"flex"} transition={"width 0.5s ease"} justifyContent={"start"} _hover={{width:"110%", transition: 'width ease 0.5s', cursor:"pointer"}} onClick={handleLogout } > 
+                                <Image width="40px" src={profileSideList[profileSideList.length-1].listImg}></Image>
+                                <HStack width="100%" display={"flex"} justifyContent={"space-between"} paddingBottom={"4px"} >
+                                <Text>{profileSideList[profileSideList.length-1].content}</Text>
+                                <Image src="https://www.netmeds.com/msassets/images/icons/keyboard_arrow_big_right.svg"></Image>
+                            </HStack>
+                            </HStack>
+
+                        </VStack>
+                       </GridItem>
+                      <GridItem style={border} rowSpan={3} colSpan={4} bg='white' > 
+                        <HStack display={"flex"} justifyContent={"space-between"} padding="30px">
+                            <VStack width={"40%"}>
+                            <FormControl>
+                                <FormLabel fontWeight={"bold"}>Login Information</FormLabel>
+                                <FormLabel fontWeight={"700"} color={"lightblue"}>Email</FormLabel>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.email}</Text>
+                                <FormHelperText>We'll never share your email.</FormHelperText>
+                                <FormLabel marginTop={"6"} fontWeight={"700"} color={"lightblue"}>Mobile Number</FormLabel>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.mobile}</Text>
+                            </FormControl>
+
+
+                            </VStack>
+                            <VStack width={"40%"}>
+                            <FormControl>
+                                <FormLabel fontWeight={"bold"}>PERSONAL INFORMATION</FormLabel>
+                                <FormLabel fontWeight={"700"} color={"lightblue"}>FULL NAME</FormLabel>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.name}</Text>
+
+                                <FormLabel marginTop={"6"} fontWeight={"700"} color={"lightblue"}>Gender</FormLabel>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.gender.length == 0? "NO DATA" : currentUser.gender}</Text>
+                            </FormControl>
+
+
+                            </VStack>
+                        </HStack>
+                       </GridItem>
+              </Grid>
+           {/* </Box> */}
+        </Box>
+        </Box>
+</ChakraProvider>
         </div>
     );
 }
