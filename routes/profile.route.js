@@ -9,6 +9,21 @@ route.get("/", (req, res)=>{
 
 })
 
+route.get("/mobilegender/:id", async (req, res)=>{
+
+    let userID = req.params.id
+     
+
+    try{
+        var userdata = await user.find({_id:userID}).select("address");
+        
+        res.send({...userdata})
+    }catch(err){
+        res.status(500).send({error:err});
+    }
+     console.log(userdata);
+})
+
 route.post("/", async (req, res)=>{
 
     let requiredData = req.body;
@@ -16,12 +31,12 @@ route.post("/", async (req, res)=>{
   let userdata = {
 
     email: requiredData.email,
-    firstname: requiredData.firstname,
-    lastname: requiredData.lastname,
-    mobile: requiredData.mobile,
+    
+    contact: requiredData.mobile,
     gender: requiredData.gender
 
   };
+  
 
   // updating the address data with email reference
   try{
