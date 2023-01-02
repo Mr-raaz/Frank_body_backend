@@ -11,7 +11,7 @@ function Navbar() {
 
     const cartitem = useSelector((store) => store.cart);
     const login_status = useSelector((store) => store.loginStatus);
-
+ const [change ,setChange] =useState(false);
     const [count , setCount] = useState(0);
 
     useEffect(()=>{
