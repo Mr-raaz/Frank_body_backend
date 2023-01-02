@@ -39,9 +39,11 @@ router.post("/login", async (req, res)=>{
 
         if(passwordMatch){
           const token = await jwt.sign({email:reqData.email} , "secretkey");
-
+          console.log(db[0]._id);
           res.send({
-              token:token
+              token:token,
+              // sending user id with token for future use
+              userId : db[0]._id
           })
         } else {
           res.status(500).send({

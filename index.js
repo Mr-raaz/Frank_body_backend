@@ -5,11 +5,13 @@ const connect = require("./db/connect");
 const authRoute = require('./routes/auth.route');
 const userRoute = require('./routes/user.route');
 const productRoute = require('./routes/product.route');
+const profileRoute = require("./routes/profile.route")
 const cookieSession = require("cookie-session");
 const passportSetup = require("./passport");
 const passport = require("passport");
 const commentRoute = require('./routes/comments.route');
 const app = express();
+
 
 app.use(
   cookieSession({ name: "session", keys: ["ayush"], maxAge: 24 * 60 * 60 * 100 })
@@ -42,11 +44,12 @@ app.use('/user',userRoute);
 app.use('/products' , productRoute);
 app.use("/auth", authRoute);
 app.use('/comment' , commentRoute);
-
+app.use('/profile', profileRoute);
 
 app.get('/' , (req,res) =>{
     res.send("server is working....");
 })
+
 
 
 
