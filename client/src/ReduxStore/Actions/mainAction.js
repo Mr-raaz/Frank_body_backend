@@ -50,29 +50,15 @@ function setSortingOrder(curr , dispatch){
 }
 
 
-function addToCart(data , dispatch , id){
-
-const actual = {...data , cartStatus:true};
-
-// fetch(`https://frankbodyapi.herokuapp.com/products/${id}`,{
-
-    fetch(`https://odd-pleat-cod.cyclic.app/products/${id}`,{
-
-
-        method:'PATCH',
-        headers:{
-            "Content-Type": "application/json"
-        },
-        body:JSON.stringify({
-            "cartStatus" : true
-        })
-    })
-
+function addToCart(data , dispatch){
 
     dispatch({
         type:"ADD",
-        payload:actual
+        payload:data
     })
+
+
+    // console.log("data received");
 }
 
 function quantityZero(data ,dispatch , id){

@@ -7,19 +7,39 @@ import b1 from './Images/bottom-1.webp';
 import b2 from './Images/bottom-2.webp';
 import b3 from './Images/bottom-3.webp';
 import b4 from './Images/bottom-4.webp';
-
+import { useEffect } from "react";
 import bfi1 from './Images/buttfrominsta/bfi1.webp';
 import bfi2 from './Images/buttfrominsta/bfi2.webp';
 import bfi3 from './Images/buttfrominsta/bfi3.webp';
 import bfi4 from './Images/buttfrominsta/bfi4.webp';
 import bannerI1 from './Images/bannerI1.webp'
 import { Footer } from "../Footer/footer";
-
-
-
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../ReduxStore/Actions/mainAction";
 
 
 function LandingPage() {
+    const cookies = new Cookies();
+    const dispatch  = useDispatch();
+
+    useEffect(()=>{
+        let token = cookies.get('jwt');
+        if(token){
+
+          axios.post('https://frank-body-backend.vercel.app/products/getcart' , {
+                headers: {
+                    Authentication:token
+                }
+            }).then((res)=>{
+                addToCart(res.data , dispatch);
+                
+            }).catch((err)=>{
+                console.log(err , "from ltd card");
+            })
+        }        
+      },[])
 
 
     return (

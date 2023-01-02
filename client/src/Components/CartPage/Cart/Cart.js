@@ -1,189 +1,173 @@
-import React, { useEffect, useRef, useState } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import { json, useNavigate } from "react-router-dom";
-import { AddQuantityKey, DecreaseQuantity, DeleteFromCart, IncreaseQuantity  , makeZero} from '../../../ReduxStore/Actions/mainAction';
+import React, { useRef } from 'react';
+import Navbar from '../../LandingPage/TopSection/Navbar/Navbar';
+import './Cart.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faAngleRight , faTrash} from '@fortawesome/free-solid-svg-icons';
+import offerPng from './offer.png';
+// import party from "party-js";
+import { useSelector } from 'react-redux';
+import Product from './Product';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+function Cart() {
 
-import "./Cart.css"
-import Navbar from "../../LandingPage/TopSection/Navbar/Navbar";
+    const coupon_input = useRef();
+    const cartData = useSelector((store) => store.cart);
 
-import { ToastContainer, toast } from 'react-toastify';
-import {toast as tt} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-export const Cart = ()=>{
-    
-    const cartData = useSelector((storeData)=>storeData.cart);
-    const [totalPrice,setTotalPrice] = useState(0);
-    const [coupon,setCoupon] = useState(false);
-    const discountRef = useRef(null);
-    const dispatch = useDispatch();
+    const [total_price , setTotalPrice] = useState(0);
+    const [price_discount , setPriceDiscount] = useState(0);
+    const [coupon_status , setcouponStatus] = useState(false);
+    const [invalid_coupon , setValidCoupon] = useState(false);
     const navigate = useNavigate();
+    
+    const[count_price , setPrice] = useState(0);
 
-    useEffect(()=>{
-        AddQuantityKey(cartData,dispatch)
-    },[])
-
-    function handleCheckout(){
-            localStorage.setItem("total_Price" , Math.round(totalPrice * 100)/100);
-            localStorage.setItem("orderHistory" , JSON.stringify(cartData));
-            makeZero(dispatch);
-            navigate('/checkout');
+    function check(val){
+        setTotalPrice((prev) => prev+val);
+        
+        if(val < 0){
+            setPriceDiscount((prev) => prev - 47)
+        } else {
+            setPriceDiscount((prev) => prev + 47)
+        }
     }
 
+    function cartPrice(){
+       let temp = 0;
+
+       cartData.map((elem)=>{
+        if(elem){
+            temp += (elem.best_price * elem.quantity);
+        }
+       })
+        setTotalPrice(temp);
+
+        setPriceDiscount(Math.floor(temp/10 - Math.random() * 60))
+    }
+
+    function handleProceed(){
+        navigate('/checkout')
+    }
+
+
+    function handlecoupon(e){
+        let text = coupon_input.current.value;
+
+        if(text == "FIRST"){
+            setTotalPrice((prev) => Math.floor(prev/2))
+            setcouponStatus(true)
+            setValidCoupon(false);
+        } else {
+            setValidCoupon(true);
+        }
+    }
+
+    function handleremove(){
+        setTotalPrice((prev) => prev+prev)
+            setcouponStatus(false)
+    }
     useEffect(()=>{
-        setTotalPrice(cartData.reduce((acc,el)=>{
-            return acc + el.best_price * el.quantity;
-        },0))
+        cartPrice();
     },[cartData])
 
-    const increaseCount = (index)=>{
-       IncreaseQuantity(cartData,index,dispatch)
-    }
-
-    const decreaseCount = (index)=>{
-        DecreaseQuantity(cartData,index,dispatch)
-    }
-
-    const handleCart = (index)=>{
-       DeleteFromCart(cartData,index,dispatch)
-    }
-
-    const discount = ()=>{
-
-        toast.success('Coupon Applied', {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
-
-        if(discountRef.current.value === "masai500" && totalPrice > 2000 && coupon === false) {
-            setTotalPrice((prev)=>prev-500);
-        }
-        else if(discountRef.current.value === "masai200" && totalPrice > 1000 && coupon === false){
-            setTotalPrice((prev)=>prev-200);
-        }
-        setCoupon(true);
-
-       
-    }
-
-    return (
-        <>
+    return ( 
+         <>
             <Navbar />
+            
+            <div className="cart_outer_content">
+            <p className='location'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Home <FontAwesomeIcon icon = {faAngleRight} /></b>&nbsp;  Cart</p>
 
-            <div className="cart_Item_outer">
-
-        <div className="head">
-        <p>Your Shopping Basket</p>
-
-         {/* Link CHECKOUT SECURELY button  */}
-
-        <button onClick={handleCheckout}>CHECKOUT SECURELY NOW</button>
-        </div>
-
-
-        <div>
-            <div className="item-heading">
-                <p style={{width:"530px"}}>ITEMS</p>
-                <p>PRICE</p>
-                <p>QUANTITY</p>
-                <p>SUBTOTAL</p>
-                <p></p>
-            </div>
-
-
-<ToastContainer style={{zIndex:50000000000}}/>
-            <div>
-                {
-                    cartData.map((el,index)=>{
-                        return <div className = "cartEle" key={index+1}>
-                            <div style={{display:"flex",flexDirection:"row",width:"500px",marginRight:"5px"}}>
-                                <img src={el.url_1} width="100px" height="80px" alt={el.prod_title}/>
-                            <div>
-                                <p className="ptag">{el.prod_name}</p> <br />
-                                <p className="sty">&nbsp;&nbsp;In stock</p>
-                                </div>
-                                </div>
-                            <p>₹{el.best_price}</p>
-                            <div style={{display:"flex",flexDirection:"row",gap:"10px"}}>
-                                <button className="dec" disabled = {el.quantity === 1 ? true : false} onClick={()=>decreaseCount(index)}>-</button>
-                                <p className="quant">{el.quantity}</p>
-                                <button className="inc" disabled = {el.quantity === 10 ? true : false} onClick={()=>increaseCount(index)}>+</button>
-                            </div>
-                            <p>₹{Math.round(el.best_price*el.quantity * 100) / 100}</p>
-                            <img src="https://th.bing.com/th/id/R.f6883ee1ce2e0e3755a1892da2fe7e3c?rik=ozgkFfeviLMaDg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_265949.png&ehk=gPghjaahwRbD4GGEcjuhCM8HJhQYy%2b2YzE5lGs5PvMo%3d&risl=&pid=ImgRaw&r=0" width="20px" height="20px" style={{marginTop:"15px"}} alt="" onClick={()=>handleCart(index)}/>
+            <div className="new_cart_outer">
+                    <div className='left_div'>
+                        <div className='first_section'>
+                            <p>
+                            
+                                <span>Continue Shopping</span><span> <b>{cartData.length}</b> Items</span>
+                            </p>
                         </div>
-                    })
-                }
+
+                        <div className="cart_items_section">
+
+                            
+                            
+                        {cartData.length > 0 && cartData.map((elem , idx)=>{
+                            
+                            if(elem){
+                                return <Product elem={elem} func={check}/>
+                            }
+                             
+                         })}
+                                
+                        </div>
+                    </div>
+
+                    <div className='right_div'>
+                            <div className="top_offer">
+                                <div><img src={offerPng} alt="Not found" /></div>
+
+
+
+                                <div><p className='offer_line'>Use Code <span className='new_user_name'>FIRST</span>  And Get 50% Discount</p></div>
+
+                                
+                            </div>
+
+                            <div className="price_detail_section">
+                                    
+                                <p><span>Item Total (MRP) </span> <span>&#x20B9; {total_price}</span></p>
+                                <p><span>Price Discount </span> <span>- &#x20B9; {price_discount}</span></p>
+
+                                <hr  className='first_hr'/>
+
+                                <p><span>Shipping Fee </span> <span>&#x20B9; 99</span></p>
+                                <p><span>Packaging Charges </span> <span> &#x20B9; 45</span></p>
+
+                                <hr  className='first_hr'/>
+
+                                <p className='final_amount'><span>To Be Paid </span> <span> &#x20B9; {Math.floor(total_price-price_discount + 144)}</span></p>
+                            </div>
+
+
+                            <div className='coupon_section'>
+                                    <div>Discount Coupon</div>
+                                    {
+                                        coupon_status ? <>
+                                            <div className="coupon_box">
+                                                <div>
+                                                    Coupon Applied : <span className='remove' onClick={handleremove}>Remove</span>
+                                                </div>
+
+                                                <div>-&#x20B9; {total_price}</div>
+                                            </div>
+                                        </> : <><div className='coupon_input_box'>
+                                        <input type="text"  ref={coupon_input}/>
+                                        <button onClick={handlecoupon}>Apply</button>
+                                    </div>
+                                    {
+                                        invalid_coupon ? <p className='invalid_coupon'>Invalid Coupon Code</p> : null
+                                    }
+</> 
+                                    
+                                    }
+                            </div>
+
+
+                            <div className="proceed_btn">
+                                <button onClick={handleProceed}>PROCEED</button>
+                            </div>
+                            
+                        
+                    </div> 
+                       
+            </div> 
+            
+
+
             </div>
-        </div>
 
-
-
-        <div className="subtotal">
-            <p> <i class="fa-regular fa-star"></i> Complete your order to earn {Math.round(totalPrice/32)} points</p>
-            <div style={{display:"flex",flexDirection:"row",width:"38%",gap:"80px"}} >
-                <p>Basket Subtotal : </p> 
-                <p>₹{Math.round(totalPrice * 100)/100}</p>
-            </div>
-        </div>
-
-
-
-        <div className="discount">
-            <div className="discount-child">
-                <input type="text" placeholder="Got a discount code ? Enter it here" ref={discountRef}/>
-                <button onClick={discount}>Add</button>
-            </div>
-        </div>
-
-
-
-        <div className="foot">
-
-            {/* Link the continue Shopping button  */}
-
-            <button>CONTINUE SHOPPING</button>
-
-            <div className="foot-child">
-
-                {/* Link CHECKOUT SECURELY button  */}
-
-                <button onClick={handleCheckout}>CHECKOUT SECURELY NOW</button>
-                <div>
-                    <img src= "https://www.onlinecasinos.org.uk/images/CASINO/Banking/gpay.png" width="60px" height="30px" alt=""/>
-                    <img src= "https://th.bing.com/th/id/R.da6e94dd3c89f40db67c3876d27674dd?rik=aBIV9h1KtgQbLg&riu=http%3a%2f%2f2.bp.blogspot.com%2f-c-anBBTMiTw%2fTVfnxr6OGvI%2fAAAAAAAAJQ4%2f7fNAYeoff8o%2fs1600%2fpaypal_logo16.jpg&ehk=Fo%2fIl8nSvF8o5aqMGL3ejj7a9jWYwEZppOmB8y9TMl0%3d&risl=&pid=ImgRaw&r=0" width="60px" height="30px" alt=""/>
-                    <img src= "https://www.aboutwebsites.info/wp-content/uploads/2020/11/Paytm-Logo.jpg" width="60px" height="30px" alt=""/>
-                    <img src= "https://laudco.com/storage/case-studies/July2019/gyKfHOjRAPp7JiqiAT01.png" width="60px" height="30px" alt=""/>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div className="chat">
-            <div className="chat-child1">
-                <img src = "https://th.bing.com/th/id/R.62ad0b526a35b3544436f5b6cfb32d55?rik=hd%2fiMU%2bQR5BExA&riu=http%3a%2f%2fwww.typemedia2011.com%2fdata%2fbigletters%2fSuperhero-Joetheplumber_f.png&ehk=QgLj6avEe%2fATXH3jCazKhlmrhtliOsyqSfo3UlAqQBk%3d&risl=&pid=ImgRaw&r=0" width="60px" height="60px" alt = ""/>
-                <div>
-                    <p className="font-sty">Live Chat</p>
-                    <p>Our Operators are <span style={{color:"darkgreen" , fontFamily:"Helvetica"}}>Online</span></p>
-                </div>
-            </div>
-            <div className="chat-child2">
-                <p>Average connection time 25 secs</p>
-                <button>START CHAT</button>
-            </div>
-        </div>
-
-    </div>
         </>
-    )
+    );
 }
-
 
 export default Cart;

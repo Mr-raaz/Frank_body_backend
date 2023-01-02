@@ -194,6 +194,21 @@ body::-webkit-scrollbar-thumb {
     text-align: center;
     font-family: poppins;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* media query below */
 @media only screen and (min-width: 421px) and (max-width: 720px) {
     .bottom_features_container{
         width: 100%;

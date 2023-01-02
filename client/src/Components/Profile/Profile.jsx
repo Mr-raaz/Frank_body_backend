@@ -1,110 +1,279 @@
 import React from 'react';
-import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
-import './Profile.css'
-import avtar from './img/avtar.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTruck , faAngleRight} from '@fortawesome/free-solid-svg-icons';
-import edit from './img/edit.png';
+// import {Box} from "@mui/material"
+
 import { useState } from 'react';
-function Profile() {
+import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
+import { Box } from '@chakra-ui/react'
+import { Text, Button, useMediaQuery, HStack, VStack, Grid, GridItem, Image, Heading, FormControl, FormHelperText,
+    FormLabel, Input
+} from '@chakra-ui/react';
+import {profileSideList} from "../../constant"
+import Cookies from 'universal-cookie';
+import {SetLogin} from '../../ReduxStore/Actions/mainAction';
+import { useDispatch } from 'react-redux';
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
-    // const data = ;
+import { useToast } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
+import { useRef } from 'react';
+import { Select } from '@chakra-ui/react';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+  } from '@chakra-ui/react'
+  import { EditIcon} from '@chakra-ui/icons'
 
-    const [data , setData] = useState(JSON.parse(localStorage.getItem("orderHistory")));
+function Profile(props) {
+  
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
-    function handleClickCancel(idx){
-        // data.splice(idx , 1)
+    const initialRef = React.useRef(null)
+    const finalRef = React.useRef(null)
 
-        let temp = data.filter((elem , id)=>{
-            return id != idx;
-        })
+    const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
+    const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
+    const [isLargerThan1000] = useMediaQuery('(min-width: 1300px)');
 
-        localStorage.setItem("orderHistory" , JSON.stringify(temp));
-        setData(temp);
+    const toast = useToast()
+
+    const cookies = new Cookies();
+
+
+    const dispatch = useDispatch();
+    const [currentUser, setCurrentuser] = useState({
+        firstname : "",
+        lastname : "",
+        email : "",
+        mobile : "",
+        gender : ""
+    });
+  let emptyData = {
+    firstname : "",
+    lastname : "",
+    email : "",
+    mobile : "",
+    gender : ""
+};
+    const [editUser, seteditUser] = useState(emptyData); 
+
+
+
+    function handleLogout(){
+        toast({
+            title: 'Logging out...',
+
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          })
+            console.log("logout");
+        setTimeout(()=>{
+        SetLogin(dispatch , false);
+        cookies.remove('jwt')
+       },3000)
+
     }
 
+    let border = {
+        borderRadius : "10px"
+    }
+    // let currentUser = {
+    //     name : "Hari Prasanth",
+    //     email : "hariprasanthmath@gmail.com",
+    //     mobile : "8248608590",
+    //     gender : ""
+    // }
+    let imageAndName = {
+       display:"flex",
+       alignItems:"center",
+       flexDirection:"column",
+       justifyContent:"center",
+       margin:"auto"
+    }
+    let centerIt = {
+        display:"flex",
+       alignItems:"center",
+       flexDirection:"row",
+       justifyContent:"center",
+       border
+    }
+   
+    const handleModalInputs = (e)=>{
+        
+        console.log(e.target.name, e.target.value);
+        seteditUser({...editUser, [e.target.name]:e.target.value});
+        
+    }
+
+    const handleSaveInput = ()=>{
+        console.log(editUser);
+        setCurrentuser({...editUser});
+        setTimeout(()=>{
+           onClose();
+        },1000)
+        // onClose
+    }
 
     return (
-        <>
-            <Navbar />
+        <div>
+           
+ <ChakraProvider>
+ <Box backgroundColor={"#f3f7fb"} height={"100vh"}>
+        <Box marginTop="600px" width="80%" margin="auto">
 
-            <div className="headingHere">
-                <h3>My Account</h3>
-            </div>
-            <div className="profile_outer">
+            <Grid
+                  h='500px'
+                  templateRows='repeat(6, 1fr)'
+                  templateColumns='repeat(6, 1fr)'
+                  gap={4}
+                 >
+
+                    {/* first */}
+                      <GridItem style={border} rowSpan={2} colSpan={2} bg='white'>
+                      <HStack height={"100%"} minWidth={"max-content"} padding="30px" >
+                             <img src="https://www.netmeds.com/msassets/images/icons/profile-icon.svg"></img>
+                              <VStack margin={"30px"}>
+                              <Heading size={"md"}>{`${currentUser.firstname} ${currentUser.lastname}` }</Heading>
+                              <Text fontSize={"sm"}>{currentUser.email}</Text>
+                              <EditIcon boxSize={4} _hover={{width:"110%", transition: 'width ease 0.5s',boxSize:"6" , cursor:"pointer"}} onClick={onOpen }/>
+ 
+
+                              </VStack>
+                     </HStack>
+                      </GridItem>
+                      {/* second */}
+                      <GridItem  rowSpan={2} colSpan={4 } bg='white' style={centerIt}> 
+                      <HStack display={"flex"} flexDirection={"row"} justifyContent={"space-around"} width={"60%"} margin={"auto"}>
+                        <Box style={imageAndName}> 
+                            <Image src="https://www.netmeds.com/msassets/images/icons/payment_history.svg"></Image>
+                            <Text>Payment Methods</Text>
+
+                        </Box>
+                        <Box style={imageAndName}>
+                        <Image src="https://www.netmeds.com/msassets/images/icons/medicine_orders.svg"></Image>
+                        <Text>Medicine Order</Text>
+                        </Box>
+                        <Box style={imageAndName}>
+                        <Image src="https://www.netmeds.com/msassets/images/icons/rewards.svg"></Image>
+                        <Text>My Rewards</Text>
+                        </Box>
+                        </HStack>   
+                      </GridItem>
+                      {/* third */}
+                      <GridItem style={border} rowSpan={4} colSpan={2} bg='white' > 
+
+                        <VStack margin="10%" width="80%" display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                            {profileSideList.map((eachItem,index)=>{
+                                if(index != profileSideList.length-1){
+                                return <HStack width="100%" display={"flex"} transition={"width 0.5s ease"} justifyContent={"start"} _hover={{width:"110%", transition: 'width ease 0.5s', cursor:"pointer"}}  > 
+                                <Image width="40px" src={eachItem.listImg}></Image>
+                                <HStack width="100%" display={"flex"} justifyContent={"space-between"} paddingBottom={"4px"} borderBottom={index+1 < profileSideList.length ? "3px solid lightgrey" : ""}>
+                                <Text>{eachItem.content}</Text>
+                                <Image src="https://www.netmeds.com/msassets/images/icons/keyboard_arrow_big_right.svg"></Image>
+                                </HStack>
+                              </HStack>
+                                }
+                            })}
+                            <HStack width="100%" display={"flex"} transition={"width 0.5s ease"} justifyContent={"start"} _hover={{width:"110%", transition: 'width ease 0.5s', cursor:"pointer"}} onClick={handleLogout } > 
+                                <Image width="40px" src={profileSideList[profileSideList.length-1].listImg}></Image>
+                                <HStack width="100%" display={"flex"} justifyContent={"space-between"} paddingBottom={"4px"} >
+                                <Text>{profileSideList[profileSideList.length-1].content}</Text>
+                                <Image src="https://www.netmeds.com/msassets/images/icons/keyboard_arrow_big_right.svg"></Image>
+                            </HStack>
+                            </HStack>
+
+                        </VStack>
+                       </GridItem>
+                       {/* fourth */}
+                      <GridItem style={border} rowSpan={3} colSpan={4} bg='white' > 
+                        <HStack display={"flex"} justifyContent={"space-between"} padding="30px">
+                            <VStack width={"40%"}>
+                            <FormControl>
+                                <FormLabel fontWeight={"bold"}>Login Information</FormLabel>
+                                <FormLabel fontWeight={"700"} color={"lightblue"}>Email</FormLabel>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.email}</Text>
+                                <FormHelperText>We'll never share your email.</FormHelperText>
+                                <FormLabel marginTop={"6"} fontWeight={"700"} color={"lightblue"}>Mobile Number</FormLabel>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.mobile}</Text>
+                            </FormControl>
 
 
-                <div className="profile_left">
-                    <div className='userDetails'>
-                            <div>
-                                <img src={avtar} alt="Not found" />
-                            </div>
+                            </VStack>
+                            <VStack width={"40%"}>
+                            <FormControl>
+                                <FormLabel fontWeight={"bold"}>PERSONAL INFORMATION</FormLabel>
+                                <FormLabel fontWeight={"700"} color={"lightblue"}>FULL NAME</FormLabel>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{`${currentUser.firstname} ${currentUser.lastname}` }</Text>
+
+                                <FormLabel marginTop={"6"} fontWeight={"700"} color={"lightblue"}>Gender</FormLabel>
+                                <Text width={"100%"} borderBottom={"2px solid lightgrey"} marginTop={"-2"}>{currentUser.gender.length == 0? "NO DATA" : currentUser.gender}</Text>
+                            </FormControl>
 
 
-                            <div>
-                                <h3>Anshu Raj</h3>
-                                <p>fakereal477@gmail.com</p>
-                                <p>+91 - 800******7</p>
-                            </div>
+                            </VStack>
+                        </HStack>
+                       </GridItem>
+              </Grid>
+           {/* </Box> */}
+        </Box>
+        </Box>
 
+        <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent onChange={handleModalInputs}>
+          <ModalHeader>Edit details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>First name</FormLabel>
+              <Input name="firstname" placeholder='First name' />
+            </FormControl>
 
-                    </div>
-                </div>
+            <FormControl mt={2}>
+              <FormLabel>Last name</FormLabel>
+              <Input name="lastname" placeholder='Last name' />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>Email</FormLabel>
+              <Input name="email" placeholder='Email Address' />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>Phone</FormLabel>
+              <Input name="mobile" placeholder='Phone Number' />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>Gender</FormLabel>
+              <Select name="gender" placeholder='Select option'>
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
+                    <option value='gender'>Other</option>
+              </Select>
+              
+            </FormControl>
+          </ModalBody>
 
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={handleSaveInput}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
-
-
-
-                <div className="profile_right">
-
-                        <div>
-                            <img src={edit} alt="Not found" />
-                            <h6>Edit Profile</h6>
-                        </div>
-
-
-                        <div>
-                            <img src="https://www.netmeds.com/msassets/images/icons/medicine_orders.svg" alt="Not found" />
-                            <h6>Orders</h6>
-                        </div>
-                        <div>
-                            <img src="https://www.netmeds.com/msassets/images/icons/rewards.svg" alt="Not found" />
-                            <h6>Rewards</h6>
-                        </div>
-                </div>
-
-
-
-            </div>
-            <div className="orderHistory">
-
-                <h3>Previous Orders</h3>
-
-                <div className="prev_order_container">
-                    {
-                        data.map((elem , idx)=>{
-                            return <>
-                            <br />
-                            <div className="orderItem">
-                        <div><img src={elem.url_1} alt="Not found" /></div>
-
-                        <div>
-                            <h3>{elem.prod_name}</h3>
-                            <p>OrderId : #34356</p>
-                            <p><b>Price:</b> &#x20B9; {elem.best_price  * elem.quantity}</p>
-                        </div>
-
-                        <div className='btn_gourp'>
-                            <button>Track Order</button>
-                            <button onClick={()=>handleClickCancel(idx)}>Cancel Order</button>
-                        </div>
-                    </div>
-                            </>
-                        })
-                    }
-                </div>
-                    </div>
-        </>
+</ChakraProvider>
+        </div>
     );
 }
 

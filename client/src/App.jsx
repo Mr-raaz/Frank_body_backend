@@ -2,11 +2,9 @@ import React from 'react';
 import "swiper/css/bundle";
 import AllRoutes from './AllRoutes/AllRoutes';
 import { AnimatePresence } from 'framer-motion';
-
 import avtar from './Components/LandingPage/Images/chatbot.png';
 import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
-import Search from './Components/searchbar/search';
 
 const steps = [
     {
@@ -66,8 +64,8 @@ const config = {
 function App() {
     return (
         <>
-            <AnimatePresence mode='wait'>
 
+            <AnimatePresence mode='wait'>
                 <AllRoutes>
 
 
@@ -87,7 +85,6 @@ function App() {
 
                 />
             </ThemeProvider>
-            <Search />
         </>
     );
 }

@@ -3,10 +3,10 @@ import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
 import { Link  , Navigate} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'
-import {faGoogle , faFacebook} from '@fortawesome/free-brands-svg-icons';
+import {faSquareGooglePlus , faSquareFacebook , faSquareGithub} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ToastContainer, toast } from 'react-toastify';
-import {toast as tt} from 'react-toastify';
+// import {toast as tt} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useRef } from 'react';
@@ -16,6 +16,7 @@ function Register() {
     const pass = useRef();
     const fname = useRef();
     const lname = useRef();
+    const navigate = useNavigate();
 
 
     function handleFormSubmit(e){
@@ -37,6 +38,11 @@ function Register() {
             progress: undefined,
             theme: "light",
             });
+
+            setTimeout(()=>{
+                navigate('/login');
+            },1500)
+
         }).catch((err)=>{
           toast.error(`${err.response.data}`, {
             position: "top-center",
@@ -52,11 +58,18 @@ function Register() {
 
     }
 
+// https://frank-body-backend.vercel.app/auth/github
+    const google = () => {
+        window.open("http://localhost:5000/auth/google", "_self");
+      };
+    
+      const facebook = () => {
+        window.open("http://localhost:5000/auth/facebook", "_self");
+      };
 
-
-
-
-
+      const github = () => {
+        window.open("http://localhost:5000/auth/github", "_self");
+      };
 
     return (
         <>
@@ -71,7 +84,7 @@ function Register() {
 
                     <div className='formSide'>
 
-                    <div  className='registerconatiner'>
+                    <div  className='registerconatiner register_section'>
 
         <form className='registerform' onSubmit={handleFormSubmit}>
             <h2 className='cana'>Create an account</h2>
@@ -86,6 +99,11 @@ function Register() {
         </form>
         <div className='registerlinks'>
             <Link className='registerlinksdata firstlink' to="/login">Have an account? Login</Link>
+        </div>
+        <div className="social_links_for_signup">
+            <FontAwesomeIcon  icon={faSquareFacebook}  className="social_links_hover social_links_hover1" onClick={facebook} />
+            <FontAwesomeIcon  icon={faSquareGooglePlus}  className="social_links_hover social_links_hover2" onClick={google} />
+            <FontAwesomeIcon icon={faSquareGithub}  className="social_links_hover social_links_hover3" onClick={github}/>
         </div>
     </div>
                     

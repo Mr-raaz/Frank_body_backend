@@ -6,9 +6,11 @@ import { useDispatch } from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlus , faMinus} from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-
+import Cookies from 'universal-cookie';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 function Card({data}) {
-
+    const cookies = new Cookies();
     let {url_1 , prod_name , best_price  , _id , cartStatus} = data;
 
     const cartData = useSelector((cartdata) => cartdata.cart);
@@ -16,6 +18,7 @@ function Card({data}) {
     const [cartState , currCartState] = useState(cartStatus);
     
     const [quant , setQuant] = useState(1);
+    const login_status = useSelector((store) => store.loginStatus);
 
     const dispatc = useDispatch();
 
@@ -33,9 +36,44 @@ function Card({data}) {
 
     function addtoc(){
 
-        currCartState(true);
 
-        addToCart(data , dispatc , _id);
+        if(login_status){
+            currCartState(true);
+            let token = cookies.get('jwt');
+            
+            axios.post('https://frank-body-backend.vercel.app/products/addtocart' , {
+                headers: {
+                    Authentication:token
+                },
+                data:{
+                   id:_id 
+                }
+            }).then((res)=>{
+                addToCart(res.data , dispatc);
+                
+            }).catch((err)=>{
+                console.log(err , "from ltd card");
+            })
+
+
+
+
+
+        } else {
+            toast.warn('Please Login First', {
+                position: "top-center",
+                autoClose: 1200,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+        }
+        // currCartState(true);
+
+        // addToCart(data , dispatc , _id);
 
     }
 
@@ -48,7 +86,21 @@ function Card({data}) {
         if(quant + val == 0){
             currCartState(false);
 
-            quantityZero(cartData , dispatc , _id);
+            let token = cookies.get('jwt');
+            
+            axios.post('https://frank-body-backend.vercel.app/products/deletefromcart' , {
+                headers: {
+                    Authentication:token
+                },
+                data:{
+                   id:_id 
+                }
+            }).then((res)=>{
+                addToCart(res.data , dispatc);
+                
+            }).catch((err)=>{
+                console.log(err , "from ltd card");
+            })
         }
         
     }

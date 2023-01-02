@@ -6,11 +6,16 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {addToCart , quantityZero} from '../../../ReduxStore/Actions/mainAction';
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'universal-cookie';
+import axios from 'axios';
 function Details_page({data}) {
 
 
-  let {id ,  prod_name, url_1, url_2  , categories , mrp , best_price , cartStatus} = data;
-
+  let {_id ,  prod_name, url_1, url_2  , categories , mrp , best_price , cartStatus} = data;
+  const login_status = useSelector((store) => store.loginStatus);
+  const cookies = new Cookies();
   const cartData = useSelector((cartdata) => cartdata.cart);
 
   const [cartState , currCartState] = useState(cartStatus);
@@ -36,13 +41,43 @@ function Details_page({data}) {
 
   function addToCartDes(){
 
-    currCartState(true);
 
-    addToCart(data , dispatc , id);
+    if(login_status){
+      currCartState(true);
+      // alert(_id);
+      let token = cookies.get('jwt');
+      
+      axios.post('https://frank-body-backend.vercel.app/products/addtocart' , {
+          headers: {
+              Authentication:token
+          },
+          data:{
+             id:_id 
+          }
+      }).then((res)=>{
+          addToCart(res.data , dispatc);
+          
+      }).catch((err)=>{
+          console.log(err , "from ltd card");
+      })
+
+  } else {
+      toast.warn('Please Login First', {
+          position: "top-center",
+          autoClose: 1200,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+  }
+
 
   }
   function buyNowTrigger(){
-    addToCart(data , dispatc , id);
+    addToCart(data , dispatc , _id);
     navigate('/cart');
   }
 
@@ -53,9 +88,23 @@ function Details_page({data}) {
     }
 
     if(quant + val == 0){
+      
         currCartState(false);
-
-        quantityZero(cartData , dispatc , id);
+        let token = cookies.get('jwt');
+            
+        axios.post('https://frank-body-backend.vercel.app/products/deletefromcart' , {
+            headers: {
+                Authentication:token
+            },
+            data:{
+               id:_id 
+            }
+        }).then((res)=>{
+            addToCart(res.data , dispatc);            
+        }).catch((err)=>{
+            console.log(err , "from ltd card");
+        })
+        quantityZero(cartData , dispatc , _id);
     }
     
 }
@@ -148,6 +197,7 @@ function Details_page({data}) {
             </div>
         </div>
       </div>
+      <ToastContainer  style={{zIndex:10000000000}}/>
     </>
   );
 }

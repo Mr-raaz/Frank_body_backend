@@ -7,7 +7,7 @@ import { Footer } from '../Footer/footer';
 import ShoppingOfferSection from '../ProductPage/product_page_comp/InitialOfferSection/ShoppingOfferSection';
 import DetailsTabSection from './ProdDesComponent/DetailsTabSection';
 import SimilarProducts from './ProdDesComponent/SimilarProducts';
-
+import ProductsRating from '../ProductsRating/ProductsRating';
 function ProductDescription() {
 
     const [currProd , setProd] = useState([]);
@@ -37,7 +37,6 @@ function ProductDescription() {
     }
 
     useEffect(()=>{
-
             getProductDetails();
             scrollToTop(500);
             
@@ -71,6 +70,7 @@ function ProductDescription() {
             
 <DetailsTabSection />
 <SimilarProducts  func = {check}/>
+<ProductsRating />
 <ShoppingOfferSection />
                 <Footer />
         </>

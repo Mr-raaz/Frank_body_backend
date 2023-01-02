@@ -1,12 +1,23 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../ReduxStore/Actions/mainAction';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 function PaymentDetail() {
 
     const [curr, setcurr] = useState('3');
-    const lcoalprice = localStorage.getItem("total_Price");
+    const cookies = new Cookies();
+    const cartData = useSelector((store) => store.cart);
     const [payment , setpayment] = useState(false);
     const [loading , setLoading] = useState(false);
+    const dispatch = useDispatch();
+
+    const [total_price , setTotalPrice] = useState(0);
+    const [price_discount , setPriceDiscount] = useState(0);
 
     const navigate = useNavigate();
 
@@ -15,6 +26,15 @@ function PaymentDetail() {
     }
 
     function handleOrder(){
+
+        addToCart([],dispatch);
+
+        let token = cookies.get('jwt');
+        
+        axios.post('https://frank-body-backend.vercel.app/user/orderPlaced' , {
+                token:token
+        })
+
         setLoading(true);
 
         setTimeout(()=>{
@@ -22,6 +42,23 @@ function PaymentDetail() {
             setpayment(true);
         },1000)
     }
+
+    function cartPrice(){
+        let temp = 0;
+ 
+        cartData.map((elem)=>{
+         if(elem){
+             temp += (elem.best_price * elem.quantity);
+         }
+        })
+         setTotalPrice(temp);
+ 
+         setPriceDiscount(Math.floor(temp/10 - Math.random() * 60))
+     }
+
+     useEffect(()=>{
+        cartPrice();
+     },[])
     return (
         <>
             <div className="outsdaferDiv">
@@ -95,6 +132,13 @@ function PaymentDetail() {
                                 </div>
                             </div> : null }
 
+                            {
+                                curr == 2 || curr == 4 || curr == 5 || curr == 6? <div className='payment_notavailable'><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDo4AY2LL58Gyd_DHmCSps3JHNnGTtevG1l3crh_xFrA&s" alt="Not found" />
+                                
+                                <p>Currently not available</p>
+                                </div> : null
+                            }
+
                     </div>
                     </div>
 
@@ -122,10 +166,10 @@ Beauty and Makeup products on........</p>
 
                         <div className="paymentSection_two">
                             <div>
-                                <p><span>Item Total(MRP)</span> <span>&#x20B9; {lcoalprice}</span></p>
-                                <p><span>Price Discount</span> <span> - &#x20B9; 99</span></p>
+                                <p><span>Item Total(MRP)</span> <span>&#x20B9; {total_price}</span></p>
+                                <p><span>Price Discount</span> <span> - &#x20B9; {price_discount}</span></p>
 
-                                <p><span>Care Plan</span> <span>&#x20B9; 165</span></p>
+                                <p><span>Care Plan</span> <span>&#x20B9; 125</span></p>
 
                                 
                             </div>
@@ -134,7 +178,7 @@ Beauty and Makeup products on........</p>
 
                             <div className='line'></div>
 
-                            <p><span className='paid_p'>To be Paid</span> <span className='paid_p'>&#x20B9; {Number(lcoalprice) + 115}</span></p>
+                            <p><span className='paid_p'>To be Paid</span> <span className='paid_p'>&#x20B9; {total_price-price_discount+125+49}</span></p>
 
 
 

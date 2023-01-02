@@ -2,17 +2,11 @@ import React from 'react';
 import rightlogo from '../img/rightlogo.png';
 import {motion as m } from 'framer-motion';
 
-
-
-
-
-
-
-
 function TopBanner() {
 
-       function handleClick(){
-        alert("working fine.....")
+       function handleClick(e){
+        alert("working fine.....");
+        console.log(e.target);
        }
 
     return (
@@ -32,7 +26,7 @@ function TopBanner() {
                     <h1>& Give The Best Magic Beauty</h1>
                     <p>Everything is There For Your Beauty Needs</p>
 
-                    <button className='ShowNow_btn' onClick={handleClick}>Shop Now</button>
+                    <button className='ShowNow_btn' style={{zIndex:"1000"}} onClick={handleClick}>Shop Now</button>
 
 
 
