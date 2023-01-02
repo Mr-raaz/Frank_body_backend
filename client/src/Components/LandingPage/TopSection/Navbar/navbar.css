@@ -45,9 +45,97 @@ height: 100%;
     justify-content: space-evenly;
     color: white;
 }
+#navbarSearchBox{
+  position: relative;
+  
+    /* border: 1px solid teal; */
+    margin-right: -130px;
+}
+#searchNavicon,#searchcross,#searchNaviconChange,#searchcrossChange{
+    position: absolute;
+    
+    font-size: 16px;
+}
+#searchNavicon
+{ 
+    height: 100%;
+    background-color: white;
+     margin-left: -25px;
+     padding: 0 5px;
+     border-radius:50px 0px 0px 50px ;
+}
+#searchNaviconChange{
+    height: 100%;
+    margin-left: 205px;
+    background-color:#e76364;
+    /* margin-left: -25px; */
+    padding: 0 5px;
+    border-radius:50px 0px 0px 50px ;
+}
+#searchcross{
+    visibility: visible;
+    top: 8px;
+    color: #e76364;
+    margin-left: -20px;
+}
+#searchcrossChange{
+visibility: hidden;
 
+top: 8px;
+color: #e76364;
+margin-left: -20px;
+}
+#searchInput{
+    width:230px;
+    outline: none;
+    border: none;
+   border-radius: 0 50px 50px 0;
+    height: 100%;
+    padding: 5px;
+    /* background-color: black; */
+}
+#searchInputChange{
+    visibility: hidden;
+    width:230px;
+    outline: none;
+    border: none;
+   border-radius: 0 50px 50px 0;
+    height: 100%;
+    padding: 5px;
+    padding: 0 8px;
+}
+.searchdivsuggestion{
+    top:48px;
+    width:110%;
+    right:-2px;
+    background: transparent;
+    position:absolute;
+}
+.SearchSuggestion{
+    border:1px solid red;
+    background-color: white;
+    border-color:#e76364 ;
+    width:100%;
+    height:30px;
+    margin-bottom: 5px;
+    border-radius:50px 50px 50px 50px;
+    transition: 0.75s;
+    opacity: 1;
+}
+.SearchSuggestionNew{
+    border:1px solid red;
+    background-color: white;
+    margin-bottom: 5px;
+    width:100%;
+   border-color:#e76364 ;
+    height:30px;
+    border-radius:50px 50px 50px 50px;
+    opacity: -1;
+    transition: 0.75s;
+}
 .navbar_icons{
-    width: 12%;
+   
+    width: 5%;
     display: flex;
     justify-content: space-between;
     font-size: 20px;
