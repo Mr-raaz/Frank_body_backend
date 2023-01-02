@@ -28,7 +28,7 @@ function LandingPage() {
         let token = cookies.get('jwt');
         if(token){
 
-          axios.post('http://localhost:5000/products/getcart' , {
+          axios.post('https://frank-body-backend.vercel.app/products/getcart' , {
                 headers: {
                     Authentication:token
                 }

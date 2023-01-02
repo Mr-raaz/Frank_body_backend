@@ -47,7 +47,7 @@ function Details_page({data}) {
       // alert(_id);
       let token = cookies.get('jwt');
       
-      axios.post('http://localhost:5000/products/addtocart' , {
+      axios.post('https://frank-body-backend.vercel.app/products/addtocart' , {
           headers: {
               Authentication:token
           },
@@ -92,7 +92,7 @@ function Details_page({data}) {
         currCartState(false);
         let token = cookies.get('jwt');
             
-        axios.post('http://localhost:5000/products/deletefromcart' , {
+        axios.post('https://frank-body-backend.vercel.app/products/deletefromcart' , {
             headers: {
                 Authentication:token
             },

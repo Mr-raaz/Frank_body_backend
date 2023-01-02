@@ -2,11 +2,9 @@ import React from 'react';
 import "swiper/css/bundle";
 import AllRoutes from './AllRoutes/AllRoutes';
 import {AnimatePresence} from 'framer-motion';
-
 import avtar from './Components/LandingPage/Images/chatbot.png';
 import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
-
 
 const steps = [
     {
@@ -77,7 +75,7 @@ function App() {
 
         </AllRoutes>
         </AnimatePresence>
-
+       
 
         <ThemeProvider theme={theme}>
                 <ChatBot

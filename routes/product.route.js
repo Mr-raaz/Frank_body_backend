@@ -144,6 +144,37 @@ route.post('/getcart' , async (req,res)=>{
 })
 
 
+route.get('/category/:category' , async(req,res)=>{
+    try {
+        let {category} = req.params;
+        let {sort , start , end} = req.query;
+
+        if(category == 'foundation'){
+            category = "KIT"
+        }
+
+        if(category == 'eyecare'){
+            category = 'Skin Care';
+        }
+
+        let data = [];
+
+        if(sort == 'none'){
+            data = await product.find({categories:{$eq:category}})
+            
+        } else if (sort == 'best_price_high_to_low'){
+            data = await product.find({categories:{$eq:category}}).sort({best_price: -1});
+        } else {
+            data = await product.find({categories:{$eq:category}}).sort(sort);
+        }
+        
+        res.send(data);
+    } catch (error) {
+        res.status(500).send("can't find data");
+    }
+})
+
+
 
 module.exports = route;
 
