@@ -10,6 +10,7 @@ function SearchedProducts() {
     let [searchedData, setSearchedData] = useState([]);
 
     const getData = async () => {
+
         let res = await fetch(`https://frank-body-backend.vercel.app/products`)
         let arr = await res.json();
         arr = arr.data;
