@@ -28,7 +28,8 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react'
   import { EditIcon} from '@chakra-ui/icons'
-
+import { useEffect } from 'react';
+import axios from 'axios';
 function Profile(props) {
   
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -119,6 +120,12 @@ function Profile(props) {
         },1000)
         // onClose
     }
+    
+    useEffect(()=>{
+        axios.post('localhost:5000/profile' , {
+            currentUser
+        })
+    },[currentUser])
 
     return (
         <div>
