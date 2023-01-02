@@ -143,4 +143,13 @@ export function makeZero(dispatch){
     })
 }
 
+export function setUserID(dispatch, data){
+
+   dispatch({
+    type:"SETUSERID",
+    payload : data
+   })
+
+}
+
 export {setActiveCategory , setSortingOrder , addToCart , quantityZero , SetLogin};
