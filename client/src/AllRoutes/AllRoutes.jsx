@@ -20,13 +20,10 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {SetLogin} from '../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
-import Profileops from '../Components/Profile/Profileops';
+// import Profileops from '../Components/Profile/Profileops';
 import { ChakraProvider } from '@chakra-ui/react'
 import { EmailVerification } from '../Components/Verification/EmailVerification';
 import {PasswordVerification } from '../Components/Verification/PasswordVerification';
-
-
-
 import { addToCart } from '../ReduxStore/Actions/mainAction';
 
 function AllRoutes() {
@@ -124,7 +121,7 @@ function AllRoutes() {
                         <Route path='/contact' element={<Contact />} />
                         <Route path ='/Login' element={<Login />} />
                         <Route path='/details/:id' element={<ProductDescription />} />
-                        <Route path='/profile' element={isLogin ? <Profileops  /> : <Navigate to='/Login' />} />
+                        <Route path='/profile' element={isLogin ? <Profile  /> : <Navigate to='/Login' />} />
                         <Route path = '/register' element={<Register />} />
                         <Route path='/category/:type' element={<ProductCategory />} />
                         <Route path='/checkout' element={<Payment />} />

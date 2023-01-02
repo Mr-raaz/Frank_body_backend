@@ -2,12 +2,9 @@ import React from 'react';
 import "swiper/css/bundle";
 import AllRoutes from './AllRoutes/AllRoutes';
 import {AnimatePresence} from 'framer-motion';
-
 import avtar from './Components/LandingPage/Images/chatbot.png';
 import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
-import { ChakraProvider } from '@chakra-ui/react';
-
 const steps = [
     {
         id: '0',
@@ -66,7 +63,6 @@ const config = {
 function App() {
     return (
         <>
-<ChakraProvider>
 <AnimatePresence mode='wait'>
         <AllRoutes>
 
@@ -77,7 +73,6 @@ function App() {
 
         </AllRoutes>
         </AnimatePresence>
-        </ChakraProvider>
 
         <ThemeProvider theme={theme}>
                 <ChatBot
