@@ -40,7 +40,7 @@ export default function DraggableDialog({func}) {
 
   const handleClose = () => {
 
-    axios.post(`http://localhost:5000/comment/${id}` , {
+    axios.post(`https://frank-body-backend.vercel.app/comment/${id}` , {
       token:{token},
       comment:{
         message:detail.current.value

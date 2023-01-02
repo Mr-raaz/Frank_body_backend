@@ -77,7 +77,7 @@ function AllRoutes() {
         let token = cookies.get('jwt');
         if(token){
 
-          axios.post('http://localhost:5000/products/getcart' , {
+          axios.post('https://frank-body-backend.vercel.app/products/getcart' , {
                 headers: {
                     Authentication:token
                 }
@@ -96,7 +96,7 @@ function AllRoutes() {
 
       async function addTobackend(data){
 
-        axios.post('http://localhost:5000/user/googleregister' , {
+        axios.post('https://frank-body-backend.vercel.app/user/googleregister' , {
           name:data.displayName,
           email:data.emails[0].value,
           avtar:data.photos[0].value
