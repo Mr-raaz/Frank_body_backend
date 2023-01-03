@@ -32,7 +32,7 @@ route.post("/", async (req, res)=>{
 
     email: requiredData.email,
     
-    contact: requiredData.mobile,
+    mobile: requiredData.mobile,
     gender: requiredData.gender
 
   };
@@ -54,6 +54,7 @@ route.post("/", async (req, res)=>{
   try{
 
     var dbData = await user.find({email:userdata.email});
+    res.send({message:dbData});
 
   }catch(err){
 
@@ -63,7 +64,7 @@ route.post("/", async (req, res)=>{
  
 
   
-  res.send({message:dbData});
+  
   
 })
 

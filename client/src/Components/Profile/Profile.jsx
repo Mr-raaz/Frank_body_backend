@@ -2,7 +2,7 @@ import React from 'react';
 // import {Box} from "@mui/material"
 
 import { useState } from 'react';
-import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
+// import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
 import { Box } from '@chakra-ui/react'
 import { Text, Button, useMediaQuery, HStack, VStack, Grid, GridItem, Image, Heading, FormControl, FormHelperText,
     FormLabel, Input
@@ -11,12 +11,12 @@ import {profileSideList} from "../../constant"
 import Cookies from 'universal-cookie';
 import {SetLogin} from '../../ReduxStore/Actions/mainAction';
 import { useDispatch } from 'react-redux';
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+// import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
 import { useToast } from '@chakra-ui/react'
 import { ChakraProvider } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/react';
-import { useRef } from 'react';
+// import { useRef } from 'react';
 import { Select } from '@chakra-ui/react';
 import {
     Modal,
@@ -29,9 +29,9 @@ import {
   } from '@chakra-ui/react'
   import { EditIcon} from '@chakra-ui/icons'
 import { useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { store } from '../../ReduxStore/store';
+// import { store } from '../../ReduxStore/store';
 function Profile(props) {
   
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -45,18 +45,20 @@ function Profile(props) {
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
 
-    const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
-    const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
-    const [isLargerThan1000] = useMediaQuery('(min-width: 1300px)');
+    // const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
+    // const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
+    // const [isLargerThan1000] = useMediaQuery('(min-width: 1300px)');
 
     const toast = useToast()
 
     const cookies = new Cookies();
    
     const [curruserID, setuserID] = useState(useSelector((store)=>{return store.userId}));
+
     
      useEffect(()=>{
         console.log(curruserID);
+        
         getData();
       
 
@@ -70,15 +72,15 @@ function Profile(props) {
         mobile : "",
         gender : ""
     });
-  let emptyData = {
-    firstname : "",
-    lastname : "",
-    email : "",
-    mobile : "",
-    gender : ""
-};
+//   let emptyData = {
+//     firstname : "",
+//     lastname : "",
+//     email : "",
+//     mobile : "",
+//     gender : ""
+// };
 const getData = async ()=>{
-    let url = "https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile/"+curruserID;
+    let url = "frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile/"+curruserID;
     console.log(url);
     let fetcheddata = await fetch(url);
     let result = await fetcheddata.json();
@@ -107,7 +109,7 @@ const getData = async ()=>{
     const [editUser, seteditUser] = useState(currentUser); 
    
     const getmobileandgender = async ()=>{
-        let mobgen = await fetch("https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/mobilegender/"+curruserID);
+        let mobgen = await fetch("https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile/mobilegender/"+curruserID);
         let result = await mobgen.json();
         setGender(result[0].address[0].gender);
         setMobile(result[0].address[0].contact);
@@ -171,13 +173,14 @@ const getData = async ()=>{
         setTimeout(()=>{
            onClose();
         },1000)
+        postData();
         // onClose
     }
     
-    useEffect(()=>{
-        console.log(currentUser);
-         postData();
-    },[currentUser])
+    // useEffect(()=>{
+    //     console.log(currentUser);
+    //      postData();
+    // },[currentUser])
  
     const postData = async ()=>{
 
@@ -188,8 +191,8 @@ const getData = async ()=>{
             },
             data : {
                 email : currentUser.email,
-                mobile, 
-                gender
+                mobile : mobile, 
+                gender : gender
             }
          })
          let result = await resp.json();
