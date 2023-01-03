@@ -115,7 +115,7 @@ function Login() {
 
 
         const google = () => {
-            window.open("https://frank-body-backend.vercel.app/auth/google", "_self");
+            window.open("http://localhost:5000/auth/google", "_self");
           };
         
           const facebook = () => {
