@@ -13,8 +13,8 @@ function Navbar() {
     const login_status = useSelector((store) => store.loginStatus);
     const [change, setChange] = useState(false);
     const [count, setCount] = useState(0);
-    let [value, setValue] = useState("");
-    let [data, setdata] = useState([]);
+    const [value, setValue] = useState("");
+    const [data, setdata] = useState([]);
 
     const getData = async () => {
         let res = await fetch(`https://frank-body-backend.vercel.app/products`)
@@ -36,6 +36,10 @@ function Navbar() {
 
     function logoClick() {
         navigate('/');
+    }
+    const handlestateChange =()=>{
+        setChange(false)
+        setValue("")
     }
     return (
         <>
@@ -61,7 +65,7 @@ function Navbar() {
                             setChange(false)
                         }
                     }} onChange={(e) => searchedValue(e)} placeholder='search product' />
-                    <FontAwesomeIcon icon={faX} id={change ? 'searchcross' : 'searchcrossChange'} className="cart_logo" onClick={() => setChange(false)} />
+                    <FontAwesomeIcon icon={faX} id={change ? 'searchcross' : 'searchcrossChange'} className="cart_logo" onClick={handlestateChange} />
                     <div class='searchdivsuggestion' >
                         {data.filter((elem) => {
                             let title = elem.prod_name.toLowerCase();

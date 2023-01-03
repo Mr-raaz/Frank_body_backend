@@ -135,10 +135,10 @@
     width: 100%;
     margin-bottom: 5px;
     border-radius: 50px 50px 50px 50px;
-    transition: 1.0s;
-    opacity: 1;
+      opacity: 1;
     padding: 5px 10px;
     cursor: pointer;
+    transition: 0.7s;
 }
 
 
@@ -149,9 +149,9 @@
     width: 100%;
     border-color: #e76364;
     border-radius: 50px 50px 50px 50px;
-    opacity: -1;
-    transition: 1.0s;
+    opacity: -2;
     padding: 5px 10px;
+    transition: 0.7s;
 }
 
 .test_eclips {
