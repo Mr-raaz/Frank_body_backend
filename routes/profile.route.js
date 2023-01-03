@@ -19,7 +19,7 @@ route.get("/mobilegender/:id", async (req, res)=>{
         
         res.send({...userdata})
     }catch(err){
-        res.status(500).send({error:err});
+        res.status(500).send({error:"something went wrong"});
     }
      console.log(userdata);
 })
@@ -45,7 +45,7 @@ route.post("/", async (req, res)=>{
 
   }catch(err){
 
-     res.status(500).send({message:err});
+     res.status(500).send({message:"something went wrong"});
 
   }
   
@@ -58,7 +58,7 @@ route.post("/", async (req, res)=>{
 
   }catch(err){
 
-     res.status(500).send({message:err});
+     res.status(500).send({message:"something went wrong"});
 
   }
  
@@ -79,7 +79,7 @@ route.get("/:id",async (req, res)=>{
         
         res.send({message:userdata})
     }catch(err){
-        res.status(500).send({error:err});
+        res.status(500).send({error:"something went wrong"});
     }
      console.log(userdata);
 
