@@ -1,4 +1,4 @@
-import React  , {useState}from 'react';
+import React  , {useState , useEffect}from 'react';
 import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
 import { Link  , Navigate} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -123,7 +123,13 @@ function Login() {
           };
 
 
-
+          useEffect(()=>{
+            let token = cookies.get('jwt');
+            if(token){
+              SetLogin(dispatch, true);
+              navigate('/cart');
+            }
+        },[])
 
 
 

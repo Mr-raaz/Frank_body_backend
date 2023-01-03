@@ -4,16 +4,19 @@ import './Cart.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faAngleRight , faTrash} from '@fortawesome/free-solid-svg-icons';
 import offerPng from './offer.png';
-// import party from "party-js";
+import { SetLogin } from '../../../ReduxStore/Actions/mainAction';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import Product from './Product';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 function Cart() {
 
     const coupon_input = useRef();
     const cartData = useSelector((store) => store.cart);
+    const cookies = new Cookies();
 
     const [total_price , setTotalPrice] = useState(0);
     const [price_discount , setPriceDiscount] = useState(0);
@@ -22,6 +25,7 @@ function Cart() {
     const navigate = useNavigate();
     
     const[count_price , setPrice] = useState(0);
+    const dispatch = useDispatch();
 
     function check(val){
         setTotalPrice((prev) => prev+val);
@@ -70,7 +74,13 @@ function Cart() {
     useEffect(()=>{
         cartPrice();
     },[cartData])
-
+useEffect(()=>{
+    let token = cookies.get('jwt');
+    if(token){
+      SetLogin(dispatch, true);
+      navigate('/cart');
+    }
+},[])
     return ( 
          <>
             <Navbar />

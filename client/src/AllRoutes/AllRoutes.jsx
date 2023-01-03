@@ -90,8 +90,13 @@ function AllRoutes() {
       })
     }
   }
+
   useEffect(() => {
     fetchCart();
+    let token = cookies.get('jwt');
+    if(token){
+      SetLogin(dispatch, true);
+    }
   }, [])
 
 

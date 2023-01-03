@@ -44,7 +44,7 @@ function Navbar() {
                     <img src={logo} alt="Not found" onClick={logoClick} className="logo"
                     />
                 </div>
-                <div className='navList'>
+                <div className='navList' style={change ? {marginLeft:'-300px'} : null}>
                     <ul>
                         <li><NavLink to='/'>Home</NavLink></li>
                         <li><NavLink to='/shop'>Shop</NavLink></li>
@@ -53,7 +53,7 @@ function Navbar() {
                     </ul>
                 </div>
                 <div id='navbarSearchBox'>
-                    <span id={change ? 'searchNavicon' : 'searchNaviconChange'}> <FontAwesomeIcon style={change ? { color: '#e76364', marginTop: '8px' } : { color: 'white', marginTop: '8px' }} icon={faMagnifyingGlass} className="cart_logo" onClick={() => setChange(true)} /></span>
+                    <span id={change ? 'searchNavicon' : 'searchNaviconChange'}> <FontAwesomeIcon style={change ? { color: '#e76364', marginTop: '8px'} : { color: 'white', marginTop: '8px' , fontSize:'19px' , fontWeight:'bold' , cursor:'pointer'}} icon={faMagnifyingGlass} className="cart_logo" onClick={() => setChange(true)} /></span>
                     <input type="text" value={value} id={change ? 'searchInput' : 'searchInputChange'} onKeyPress={(e) => {
                         if (e.charCode == 13 && value != "") {
                             navigate(`/products?search_query=${value}`)
@@ -74,7 +74,7 @@ function Navbar() {
                                     <div><p key={ind + 1} onClick={() => setValue(elem.prod_name)} className={change ? "SearchSuggestion test_eclips" : 'SearchSuggestionNew test_eclips'}>{elem.prod_name}</p></div>
                                 )
                             }).splice(0, 5)}
-                        {/*  */}
+                        
                     </div>
                 </div>
 
