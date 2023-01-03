@@ -8,7 +8,7 @@ const passport = require("passport");
 const user = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 
-const CLIENT_URL = "http://localhost:3000/";
+const CLIENT_URL = "https://frankbody.netlify.app/";
 
 
 
