@@ -22,7 +22,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
