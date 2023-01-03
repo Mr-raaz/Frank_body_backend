@@ -1,3 +1,4 @@
+require('dotenv').config()
 const {Router} = require("express");
 const {getProducts} = require('../controlers/product.controller');
 const product = require('../models/product.model');
@@ -42,7 +43,7 @@ route.post('/addtocart' , async (req,res) =>{
 
         let {headers:{Authentication} , data:{id}} = req.body;
 
-        let {email} = await jwt.verify(Authentication , "secretkey");
+        let {email} = await jwt.verify(Authentication , process.env.SECRET_KEY);
 
         let dbData = await user.find({email:{$eq:email}});
         
@@ -90,7 +91,7 @@ route.post('/deletefromcart' , async(req,res)=>{
     try {
         let {headers:{Authentication} , data:{id}} = req.body;
 
-        let {email} = await jwt.verify(Authentication , "secretkey");
+        let {email} = await jwt.verify(Authentication , process.env.SECRET_KEY);
 
         let dbData = await user.find({email:{$eq:email}});
         
@@ -129,7 +130,7 @@ route.post('/getcart' , async (req,res)=>{
     try {
         let {headers:{Authentication}} = req.body;
 
-        let {email} = await jwt.verify(Authentication , "secretkey");
+        let {email} = await jwt.verify(Authentication , process.env.SECRET_KEY);
 
         let dbData = await user.find({email:{$eq:email}});
         

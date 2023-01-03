@@ -1,3 +1,4 @@
+require('dotenv').config()
 const {Router} = require('express');
 const product = require('../models/product.model');
 const jwt = require('jsonwebtoken');
@@ -11,7 +12,7 @@ route.post('/:id' , async(req,res) =>{
     try {
         let {token , comment} = req.body;
 
-        let {email} = await jwt.verify(token.token , "secretkey");
+        let {email} = await jwt.verify(token.token , process.env.SECRET_KEY);
 
         let dbData = await user.find({email:{$eq:email}});
         

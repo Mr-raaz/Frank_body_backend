@@ -1,3 +1,4 @@
+require('dotenv').config()
 const {Router} = require("express");
 const user = require('../models/user.model');
 const {userExist} = require('../middlewares/user.middlewars');
@@ -51,7 +52,7 @@ route.post('/googleregister' , async (req,res)=>{
         })
       }
 
-      let token = await jwt.sign({email:email} , "secretkey");
+      let token = await jwt.sign({email:email} , process.env.SECRET_KEY);
       
       res.send({
         token:token
@@ -166,7 +167,7 @@ route.post('/setAddress' , async(req,res)=>{
 
     let {token  , address} = req.body;
 
-    let {email} = await jwt.verify(token , "secretkey");
+    let {email} = await jwt.verify(token , process.env.SECRET_KEY);
 
     let dbData = await user.find({email:{$eq:email}});
     
@@ -189,7 +190,7 @@ route.post('/orderPlaced' , async(req,res)=>{
   try {
       let token = req.body.token;
 
-      let {email} = await jwt.verify(token , "secretkey");
+      let {email} = await jwt.verify(token , process.env.SECRET_KEY);
 
       let dbData = await user.find({email:{$eq:email}});
 

@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 // const userManualLogin = require("../controlers/user.controller")
@@ -17,6 +18,7 @@ router.post("/login", async (req, res)=>{
    
     try {
         let reqData = req.body;
+
         
         let db = await user.find({email:{$eq:reqData.email}});
         let db2 = await user.find({email:{$eq:reqData.email}}).count();
@@ -38,7 +40,7 @@ router.post("/login", async (req, res)=>{
         let passwordMatch = await  bscrypt.compare(reqData.password,db[0].password);
 
         if(passwordMatch){
-          const token = await jwt.sign({email:reqData.email} , "secretkey");
+          const token = await jwt.sign({email:reqData.email} , process.env.SECRET_KEY);
           console.log(db[0]._id);
           res.send({
               token:token,
@@ -67,7 +69,6 @@ router.get("/login/success", (req, res) => {
       success: true,
       message: "successfull",
       user: req.user,
-     
     });
   
 });
