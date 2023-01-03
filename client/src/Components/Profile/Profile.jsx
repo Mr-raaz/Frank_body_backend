@@ -2,7 +2,7 @@ import React from 'react';
 // import {Box} from "@mui/material"
 
 import { useState } from 'react';
-// import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
+import Navbar from '../LandingPage/TopSection/Navbar/Navbar';
 import { Box } from '@chakra-ui/react'
 import { Text, Button, useMediaQuery, HStack, VStack, Grid, GridItem, Image, Heading, FormControl, FormHelperText,
     FormLabel, Input
@@ -80,18 +80,22 @@ function Profile(props) {
 //     gender : ""
 // };
 const getData = async ()=>{
-    let url = "frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile/"+curruserID;
+    let url = "https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile/"+curruserID;
     console.log(url);
     let fetcheddata = await fetch(url);
     let result = await fetcheddata.json();
     let fullname = result.message[0].name.split(" ");
-    if(result.message[0]?.address.length !== 0){
+    if(address){
+      if(result.message[0]?.address.length !== 0){
         var address = result.message[0]?.address[0];
     if(address?.firstname.length === 0 || address?.lastname.length === 0){
         address.firstname = fullname[0];
         address.lastname = fullname[1];
         setCurrentuser(address);
     }
+
+    }
+   
 
     }else{
         setCurrentuser({
@@ -111,14 +115,21 @@ const getData = async ()=>{
     const getmobileandgender = async ()=>{
         let mobgen = await fetch("https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile/mobilegender/"+curruserID);
         let result = await mobgen.json();
-        setGender(result[0].address[0].gender);
-        setMobile(result[0].address[0].contact);
+        setGender(result[0].address[0]?.gender);
+        setMobile(result[0].address[0]?.mobile);
     }
 
     useEffect(()=>{
-         getmobileandgender();
+         setTimeout(()=>{
+          getmobileandgender();
+          // getData();
+         },3000)
+    },[currentUser])
+ 
+    useEffect(()=>{
+      getmobileandgender();
+      getData()
     },[])
-
 
     function handleLogout(){
         toast({
@@ -183,37 +194,41 @@ const getData = async ()=>{
     // },[currentUser])
  
     const postData = async ()=>{
-
+         let obj = {
+          email : currentUser.email,
+          mobile : mobile, 
+          gender : gender
+      }
          let resp = await fetch("https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app/profile", {
             method : "POST",
             headers :{
                 "Content-Type" : "application/json"
             },
-            data : {
-                email : currentUser.email,
-                mobile : mobile, 
-                gender : gender
-            }
+            body : JSON.stringify(obj)
          })
-         let result = await resp.json();
-         console.log(result);
+        //  let result = await resp.json();
+        //  console.log(result);
     }
-
+  const printalldata = ()=>{
+    console.log(curruserID, currentUser, mobile, gender);
+  }
     
     
 
     return (
         <div>
-           
+           <Navbar></Navbar>
  <ChakraProvider>
- <Box backgroundColor={"#f3f7fb"} height={"100vh"}>
-        <Box marginTop="600px" width="80%" margin="auto">
+ <Box backgroundColor={"#f3f7fb"} height={"100vh"} marginTop={"50px"}>
+        <Box marginTop="600px" width="80%" margin="auto" >
 
             <Grid
                   h='500px'
                   templateRows='repeat(6, 1fr)'
                   templateColumns='repeat(6, 1fr)'
                   gap={4}
+                  marginTop={"50px"}
+                  paddingTop={"50px"}
                  >
 
                     {/* first */}
@@ -239,7 +254,7 @@ const getData = async ()=>{
                         </Box>
                         <Box style={imageAndName}>
                         <Image src="https://www.netmeds.com/msassets/images/icons/medicine_orders.svg"></Image>
-                        <Text>Medicine Order</Text>
+                        <Text> Orders</Text>
                         </Box>
                         <Box style={imageAndName}>
                         <Image src="https://www.netmeds.com/msassets/images/icons/rewards.svg"></Image>
@@ -305,6 +320,7 @@ const getData = async ()=>{
            {/* </Box> */}
         </Box>
         </Box>
+        <button onClick={printalldata}>print all data</button>
 
         <Modal
         initialFocusRef={initialRef}
@@ -339,7 +355,7 @@ const getData = async ()=>{
               <Select name="gender" placeholder='Select option' onChange={(e)=>{setGender(e.target.value)}}>
                     <option value='male'>Male</option>
                     <option value='female'>Female</option>
-                    <option value='gender'>Other</option>
+                    <option value='other'>Other</option>
               </Select>
               
             </FormControl>
