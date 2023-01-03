@@ -76,7 +76,7 @@ route.post('/googleregister' , async (req,res)=>{
             const token = jwt.sign({userID : temp._id},secret,{
                 expiresIn :'5d'
             })
-            const link =`http://localhost:3000/user/reset/${temp._id}/${token}`
+            const link =`https://frankbody.netlify.app/user/reset/${temp._id}/${token}`
             // console.log(link);
              try {
             let info =await transporter.sendMail({
