@@ -30,48 +30,48 @@ That simple, that good.</p>
  
  | Name            | Contribution                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-|<a href = "https://github.com/yug0231" > Ayush </a> | Login / Signup , authentication |
+|<a href = "https://github.com/Ayushsingh05" > Ayush </a> | Login / Signup , authentication |
 | <a href = "https://github.com/Adil-khan-007" > Ramiz raza </a>| Search Page |
-|<a href = "https://github.com/vaddadiPhani" > Hari </a>| Profile Page |
+|<a href = "https://github.com/hariprasanthmath" > Hari </a>| Profile Page/ Login backend |
 | <a href = "https://github.com/Mr-raaz" >Anshu Raj </a> | Landing Page , Cart Page|
  
  <br>
  
  # 🔹 Landing Page 
  <p>Landing Page has Login Signup / Search bar /  Cart and Trending Feature Which helps users to pick what They want Easily...</p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gMgt1-QrxC8AOZQIbvTaqK7EC57FISabnApeWhJQVRIEtPO0l0KozkCNLNqPYZl_Jk35wyNSK6wj6X7unrYGwGE2byaUA=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gNjgJmvUuQNJ8lbMFZoxZ6MEW1fGmm6rpfry3i52GEW8QMvKf8GPrp-FRBera5EoR-kK1m6M8OgZIwbeqP76e17uf2RpA=w1920-h972"/>
  
  # 🔹 Login / SignUp 
  <p></p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gM1i7iRbKfazq-4IVzos7cRybi93R-vbpnyvsX_EB0mUOlKo4K4Cokws6zNfCgAMYVvsphqoQKVACLybaWMx7C_8RV5Vg=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gM_jeZFdWT3IkoQhpEnbxLiHMel2m-7mlzZeLyG1f2UIgVqXyXGQdql8bSeppEyKTUSLpzeHkJhfAXHCLP-h3BcYlmKAw=w1920-h972"/>
  
  # 🔹 Product Page
  <p></p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gPmTf1_JTxaRwLHcspiXGye3CPtgrCfN-jpERR31zth4ajzFI1IaJdqYirtGN_5ubGaAOJBDYz7T31y61zGRqd0D4O5tA=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gN8iCQJBeVyVfk7y2oAd8FSOZb8WFxNBU2p29yMIChhHyiHl9mzAMHT0fKtkOT3gfaXlAlh5zUJfRJRXEtDis_UHWWdlw=w1920-h972"/>
  
  # 🔹 Product Description
  <p></p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gOOmZkHYoWbWcI_pcskkrfpe_uPvyuKmVXD-xbH0xDF6BbaSVJqgv-cZACpNwc40CjWucrIi-HZG8m6D4Fr7jFFPMTgRw=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gPAnRwMjiyWiUuREYfid3OAcMMPKptH5QVkOdKYMGqTh1JXHKU6QhyPpBEu70VJjxpxZ2LWj2yBqYxllm0-5tn882Tqlw=w1920-h972"/>
  
   # 🔹 Cart Page
  <p></p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gMBBzFOxgh-Ww99Xk-zIFKHIOIbKOBer77-XMwbeBd7GtgOIb2XnVDAHmJ3phOONxe6gwg18nbBz5HUcPI7i_eLPqAhow=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gOH0fm6qzYJ2SeeqDPdbyknS9LClY5zKIVWIrcIXTj8Z_467OiNodyR4yw9jzoKkXQijl8mt_s9fB7te3fLrzK_QqHbzQ=w1920-h972"/>
  
   # 🔹 Payment Page
  <p></p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gMsj-sNvn5dCTCpxESNGhXlvPRHkKo2RNS2wmmJKu7HlQsFBCrIqwUrfPIZstymlTCBfXuPg4s89Wc2U4JOeYS0AD46-A=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gM544QoRYCxEnNQvBbA48QqvV--27CJJEH2djAGu5vZXEXD-9ibR7S-hs0IwpRFnt4dGxrixPRnNhUvqtNgU0C2bD8u2g=w1920-h972"/>
  
  # 🔹 Shop Page
  <p></p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gOe52u_JiW2MGEqWmJDbPd2_aL2HCM3dwhcCteOpY6FbHQ-H5M1841vCQY0TcfLxR5NzYJMWLUOrcZLwyvh9c8s8BU2ZA=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gMFb04IuiYRqw-RollIBJM9rQ_6sSA3wCBYMB4cfHYhvn0LKdKofCB4_0ZH7OU2r8l3f4vyI0OingQ0LaxgODKDOudv_Q=w1920-h972"/>
  
  # 🔹 About Page
  <p></p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gOPanyfXJQAUnFNHLjvoXz8tf4hCLkf4suMEceS7sr1Wuz1CWGOQAfGT0QbZgRBqvAYl-ynKCB6yoY91sqgIA_Dd5DrtQ=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gNGM9IeHxFjVMo3vgT1l1twFsTQ-LbmFaBR6XqwqLFLgqg_duPuuIQLtWuU5Leqz2fxn4-JM7ZxJpEZVoG-pjQFJxJgwQ=w1920-h972"/>
  
  # 🔹 Contact Page
  <p></p>
- <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gPmAbtTU5462iSA4yx1C_OG6GxFzSNiL2D5oDiwr811XyqZY4_npxgZ3bHMoNb37sRl-lmjdj63cA_5ydrv9s0dZZ7-Lw=w1920-h972"/>
+ <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AFDK6gMW5sQk8bgoKK_bw7_Aqt_Jgr8XWCGBey_aVFJnxC4pZ7Nb6utglG9JhNSN8I5dW7luMX9_y_d4Lr6LM4ltrX2imjIEqw=w1920-h972"/>
  
     
  # <img src="https://cdn-icons-png.flaticon.com/512/1934/1934019.png" width="25px"/> Challenges :

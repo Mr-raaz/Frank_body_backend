@@ -19,14 +19,14 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(
-  cors({
-    origin: "https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app",
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: "https://frank-body-backend-git-produtnew2-mr-raaz.vercel.app",
+//     methods: "GET,POST,PUT,DELETE",
+//     credentials: true,
+//   })
+// );
 
 
 const port = process.env.PORT || 5000;
